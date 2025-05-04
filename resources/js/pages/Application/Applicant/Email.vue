@@ -1,0 +1,28 @@
+<template>
+    <div class="mb-6">
+        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Email</label>
+        <input
+            v-model="model"
+            type="email"
+            class="w-full px-5 py-3 rounded-xl bg-[#ffff] border-2 border-cyan-500 text-black placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+            placeholder="Enter your email address"
+        />
+        <div v-if="error" class="text-pink-500 text-sm mt-2">{{ error }}</div>
+    </div>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+    modelValue: String,
+    error: String,
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const model = computed({
+    get: () => props.modelValue,
+    set: (value) => emit('update:modelValue', value),
+})
+</script>
