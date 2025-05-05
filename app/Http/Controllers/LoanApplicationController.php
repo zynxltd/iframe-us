@@ -19,9 +19,11 @@ class LoanApplicationController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->);
+        dd($request->all());
         // Validate incoming request
         $validated = $request->validate([
+            'Source.LoanAmount' => 'required|numeric',
+
             'Loan.LoanAmount' => 'required|numeric',
             'Loan.LoanTerm' => 'required|numeric',
             'Loan.LoanPurpose' => 'required|numeric',

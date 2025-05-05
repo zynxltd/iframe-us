@@ -4,7 +4,7 @@
         <input
             v-model="model"
             type="text"
-            class="w-full rounded-xl border-2 border-cyan-500 bg-[#ffff] p-3 text-black placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-purple-500 transition-all duration-300"
+            class="w-full rounded-xl border-2 border-cyan-500 bg-[#ffff] p-3 text-black placeholder-neutral-800  focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-purple-500 transition-all duration-300"
             placeholder="Enter your postcode"
             @input="validatePostcode"
         />

@@ -6,7 +6,7 @@
             <label
                 v-for="term in terms"
                 :key="term.value"
-                class="flex items-center justify-center text-center px-5 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300 h-16"
+                class="flex items-center justify-center text-center text-xs font-medium  h-14 w-full px-2 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300"
                 :class="modelValue === term.value
                       ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white border-transparent shadow-lg'
                     : 'bg-[#ffffff] border-cyan-500 text-black-300 hover:bg-cyan-600 hover:text-white hover:border-purple-400'"

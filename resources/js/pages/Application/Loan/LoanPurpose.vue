@@ -8,7 +8,7 @@
             <label
                 v-for="purpose in purposes"
                 :key="purpose"
-                class="flex items-center justify-center text-center px-2 py-4 rounded-xl cursor-pointer border-2 transition-all duration-300 w-full h-16"
+                class="flex items-center justify-center text-center text-xs font-medium  h-14 w-full px-4 py-4 rounded-xl cursor-pointer border-2 transition-all duration-300"
                 :class="modelValue === purpose
           ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white border-transparent shadow-lg'
           : 'bg-white border-cyan-500 text-black hover:bg-cyan-600 hover:text-white hover:border-purple-400'"

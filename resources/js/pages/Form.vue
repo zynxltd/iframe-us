@@ -1,5 +1,4 @@
 <script setup>
-import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios'; // Make sure you import axios
 import {computed, ref} from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
@@ -36,8 +35,24 @@ import BankCard from "@/pages/Application/Bank/BankCard.vue";
 import BankAccountNumber from "@/pages/Application/Bank/BankAccountNumber.vue";
 import BankSortCode from "@/pages/Application/Bank/BankSortCode.vue";
 import ConsentMarketing from "@/pages/Application/Consent/ConsentMarketing.vue";
+import MonthlyMortgageRent from '@/pages/Application/Expense/MonthlyMortgageRent.vue';
+import MaritalStatus from '@/pages/Application/Applicant/MaritalStatus.vue';
+import ResidentialStatus from '@/pages/Application/Residence/ResidentialStatus.vue';
+import Utilities from '@/pages/Application/Expense/Utilities.vue';
+import RecentLoanCount from '@/pages/Application/Applicant/RecentLoanCount.vue';
+import AdultsLivingWith from '@/pages/Application/Applicant/AdultsLivingWith.vue';
+import { usePage } from '@inertiajs/vue3';
 
 const currentStep = ref(1)
+
+function goToStep(step) {
+    currentStep.value = step
+}
+
+const page = usePage()
+const trackingParams = page.props.trackingParams
+
+
 const nextStep = () => {
     // Ensure that isStepValid is accessed correctly
     if (isStepValid.value) {
@@ -48,7 +63,7 @@ const nextStep = () => {
         }
 
         // Move to the next step if not the last step
-        if (currentStep.value < 7) {
+        if (currentStep.value < 6) {
             currentStep.value++;
         }
     }
@@ -58,22 +73,65 @@ const prevStep = () => {
         currentStep.value--
     }
 }
+const getCookie = (name) => {
+    const cookies = document.cookie.split('; ');
+    let result = '';
+
+    cookies.forEach((cookie) => {
+        const [key, value] = cookie.split('=');
+        if (key === name) {
+            result = decodeURIComponent(value);
+        }
+    });
+
+    return result;
+}
+
+// Add event listener to listen for message from parent
+window.addEventListener('message', function(event) {
+    if (event.origin !== 'http://localhost:10008') return; // Ensure it's from the correct domain
+
+    const parentParams = event.data;
+
+    // Now, use these parameters in your form
+    const form = useForm({
+        AffID: parentParams.AffID || '',
+        OfferID: parentParams.OfferID || '',
+        Campaign: '',
+        AffSub: parentParams.AffSub || '',
+        AffSub2: parentParams.AffSub2 || '',
+        CreationUrl: window.location.href, // Current page URL
+        ReferrerUrl: document.referrer || '', // URL of the page that referred to this one
+        IpAddress: '127.0.0.1', // You would need to get this from the backend
+        UserAgent: navigator.userAgent, // Browser information
+    });
+
+    console.log(form); // Log the form data to verify
+});
+
+
+
+
+console.log(getCookie())
+
 const form = useForm({
-    AffID: '',
-    OfferID: '',
-    Campaign: '',
-    AffSub: '',
-    AffSub2: '',
-    AffSub3: '',
-    AffSub4: '',
-    AffSub5: '',
-    CreationUrl: '',
-    ReferrerUrl: '',
-    IpAddress: '',
-    UserAgent: '',
+    AffID: trackingParams.AffID,
+    OfferID:  trackingParams.OfferID,
+    Campaign: trackingParams.Campaign,
+    AffSub: trackingParams.AffSub,
+    AffSub2:  trackingParams.AffSub2,
+    AffSub3:  trackingParams.AffSub3,
+    AffSub4:  trackingParams.AffSub4,
+    AffSub5:  trackingParams.AffSub5,
+    CreationUrl: window.location.href, // Current page URL
+    ReferrerUrl: document.referrer || '', // URL of the page that referred to this one
+    IpAddress: '127.0.0.1', // You would need to get this from the backend
+    UserAgent: navigator.userAgent, // Browser information
+
     LoanAmount: '',
     LoanTerm: '',
     LoanPurpose: '',
+
     Title: '',
     FirstName: '',
     LastName: '',
@@ -82,12 +140,18 @@ const form = useForm({
     HomePhone: '',
     Email: '',
     Dependants: '',
+    MaritalStatus: '',
+    RecentLoanCount: '',
+    AdultsLivingWith: '',
+
+    ResidentialStatus: '',
     HouseNameNumber: '',
     StreetAddress: '',
     County: '',
     City: '',
     Postcode: '',
     AddressYears: '',
+
     EmploymentStatus: '',
     EmployerName: '',
     JobTitle: '',
@@ -95,14 +159,19 @@ const form = useForm({
     EmployerYears: '',
     NextPayDate: '',
     FollowingPayDate: '',
+
+    ExpenseMonthlyMortgageRent: '',
+    ExpenseUtilities: '',
     ExpenseTransport: '',
     ExpenseFood: '',
     ExpenseCredit: '',
     ExpenseCouncil: '',
     ExpenseOther: '',
+
     BankCard: '',
     BankAccountNumber: '',
     BankSortCode: '',
+
     ConsentMarketing: '',
     MarketingSms: '',
     MarketingEmail: '',
@@ -122,9 +191,11 @@ const form = useForm({
             ReferrerUrl: false,
             IpAddress: false,
             UserAgent: false,
+
             LoanAmount: false,
             LoanTerm: false,
             LoanPurpose: false,
+
             Title: false,
             FirstName: false,
             LastName: false,
@@ -133,12 +204,18 @@ const form = useForm({
             HomePhone: false,
             Email: false,
             Dependants: false,
+            MaritalStatus: false,
+            RecentLoanCount: false,
+            AdultsLivingWith: false,
+
+            ResidentialStatus: false,
             HouseNameNumber: false,
             StreetAddress: false,
             County: false,
             City: false,
             Postcode: false,
             AddressYears: false,
+
             EmploymentStatus: false,
             EmployerName: false,
             JobTitle: false,
@@ -146,11 +223,15 @@ const form = useForm({
             EmployerYears: false,
             NextPayDate: false,
             FollowingPayDate: false,
+
             ExpenseTransport: false,
+            ExpenseUtilities: false,
+            ExpenseMonthlyMortgageRent: false,
             ExpenseFood: false,
             ExpenseCredit: false,
             ExpenseCouncil: false,
             ExpenseOther: false,
+
             BankCard: false,
             BankAccountNumber: false,
             BankSortCode: false,
@@ -173,9 +254,11 @@ const form = useForm({
         ReferrerUrl: '',
         IpAddress: '',
         UserAgent: '',
+
         LoanAmount: '',
         LoanTerm: '',
         LoanPurpose: '',
+
         Title: '',
         FirstName: '',
         LastName: '',
@@ -184,12 +267,18 @@ const form = useForm({
         HomePhone: '',
         Email: '',
         Dependants: '',
+        MaritalStatus: '',
+        RecentLoanCount: '',
+        AdultsLivingWith: '',
+
+        ResidentialStatus: '',
         HouseNameNumber: '',
         StreetAddress: '',
         County: '',
         City: '',
         Postcode: '',
         AddressYears: '',
+
         EmploymentStatus: '',
         EmployerName: '',
         JobTitle: '',
@@ -197,14 +286,19 @@ const form = useForm({
         EmployerYears: '',
         NextPayDate: '',
         FollowingPayDate: '',
+
         ExpenseTransport: '',
+        ExpenseUtilities: '',
+        ExpenseMonthlyMortgageRent: '',
         ExpenseFood: '',
         ExpenseCredit: '',
         ExpenseCouncil: '',
         ExpenseOther: '',
+
         BankCard: '',
         BankAccountNumber: '',
         BankSortCode: '',
+
         ConsentMarketing: '',
         MarketingSms: '',
         MarketingEmail: '',
@@ -277,38 +371,51 @@ const form = useForm({
 // };
 
 const handleNextStep = () => {
-    let hasErrors = false;
-    let errorMessages = [];
-    debugger
+
+    // debugger
+    const hasErrors = ref(false)
+    const errorMessages = ref([])
 
     if (currentStep.value === 1) {
         form.touched.LoanAmount = true;
         form.touched.LoanTerm = true;
         form.touched.LoanPurpose = true;
+        form.touched.RecentLoanCount = true;
+
+        const hasErrors = ref(false)
+        const errorMessages = ref([])
 
         // Check for errors for Step 1
         if (!form.LoanAmount) {
             form.errors.LoanAmount = 'Loan amount is required.';
-            hasErrors = true;
-            errorMessages.push('Loan amount is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Loan amount is required.');
         } else {
             form.errors.LoanAmount = ''; // Remove error if valid
         }
 
         if (!form.LoanTerm) {
             form.errors.LoanTerm = 'Loan term is required.';
-            hasErrors = true;
-            errorMessages.push('Loan term is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Loan term is required.');
         } else {
             form.errors.LoanTerm = ''; // Remove error if valid
         }
 
         if (!form.LoanPurpose) {
             form.errors.LoanPurpose = 'Loan purpose is required.';
-            hasErrors = true;
-            errorMessages.push('Loan purpose is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Loan purpose is required.');
         } else {
             form.errors.LoanPurpose = ''; // Remove error if valid
+        }
+
+        if (!form.RecentLoanCount) {
+            form.errors.RecentLoanCount = 'Recent Loan Count is required.';
+            hasErrors.value = true;
+            errorMessages.value.push('Recent Loan Count is required.');
+        } else {
+            form.errors.RecentLoanCount = ''; // Remove error if valid
         }
     }
     if (currentStep.value === 2) {
@@ -320,12 +427,17 @@ const handleNextStep = () => {
         form.touched.MobilePhone = true;
         form.touched.HomePhone = true;
         form.touched.Dependants = true;
+        form.touched.MaritalStatus = true;
+        form.touched.AdultsLivingWith = true;
+
+        const hasErrors = ref(false)
+        const errorMessages = ref([])
 
         // Validate Title
         if (!form.Title) {
             form.errors.Title = 'Title is required.';
-            hasErrors = true;
-            errorMessages.push('Title is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Title is required.');
         } else {
             form.errors.Title = ''; // Remove error if valid
         }
@@ -334,12 +446,12 @@ const handleNextStep = () => {
         const firstNamePattern = /^[A-Za-z\s]+$/;
         if (!form.FirstName) {
             form.errors.FirstName = 'First name is required.';
-            hasErrors = true;
-            errorMessages.push('First name is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('First name is required.');
         } else if (!firstNamePattern.test(form.FirstName)) {
             form.errors.FirstName = 'First name should not contain numbers or special characters.';
-            hasErrors = true;
-            errorMessages.push('First name should not contain numbers or special characters.');
+            hasErrors.value = true;
+            errorMessages.value.push('First name should not contain numbers or special characters.');
         } else {
             form.errors.FirstName = ''; // Remove error if valid
         }
@@ -348,16 +460,16 @@ const handleNextStep = () => {
         const lastNamePattern = /^[A-Za-z\s]+$/;
         if (!form.LastName) {
             form.errors.LastName = 'Last name is required.';
-            hasErrors = true;
-            errorMessages.push('Last name is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Last name is required.');
         } else if (!lastNamePattern.test(form.LastName)) {
             form.errors.LastName = 'Last name should not contain numbers or special characters.';
-            hasErrors = true;
-            errorMessages.push('Last name should not contain numbers or special characters.');
+            hasErrors.value = true;
+            errorMessages.value.push('Last name should not contain numbers or special characters.');
         } else if (form.FirstName && form.FirstName.toLowerCase() === form.LastName.toLowerCase()) {
             form.errors.LastName = 'Last name cannot be the same as first name.';
-            hasErrors = true;
-            errorMessages.push('Last name cannot be the same as first name.');
+            hasErrors.value = true;
+            errorMessages.value.push('Last name cannot be the same as first name.');
         } else {
             form.errors.LastName = ''; // Remove error if valid
         }
@@ -366,8 +478,8 @@ const handleNextStep = () => {
         const dob = form.DateOfBirth ? form.DateOfBirth.split('/') : [];
         if (dob.length !== 3 || dob.some(part => part === '')) {
             form.errors.DateOfBirth = 'Date of birth is required and must be a valid date.';
-            hasErrors = true;
-            errorMessages.push('Date of birth is required and must be a valid date.');
+            hasErrors.value = true;
+            errorMessages.value.push('Date of birth is required and must be a valid date.');
         } else {
             const [day, month, year] = dob;
             const validDay = parseInt(day);
@@ -377,8 +489,8 @@ const handleNextStep = () => {
             const date = new Date(validYear, validMonth - 1, validDay);
             if (date.getFullYear() !== validYear || date.getMonth() !== validMonth - 1 || date.getDate() !== validDay) {
                 form.errors.DateOfBirth = 'Please enter a valid date of birth.';
-                hasErrors = true;
-                errorMessages.push('Please enter a valid date of birth.');
+                hasErrors.value = true;
+                errorMessages.value.push('Please enter a valid date of birth.');
             }
 
             // Check for age validity
@@ -386,12 +498,12 @@ const handleNextStep = () => {
             const age = today.getFullYear() - validYear;
             if (age > 120) {
                 form.errors.DateOfBirth = 'Age cannot be greater than 120 years.';
-                hasErrors = true;
-                errorMessages.push('Age cannot be greater than 120 years.');
+                hasErrors.value = true;
+                errorMessages.value.push('Age cannot be greater than 120 years.');
             } else if (age < 18) {
                 form.errors.DateOfBirth = 'You must be at least 18 years old.';
-                hasErrors = true;
-                errorMessages.push('You must be at least 18 years old.');
+                hasErrors.value = true;
+                errorMessages.value.push('You must be at least 18 years old.');
             } else {
                 form.errors.DateOfBirth = ''; // Remove error if valid
             }
@@ -401,8 +513,8 @@ const handleNextStep = () => {
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         if (!form.Email || !emailPattern.test(form.Email)) {
             form.errors.Email = 'Please enter a valid email address.';
-            hasErrors = true;
-            errorMessages.push('Please enter a valid email address.');
+            hasErrors.value = true;
+            errorMessages.value.push('Please enter a valid email address.');
         } else {
             form.errors.Email = ''; // Remove error if valid
         }
@@ -411,32 +523,62 @@ const handleNextStep = () => {
         const mobilePhonePattern = /^07\d{9}$/;
         if (!form.MobilePhone || !mobilePhonePattern.test(form.MobilePhone)) {
             form.errors.MobilePhone = 'Please enter a valid mobile phone number (starts with 07 and has 11 digits).';
-            hasErrors = true;
-            errorMessages.push('Please enter a valid mobile phone number (starts with 07 and has 11 digits).');
+            hasErrors.value = true;
+            errorMessages.value.push('Please enter a valid mobile phone number (starts with 07 and has 11 digits).');
         } else {
             form.errors.MobilePhone = ''; // Remove error if valid
         }
 
         // Validate HomePhone
+
         const homePhonePattern = /^0\d{10}$/;
-        if (form.HomePhone && !homePhonePattern.test(form.HomePhone)) {
+        const phone = form.HomePhone?.trim() || '';
+
+        if (phone && phone.length === 11 && !homePhonePattern.test(phone)) {
             form.errors.HomePhone = 'Please enter a valid home phone number (starts with 0 and has exactly 11 digits).';
-            hasErrors = true;
-            errorMessages.push('Please enter a valid home phone number (starts with 0 and has exactly 11 digits).');
+            hasErrors.value = true;
+            errorMessages.value.push(form.errors.HomePhone);
+        } else if (phone.length > 0 && phone.length < 11) {
+            form.errors.HomePhone = 'Home number must be exactly 11 digits.';
+            hasErrors.value = true;
+            errorMessages.value.push(form.errors.HomePhone);
         } else {
-            form.errors.HomePhone = ''; // Remove error if valid
+            form.errors.HomePhone = ''; // Valid or empty
         }
+
 
         // Validate Dependants
         if (!form.Dependants) {
             form.errors.Dependants = 'Dependants information is required.';
-            hasErrors = true;
-            errorMessages.push('Dependants information is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Dependants information is required.');
         } else {
             form.errors.Dependants = ''; // Remove error if valid
         }
+
+        // Validate MaritalStatus
+        if (!form.MaritalStatus) {
+            form.errors.MaritalStatus = 'Marital Status information is required.';
+            hasErrors.value = true;
+            errorMessages.value.push('Marital Status information is required.');
+        } else {
+            form.errors.MaritalStatus = ''; // Remove error if valid
+        }
+
+        // Validate MaritalStatus
+        if (!form.AdultsLivingWith) {
+            form.errors.AdultsLivingWith = 'Adults Living with information is required.';
+            hasErrors.value = true;
+            errorMessages.value.push('Adults Living with information is required.');
+        } else {
+            form.errors.AdultsLivingWith = ''; // Remove error if valid
+        }
     }
     if (currentStep.value === 3) {
+
+        const hasErrors = ref(false)
+        const errorMessages = ref([])
+
         const today = new Date().setHours(0, 0, 0, 0);
         const nextPayDate = form.NextPayDate ? new Date(form.NextPayDate).setHours(0, 0, 0, 0) : null;
         const followingPayDate = form.FollowingPayDate ? new Date(form.FollowingPayDate).setHours(0, 0, 0, 0) : null;
@@ -454,8 +596,8 @@ const handleNextStep = () => {
         // Employment Status
         if (!form.EmploymentStatus) {
             form.errors.EmploymentStatus = 'Employment status is required.';
-            hasErrors = true;
-            errorMessages.push('Employment status is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Employment status is required.');
         } else {
             form.errors.EmploymentStatus = '';
         }
@@ -463,8 +605,8 @@ const handleNextStep = () => {
         // Employer Name
         if (requiresEmployerDetails && !form.EmployerName) {
             form.errors.EmployerName = 'Employer name is required.';
-            hasErrors = true;
-            errorMessages.push('Employer name is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Employer name is required.');
         } else {
             form.errors.EmployerName = '';
         }
@@ -472,8 +614,8 @@ const handleNextStep = () => {
         // Job Title
         if (requiresEmployerDetails && !form.JobTitle) {
             form.errors.JobTitle = 'Job title is required.';
-            hasErrors = true;
-            errorMessages.push('Job title is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Job title is required.');
         } else {
             form.errors.JobTitle = '';
         }
@@ -481,8 +623,8 @@ const handleNextStep = () => {
         // Employer Industry
         if (!form.EmployerIndustry) {
             form.errors.EmployerIndustry = 'Employer industry is required.';
-            hasErrors = true;
-            errorMessages.push('Employer industry is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Employer industry is required.');
         } else {
             form.errors.EmployerIndustry = '';
         }
@@ -490,8 +632,8 @@ const handleNextStep = () => {
         // Employer Years
         if (!form.EmployerYears) {
             form.errors.EmployerYears = 'Employer years is required.';
-            hasErrors = true;
-            errorMessages.push('Employer years is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Employer years is required.');
         } else {
             form.errors.EmployerYears = '';
         }
@@ -499,16 +641,16 @@ const handleNextStep = () => {
         // Next Pay Date
         if (!form.NextPayDate) {
             form.errors.NextPayDate = 'Next pay date is required.';
-            hasErrors = true;
-            errorMessages.push('Next pay date is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Next pay date is required.');
         } else if (nextPayDate < today) {
             form.errors.NextPayDate = 'Next pay date must be today or a future date.';
-            hasErrors = true;
-            errorMessages.push('Next pay date must be today or a future date.');
+            hasErrors.value = true;
+            errorMessages.value.push('Next pay date must be today or a future date.');
         } else if (nextPayDate === followingPayDate) {
             form.errors.NextPayDate = 'Next pay date cannot be the same as following pay date.';
-            hasErrors = true;
-            errorMessages.push('Next pay date cannot be the same as following pay date.');
+            hasErrors.value = true;
+            errorMessages.value.push('Next pay date cannot be the same as following pay date.');
         } else {
             form.errors.NextPayDate = '';
         }
@@ -516,16 +658,16 @@ const handleNextStep = () => {
         // Following Pay Date
         if (!form.FollowingPayDate) {
             form.errors.FollowingPayDate = 'Following pay date is required.';
-            hasErrors = true;
-            errorMessages.push('Following pay date is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Following pay date is required.');
         } else if (followingPayDate < today) {
             form.errors.FollowingPayDate = 'Following pay date must be today or a future date.';
-            hasErrors = true;
-            errorMessages.push('Following pay date must be today or a future date.');
+            hasErrors.value = true;
+            errorMessages.value.push('Following pay date must be today or a future date.');
         } else if (nextPayDate === followingPayDate) {
             form.errors.FollowingPayDate = 'Following pay date cannot be the same as next pay date.';
-            hasErrors = true;
-            errorMessages.push('Following pay date cannot be the same as next pay date.');
+            hasErrors.value = true;
+            errorMessages.value.push('Following pay date cannot be the same as next pay date.');
         } else {
             form.errors.FollowingPayDate = '';
         }
@@ -538,15 +680,15 @@ const handleNextStep = () => {
         form.touched.Postcode = true;
         form.touched.AddressYears = true;
 
-        let hasErrors = false;
-        const errorMessages = [];
+        const hasErrors = ref(false)
+        const errorMessages = ref([])
 
 
         // House Name/Number
         if (!form.HouseNameNumber) {
             form.errors.HouseNameNumber = 'House name/number is required.';
-            hasErrors = true;
-            errorMessages.push('House name/number is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('House name/number is required.');
         } else {
             form.errors.HouseNameNumber = '';
         }
@@ -554,8 +696,8 @@ const handleNextStep = () => {
         // Street Address
         if (!form.StreetAddress) {
             form.errors.StreetAddress = 'Street address is required.';
-            hasErrors = true;
-            errorMessages.push('Street address is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Street address is required.');
         } else {
             form.errors.StreetAddress = '';
         }
@@ -563,8 +705,8 @@ const handleNextStep = () => {
         // County
         if (!form.County) {
             form.errors.County = 'County is required.';
-            hasErrors = true;
-            errorMessages.push('County is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('County is required.');
         } else {
             form.errors.County = '';
         }
@@ -572,8 +714,8 @@ const handleNextStep = () => {
         // City
         if (!form.City) {
             form.errors.City = 'City is required.';
-            hasErrors = true;
-            errorMessages.push('City is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('City is required.');
         } else {
             form.errors.City = '';
         }
@@ -582,12 +724,12 @@ const handleNextStep = () => {
         const ukPostcodeRegex = /^([A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})$/i;
         if (!form.Postcode) {
             form.errors.Postcode = 'Postcode is required.';
-            hasErrors = true;
-            errorMessages.push('Postcode is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Postcode is required.');
         } else if (!ukPostcodeRegex.test(form.Postcode.trim())) {
             form.errors.Postcode = 'Enter a valid UK postcode.';
-            hasErrors = true;
-            errorMessages.push('Enter a valid UK postcode.');
+            hasErrors.value = true;
+            errorMessages.value.push('Enter a valid UK postcode.');
         } else {
             form.errors.Postcode = '';
         }
@@ -595,8 +737,8 @@ const handleNextStep = () => {
         // Address Years
         if (!form.AddressYears) {
             form.errors.AddressYears = 'Address years is required.';
-            hasErrors = true;
-            errorMessages.push('Address years is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Address years is required.');
         } else {
             form.errors.AddressYears = '';
         }
@@ -605,24 +747,27 @@ const handleNextStep = () => {
         // return !hasErrors;
     }
     if (currentStep.value === 5) {
+        form.touched.ExpenseMonthlyMortgageRent = true;
+        form.touched.ExpenseTransport = true;
+        form.touched.ExpenseFood = true;
         form.touched.ExpenseFood = true;
         form.touched.ExpenseCredit = true;
         form.touched.ExpenseCouncil = true;
         form.touched.ExpenseOther = true;
 
-        debugger
-        let hasErrors = false;
-        const errorMessages = [];
+
+        const hasErrors = ref(false)
+        const errorMessages = ref([])
 
         // Expense Food
         if (!form.ExpenseFood) {
             form.errors.ExpenseFood = 'Food expense is required.';
-            hasErrors = true;
-            errorMessages.push('Food expense is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Food expense is required.');
         } else if (isNaN(form.ExpenseFood) || form.ExpenseFood < 0) {
             form.errors.ExpenseFood = 'Food expense must be a positive number.';
-            hasErrors = true;
-            errorMessages.push('Food expense must be a positive number.');
+            hasErrors.value = true;
+            errorMessages.value.push('Food expense must be a positive number.');
         } else {
             form.errors.ExpenseFood = '';
         }
@@ -630,12 +775,12 @@ const handleNextStep = () => {
         // Expense Credit
         if (!form.ExpenseCredit) {
             form.errors.ExpenseCredit = 'Credit expense is required.';
-            hasErrors = true;
-            errorMessages.push('Credit expense is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Credit expense is required.');
         } else if (isNaN(form.ExpenseCredit) || form.ExpenseCredit < 0) {
             form.errors.ExpenseCredit = 'Credit expense must be a positive number.';
-            hasErrors = true;
-            errorMessages.push('Credit expense must be a positive number.');
+            hasErrors.value = true;
+            errorMessages.value.push('Credit expense must be a positive number.');
         } else {
             form.errors.ExpenseCredit = '';
         }
@@ -643,12 +788,12 @@ const handleNextStep = () => {
         // Expense Council
         if (!form.ExpenseCouncil) {
             form.errors.ExpenseCouncil = 'Council tax expense is required.';
-            hasErrors = true;
-            errorMessages.push('Council tax expense is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Council tax expense is required.');
         } else if (isNaN(form.ExpenseCouncil) || form.ExpenseCouncil < 0) {
             form.errors.ExpenseCouncil = 'Council tax expense must be a positive number.';
-            hasErrors = true;
-            errorMessages.push('Council tax expense must be a positive number.');
+            hasErrors.value = true;
+            errorMessages.value.push('Council tax expense must be a positive number.');
         } else {
             form.errors.ExpenseCouncil = '';
         }
@@ -656,12 +801,12 @@ const handleNextStep = () => {
         // Expense Other
         if (!form.ExpenseOther) {
             form.errors.ExpenseOther = 'Other expense is required.';
-            hasErrors = true;
-            errorMessages.push('Other expense is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Other expense is required.');
         } else if (isNaN(form.ExpenseOther) || form.ExpenseOther < 0) {
             form.errors.ExpenseOther = 'Other expense must be a positive number.';
-            hasErrors = true;
-            errorMessages.push('Other expense must be a positive number.');
+            hasErrors.value = true;
+            errorMessages.value.push('Other expense must be a positive number.');
         } else {
             form.errors.ExpenseOther = '';
         }
@@ -675,14 +820,14 @@ const handleNextStep = () => {
         form.touched.BankSortCode = true;
         form.touched.ConsentMarketing = true;
 
-        let hasErrors = false;
-        const errorMessages = [];
+        const hasErrors = ref(false)
+        const errorMessages = ref([])
 
         // Bank Card
         if (!form.BankCard) {
             form.errors.BankCard = 'Bank card is required.';
-            hasErrors = true;
-            errorMessages.push('Bank card is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Bank card is required.');
         } else {
             form.errors.BankCard = '';
         }
@@ -690,12 +835,12 @@ const handleNextStep = () => {
         // Bank Account Number
         if (!form.BankAccountNumber) {
             form.errors.BankAccountNumber = 'Bank account number is required.';
-            hasErrors = true;
-            errorMessages.push('Bank account number is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Bank account number is required.');
         } else if (isNaN(form.BankAccountNumber) || form.BankAccountNumber.length < 8) {
             form.errors.BankAccountNumber = 'Account number must be a valid 8-digit number.';
-            hasErrors = true;
-            errorMessages.push('Account number must be a valid 8-digit number.');
+            hasErrors.value = true;
+            errorMessages.value.push('Account number must be a valid 8-digit number.');
         } else {
             form.errors.BankAccountNumber = '';
         }
@@ -704,12 +849,12 @@ const handleNextStep = () => {
         const sortCodeRegex = /^[0-9]{6}$/; // UK sort code format (6 digits)
         if (!form.BankSortCode) {
             form.errors.BankSortCode = 'Bank sort code is required.';
-            hasErrors = true;
-            errorMessages.push('Bank sort code is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Bank sort code is required.');
         } else if (!sortCodeRegex.test(form.BankSortCode)) {
             form.errors.BankSortCode = 'Sort code must be a valid 6-digit number.';
-            hasErrors = true;
-            errorMessages.push('Sort code must be a valid 6-digit number.');
+            hasErrors.value = true;
+            errorMessages.value.push('Sort code must be a valid 6-digit number.');
         } else {
             form.errors.BankSortCode = '';
         }
@@ -717,8 +862,8 @@ const handleNextStep = () => {
         // Consent to Marketing
         if (form.ConsentMarketing === null) {
             form.errors.ConsentMarketing = 'Consent to marketing is required.';
-            hasErrors = true;
-            errorMessages.push('Consent to marketing is required.');
+            hasErrors.value = true;
+            errorMessages.value.push('Consent to marketing is required.');
         } else {
             form.errors.ConsentMarketing = '';
         }
@@ -729,7 +874,8 @@ const handleNextStep = () => {
 
     // If there are any errors, show an alert
     if (hasErrors) {
-        alert('Please fix the following errors:\n\n' + errorMessages.join('\n'));
+        // hasErrors.value = errorMessages.value;
+        // alert('Please fix the following errors:\n\n' + errorMessages.value.join('\n'));
     } else {
         // If the step is valid, proceed to the next step
         nextStep();
@@ -776,6 +922,12 @@ const isStep1Valid = computed(() => {
     // Validate LoanPurpose
     if (!form.LoanPurpose && form.touched.LoanPurpose) {
         form.errors.LoanPurpose = 'Loan purpose is required.';
+        valid = false;
+    }
+
+    // Validate RecentLoanCount
+    if (!form.RecentLoanCount && form.touched.RecentLoanCount) {
+        form.errors.RecentLoanCount = 'Recent Loan Count is required.';
         valid = false;
     }
 
@@ -862,6 +1014,22 @@ const isStep2Valid = computed(() => {
         form.errors.Dependants = ''; // Clear error if valid
     }
 
+    // Validate MaritalStatus
+    if (form.touched.MaritalStatus && !form.MaritalStatus) {
+        form.errors.MaritalStatus = 'Marital Status information is required.';
+        valid = false;
+    } else {
+        form.errors.MaritalStatus = ''; // Clear error if valid
+    }
+
+    // Validate AdultsLivingWith
+    if (form.touched.AdultsLivingWith && !form.AdultsLivingWith) {
+        form.errors.AdultsLivingWith = 'Adults Living with information is required.';
+        valid = false;
+    } else {
+        form.errors.AdultsLivingWith = ''; // Clear error if valid
+    }
+
     return valid;
 });
 const isStep3Valid = computed(() => {
@@ -945,7 +1113,7 @@ const isStep3Valid = computed(() => {
 const isStep4Valid = computed(() => {
     let valid = true;
 
-    debugger
+    // debugger
     // House Name/Number
     if (form.touched.HouseNameNumber && !form.HouseNameNumber) {
         form.errors.HouseNameNumber = 'House name/number is required.';
@@ -1003,6 +1171,28 @@ const isStep4Valid = computed(() => {
 const isStep5Valid = computed(() => {
     let valid = true;
 
+    // Monthly Mortgage Rent
+    if (form.touched.ExpenseMonthlyMortgageRent && !form.ExpenseMonthlyMortgageRent) {
+        form.errors.ExpenseMonthlyMortgageRent = 'Monthly Mortgage Rent expense is required.';
+        valid = false;
+    } else if (form.ExpenseMonthlyMortgageRent && (isNaN(form.ExpenseMonthlyMortgageRent) || form.ExpenseMonthlyMortgageRent < 0)) {
+        form.errors.ExpenseMonthlyMortgageRent = 'Monthly Mortgage Rent expense must be a positive number.';
+        valid = false;
+    } else {
+        form.errors.ExpenseMonthlyMortgageRent = '';
+    }
+
+    // Transport
+    if (form.touched.ExpenseTransport && !form.ExpenseTransport) {
+        form.errors.ExpenseTransport = 'Transport expense is required.';
+        valid = false;
+    } else if (form.ExpenseTransport && (isNaN(form.ExpenseTransport) || form.ExpenseTransport < 0)) {
+        form.errors.ExpenseTransport = 'Transport expense must be a positive number.';
+        valid = false;
+    } else {
+        form.errors.ExpenseTransport = '';
+    }
+
     // Expense Food
     if (form.touched.ExpenseFood && !form.ExpenseFood) {
         form.errors.ExpenseFood = 'Food expense is required.';
@@ -1034,6 +1224,17 @@ const isStep5Valid = computed(() => {
         valid = false;
     } else {
         form.errors.ExpenseCouncil = '';
+    }
+
+    // Monthly Utilities
+    if (form.touched.ExpenseUtilities && !form.ExpenseUtilities) {
+        form.errors.ExpenseUtilities = 'Monthly Mortgage Rent expense is required.';
+        valid = false;
+    } else if (form.ExpenseUtilities && (isNaN(form.ExpenseUtilities) || form.ExpenseUtilities < 0)) {
+        form.errors.ExpenseUtilities = 'Monthly Mortgage Rent expense must be a positive number.';
+        valid = false;
+    } else {
+        form.errors.ExpenseUtilities = '';
     }
 
     // Expense Other
@@ -1118,6 +1319,13 @@ const validateLoanPurpose = () => {
         form.errors.LoanPurpose = ''; // Clear error if valid
     }
 };
+const validateRecentLoanCount = () => {
+    if (!form.RecentLoanCount) {
+        form.errors.RecentLoanCount = 'Recent Loan count is required.'; // Set error message if invalid
+    } else {
+        form.errors.RecentLoanCount = ''; // Clear error if valid
+    }
+};
 const validateTitle = () => {
     if (!form.Title) {
         form.errors.Title = 'Title is required.';
@@ -1172,6 +1380,20 @@ const validateDependants = () => {
         form.errors.Dependants = 'Dependants are required.';
     } else {
         form.errors.Dependants = ''; // Clear error if valid
+    }
+};
+const validateMaritalStatus = () => {
+    if (!form.MaritalStatus) {
+        form.errors.MaritalStatus = 'Marital Status are required.';
+    } else {
+        form.errors.MaritalStatus = ''; // Clear error if valid
+    }
+};
+const validateAdultsLivingWith = () => {
+    if (!form.AdultsLivingWith) {
+        form.errors.AdultsLivingWith = 'Adults Living With are required.';
+    } else {
+        form.errors.AdultsLivingWith = ''; // Clear error if valid
     }
 };
 const validateEmploymentStatus = () => {
@@ -1239,6 +1461,13 @@ const validateFollowingPayDate = () => {
         form.errors.FollowingPayDate = '';
     }
 };
+const validateResidentialStatus = () => {
+    if (!form.ResidentialStatus) {
+        form.errors.ResidentialStatus = 'Residential Status are required.';
+    } else {
+        form.errors.ResidentialStatus = ''; // Clear error if valid
+    }
+};
 const validateHouseNameNumber = () => {
     if (!form.HouseNameNumber) {
         form.errors.HouseNameNumber = 'House name or number is required.';
@@ -1283,6 +1512,33 @@ const validateAddressYears = () => {
         form.errors.AddressYears = 'Address years is required.';
     } else {
         form.errors.AddressYears = '';
+    }
+};
+const validateExpenseMonthlyMortgageRent = () => {
+    if (!form.ExpenseMonthlyMortgageRent) {
+        form.errors.ExpenseMonthlyMortgageRent = 'Monthly Mortgage / Rent expense is required.';
+    } else if (isNaN(form.ExpenseMonthlyMortgageRent) || form.ExpenseMonthlyMortgageRent < 0) {
+        form.errors.ExpenseMonthlyMortgageRent = 'Monthly Mortgage / Rent expense must be a positive number.';
+    } else {
+        form.errors.ExpenseMonthlyMortgageRent = '';
+    }
+};
+const validateExpenseUtilities = () => {
+    if (!form.ExpenseUtilities) {
+        form.errors.ExpenseUtilities = 'Utilities is required.';
+    } else if (isNaN(form.ExpenseUtilities) || form.ExpenseUtilities < 0) {
+        form.errors.ExpenseUtilities = 'Utilities must be a positive number.';
+    } else {
+        form.errors.ExpenseUtilities = '';
+    }
+};
+const validateExpenseTransport = () => {
+    if (!form.ExpenseTransport) {
+        form.errors.ExpenseTransport = 'Transport expense is required.';
+    } else if (isNaN(form.ExpenseTransport) || form.ExpenseTransport < 0) {
+        form.errors.ExpenseTransport = 'Transport expense must be a positive number.';
+    } else {
+        form.errors.ExpenseTransport = '';
     }
 };
 const validateExpenseFood = () => {
@@ -1358,71 +1614,93 @@ const validateConsentMarketing = () => {
 };
 
 
+const showLoanInfo = ref(false)
 const isSubmitting = ref(false);
 const isFinished = ref(false);
 const isAccepted = ref(false);
 const isRejected = ref(false);
-const isError = ref(false);
 const applicationId = ref(null);
 const applicationStatus = ref(null);
 const pollInterval = ref(null);
 const progressText = ref('Submitting your application...'); // Dynamic text during submission
 
 
+const submitApplication = async (event) => {
+    event.preventDefault(); // Prevent the default form submission
 
-// const submitApplication = async (event) => {
-//     event.preventDefault(); // Always prevent default form submit behavior
-//     form.touched.BankCard = true;
-//     form.touched.BankAccountNumber = true;
-//     form.touched.BankSortCode = true;
-//     form.touched.ConsentMarketing = true;
-//
-//     if (currentStep.value === 1) {
-//         console.log(form)
-//         console.log(isStep6Valid.value)
-//         debugger
-//         if (!isStep6Valid.value) {
-//             alert('Please fix the errors in Step 6 before submitting.');
-//             return;
-//         }
-//     }
-//
-//     // Show the spinner and progress text
-//     isSubmitting.value = true;
-//     isFinished.value = false;
-//     isAccepted.value = false;
-//     isRejected.value = false;
-//     progressText.value = 'Validating your details...';
-//
-//     try {
-//         // Submit the form using axios
-//         const response = await axios.post('/api/submit', form);
-//
-//         if (response.status === 201) {
-//             applicationId.value = response.data.applicationId;
-//
-//             // Start polling the status
-//             progressText.value = 'Checking application status...';
-//             pollStatus(applicationId.value);
-//         }
-//     } catch (error) {
-//         console.error('Error submitting application:', error);
-//         isSubmitting.value = false;
-//         progressText.value = 'Submission failed. Please try again.';
-//     }
-// };
+    // Validate each step first
+    if (!isStep1Valid.value) {
+        goToStep(1);
+        return; // Exit if Step 1 is not valid
+    } else if (!isStep2Valid.value) {
+        goToStep(2);
+        return; // Exit if Step 2 is not valid
+    } else if (!isStep3Valid.value) {
+        goToStep(3);
+        return; // Exit if Step 3 is not valid
+    } else if (!isStep4Valid.value) {
+        goToStep(4);
+        return; // Exit if Step 4 is not valid
+    } else if (!isStep5Valid.value) {
+        goToStep(5);
+        return; // Exit if Step 5 is not valid
+    } else if (!isStep6Valid.value) {
+        goToStep(6);
+        return; // Exit if Step 6 is not valid
+    }
+
+    // If all steps are valid, proceed with submission
+    form.touched.BankCard = true;
+    form.touched.BankAccountNumber = true;
+    form.touched.BankSortCode = true;
+    form.touched.ConsentMarketing = true;
+
+
+
+    // Submit the form on Step 6
+    if (currentStep.value === 6) {
+        console.log(form);
+        if (!isStep6Valid.value) {
+            hasErrors.value = true;
+            return; // Stop if Step 6 has validation errors
+        } else {
+            // Show the spinner and progress text
+            isSubmitting.value = true;
+            isFinished.value = false;
+            isAccepted.value = false;
+            isRejected.value = false;
+            progressText.value = 'Validating your details...';
+
+            try {
+                // Submit the form using axios
+                const response = await axios.post('/api/submit', form);
+                if (response.status === 201) {
+                    applicationId.value = response.data.applicationId;
+                    progressText.value = 'Checking application status...';
+                    pollStatus(applicationId.value);
+                }
+            } catch (error) {
+                console.error('Error submitting application:', error);
+                isSubmitting.value = false;
+                progressText.value = 'Submission failed. Please try again.';
+            }
+        }
+    }
+};
+
+
 
 const pollStatus = (applicationId) => {
     pollInterval.value = setInterval(async () => {
         try {
             const response = await axios.get(`/api/status/${applicationId}`);
 
-            debugger
+            // debugger
 
             if (response.status === 200) {
                 const status = response.data.Status;
                 applicationStatus.value = status;
-                debugger
+                // debugger
 
                 if (status === 'accepted') {
                     clearInterval(pollInterval.value);
@@ -1472,18 +1750,19 @@ const stopPolling = () => {
 
 <template>
     <div class="max-w-xl mx-auto py-10 bg-transparent">
-        <form @submit.prevent="submitApplication" v-if="!isSubmitting" id="iframe" class="space-y-4 ">
+
+        <form @submit.prevent="submitApplication" v-if="!isSubmitting" id="iframe" class=" w-full ">
             <!-- Progress Bar -->
             <div class="mb-6">
                 <div class="relative pt-1">
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-sm font-semibold text-teal-400">Step {{ currentStep }} / 6</span>
+                        <span class="text-sm font-semibold text-neutral-800">Step {{ currentStep }} / 6</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <div
                             v-for="step in 6"
                             :key="step"
-                            @click="updateStep(step)"
+                            @click="goToStep(step)"
                             class="relative flex-1 cursor-pointer group"
                         >
                             <!-- Circle -->
@@ -1508,9 +1787,18 @@ const stopPolling = () => {
                 </div>
             </div>
 
-            <div v-if="hasErrors" class="fixed top-0 left-0 right-0 bg-red-500 text-white p-4 text-center z-50">
-                <div class="max-w-2xl mx-auto">
-                    <strong class="text-lg">Please fix the following errors:</strong>
+            <div v-if="hasErrors" class="fixed top-0 left-0 right-0 flex justify-center z-50">
+                <div class="bg-red-500 text-white p-4 w-full max-w-2xl text-center relative rounded shadow">
+                    <!-- Dismiss Button -->
+                    <button
+                        @click="hasErrors = false"
+                        class="absolute top-2 right-2 text-white hover:text-gray-200 text-lg font-bold"
+                        aria-label="Close"
+                    >
+                        &times;
+                    </button>
+
+                    <strong class="text-lg block">Please fix the following errors:</strong>
                     <ul class="mt-2">
                         <li v-for="(error, index) in errorMessages" :key="index" class="text-sm mt-1">
                             - {{ error }}
@@ -1519,10 +1807,33 @@ const stopPolling = () => {
                 </div>
             </div>
 
+            <div
+                v-if="showLoanInfo"
+                class="fixed top-16 left-0 right-0 flex justify-center z-40"
+            >
+                <div class="bg-blue-100 text-blue-900 p-4 w-full max-w-2xl text-center relative rounded shadow">
+                    <!-- Dismiss Button -->
+                    <button
+                        @click="showLoanInfo = false"
+                        class="absolute top-2 right-2 text-blue-700 hover:text-blue-900 text-lg font-bold"
+                        aria-label="Close"
+                    >
+                        &times;
+                    </button>
+
+                    <strong class="text-lg block mb-1">Heads up!</strong>
+                    <p class="text-sm">
+                        This is an informational message for the user. You can include any helpful content here.
+                    </p>
+                </div>
+            </div>
+
+
 
 
             <!-- Step 1: Loan Information -->
             <div v-if="currentStep === 1">
+
                 <LoanAmount
                     v-model="form.LoanAmount"
                     :error="form.errors.LoanAmount"
@@ -1544,6 +1855,23 @@ const stopPolling = () => {
                     @change="validateLoanPurpose"
                     :class="{'border-red-400  bg-red-100': form.errors.LoanPurpose}"
                 />
+
+                <RecentLoanCount
+                    v-model="form.RecentLoanCount"
+                    :error="form.errors.RecentLoanCount"
+                    @blur="form.touched.RecentLoanCount = true"
+                    @change="validateRecentLoanCount"
+                    :class="{'border-red-400  bg-red-100': form.errors.RecentLoanCount}"
+                />
+                <!-- Floating Info Icon -->
+<!--                <button-->
+<!--                    v-if="!showLoanInfo"-->
+<!--                    @click="showLoanInfo = true"-->
+<!--                    class="fixed  bg-white  text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 transition"-->
+<!--                    title="Show Info"-->
+<!--                >-->
+<!--                    ℹ️-->
+<!--                </button>-->
             </div>
 
             <!-- Step 2: Personal Details -->
@@ -1613,8 +1941,22 @@ const stopPolling = () => {
                     @blur="validateDependants"
                     @change="validateDependants"
                 />
-            </div>
+                <MaritalStatus
+                    v-model="form.MaritalStatus"
+                    :error="form.errors.MaritalStatus"
+                    :class="{'border-red-500 bg-red-100': form.errors.MaritalStatus}"
+                    @blur="validateMaritalStatus"
+                    @change="validateMaritalStatus"
+                />
 
+                <AdultsLivingWith
+                    v-model="form.AdultsLivingWith"
+                    :error="form.errors.AdultsLivingWith"
+                    :class="{'border-red-500 bg-red-100': form.errors.AdultsLivingWith}"
+                    @blur="validateAdultsLivingWith"
+                    @change="validateAdultsLivingWith"
+                />
+            </div>
 
             <!-- Step 3: Employer Details -->
             <div v-if="currentStep === 3">
@@ -1687,10 +2029,17 @@ const stopPolling = () => {
                 />
             </div>
 
-
             <!-- Step 4: Address Details -->
             <div v-if="currentStep === 4">
                 <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Address</h2>
+
+                <ResidentialStatus
+                    v-model="form.ResidentialStatus"
+                    :error="form.errors.ResidentialStatus"
+                    :class="{ 'border-red-500 bg-red-100': form.errors.ResidentialStatus }"
+                    @input="validateResidentialStatus"
+                    @blur="validateResidentialStatus"
+                />
 
                 <HouseNameNumber
                     v-model="form.HouseNameNumber"
@@ -1741,30 +2090,36 @@ const stopPolling = () => {
                 />
             </div>
 
-
             <!-- Step 5: Monthly Expenses -->
             <div v-if="currentStep === 5">
                 <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Monthly Expenses</h2>
 
-<!--                <MortgageRentExpense-->
-<!--                    v-model="form.MortgageRentExpense"-->
-<!--                    :error="form.errors.MortgageRentExpense"-->
-<!--                    @input="validateMortgageRentExpense"-->
-<!--                    @blur="validateMortgageRentExpense"-->
-<!--                    :class="{'border-red-500 bg-red-100': form.errors.MortgageRentExpense}"-->
-<!--                />-->
-<!--                <Transport-->
-<!--                    v-model="form.ExpenseTransport"-->
-<!--                    :error="form.errors.ExpenseTransport"-->
-<!--&lt;!&ndash;                    @input="validateExpenseTransport"&ndash;&gt;-->
-<!--&lt;!&ndash;                    @blur="validateExpenseTransport"&ndash;&gt;-->
-<!--                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseTransport}"-->
-<!--                />-->
+                <MonthlyMortgageRent
+                    v-model="form.ExpenseMonthlyMortgageRent"
+                    :error="form.errors.ExpenseMonthlyMortgageRent"
+                    @change="validateExpenseMonthlyMortgageRent"
+                    @blur="validateExpenseMonthlyMortgageRent"
+                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseMonthlyMortgageRent}"
+                />
+                <Transport
+                    v-model="form.ExpenseTransport"
+                    :error="form.errors.ExpenseTransport"
+                    @change="validateExpenseTransport"
+                    @blur="validateExpenseTransport"
+                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseTransport}"
+                />
+                <Utilities
+                    v-model="form.ExpenseUtilities"
+                    :error="form.errors.ExpenseUtilities"
+                    @change="validateExpenseUtilities"
+                    @blur="validateExpenseUtilities"
+                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseUtilities}"
+                />
                 <!-- Food -->
                 <Food
                     v-model="form.ExpenseFood"
                     :error="form.errors.ExpenseFood"
-                    @input="validateExpenseFood"
+                    @change="validateExpenseFood"
                     @blur="validateExpenseFood"
                     :class="{'border-red-500 bg-red-100': form.errors.ExpenseFood}"
                 />
@@ -1773,7 +2128,7 @@ const stopPolling = () => {
                 <Credit
                     v-model="form.ExpenseCredit"
                     :error="form.errors.ExpenseCredit"
-                    @input="validateExpenseCredit"
+                    @change="validateExpenseCredit"
                     @blur="validateExpenseCredit"
                     :class="{'border-red-500 bg-red-100': form.errors.ExpenseCredit}"
                 />
@@ -1782,7 +2137,7 @@ const stopPolling = () => {
                 <Council
                     v-model="form.ExpenseCouncil"
                     :error="form.errors.ExpenseCouncil"
-                    @input="validateExpenseCouncil"
+                    @change="validateExpenseCouncil"
                     @blur="validateExpenseCouncil"
                     :class="{'border-red-500 bg-red-100': form.errors.ExpenseCouncil}"
                 />
@@ -1791,15 +2146,16 @@ const stopPolling = () => {
                 <Other
                     v-model="form.ExpenseOther"
                     :error="form.errors.ExpenseOther"
-                    @input="validateExpenseOther"
+                    @change="validateExpenseOther"
                     @blur="validateExpenseOther"
                     :class="{'border-red-500 bg-red-100': form.errors.ExpenseOther}"
                 />
             </div>
 
-
             <!-- Step 6: Additional Information -->
             <div v-if="currentStep === 6">
+
+
                 <h3 class="text-3xl font-bold text-neutral-800 mb-6 text-center">Last bit...</h3>
                 <p class="text-lg font-bold text-neutral-800 border-2 border-cyan-500 rounded-xl px-5 py-3 mb-6 shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-center mx-auto">
                     We need these details to deposit the funds and verify your application

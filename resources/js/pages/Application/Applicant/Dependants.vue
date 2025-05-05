@@ -5,7 +5,7 @@
             <label
                 v-for="option in options"
                 :key="option.value"
-                class="flex items-center bg-[#ffff] justify-center px-5 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300 w-full"
+                class="flex items-center justify-center text-center text-xs font-medium  h-14 w-full px-2 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300"
                 :class="model === option.value
                     ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white border-transparent shadow-lg'
                     : 'bg-[#fffff] border-cyan-500 text-black hover:bg-cyan-600 hover:text-white hover:border-purple-400'"
