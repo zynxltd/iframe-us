@@ -44,7 +44,8 @@ class LoanApplication extends Model
         'BankAccountNumber',
         'BankSortCode',
         'ConsentMarketing',
-        'status', // Assuming a 'status' column to store the application status
+        'Status', // Assuming a 'status' column to store the application status
+        'ApplicationID'
     ];
 
     // Optional: If you want to manipulate status before saving, you can do that here

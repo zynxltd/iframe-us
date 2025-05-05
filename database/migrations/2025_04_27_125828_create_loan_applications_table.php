@@ -46,7 +46,8 @@ return new class extends Migration
             $table->string('BankAccountNumber');
             $table->string('BankSortCode');
             $table->boolean('ConsentMarketing');
-            $table->string('status')->default('pending'); // Adding status column to track application status
+            $table->string('Status')->default('pending'); // Adding status column to track application status
+            $table->string('ApplicationID');
             $table->timestamps();
         });
     }

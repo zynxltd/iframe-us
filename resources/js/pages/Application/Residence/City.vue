@@ -1,6 +1,6 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">City</label>
+        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">City</label>
         <select
             v-model="model"
             class="w-full rounded-xl border-2 border-cyan-500 bg-[#fff] p-3 text-black placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-purple-500 transition-all duration-300"

@@ -19,41 +19,54 @@ class LoanApplicationController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->);
         // Validate incoming request
         $validated = $request->validate([
-            'LoanAmount' => 'required|numeric',
-            'LoanTerm' => 'required|numeric',
-            'LoanPurpose' => 'required|string',
-            'Title' => 'required|string',
-            'FirstName' => 'required|string',
-            'LastName' => 'required|string',
-            'DateOfBirth' => 'required|date',
-            'MobilePhone' => 'required|string',
-            'HomePhone' => 'nullable|string',
-            'Email' => 'required|email',
-            'Dependants' => 'required|numeric',
-            'EmploymentStatus' => 'required|string',
-            'EmployerName' => 'required|string',
-            'JobTitle' => 'required|string',
-            'EmployerIndustry' => 'required|string',
-            'EmployerYears' => 'required|numeric',
-            'NextPayDate' => 'required|date',
-            'FollowingPayDate' => 'required|date',
-            'HouseNameNumber' => 'required|string',
-            'StreetAddress' => 'required|string',
-            'County' => 'required|string',
-            'City' => 'required|string',
-            'Postcode' => 'required|string',
-            'AddressYears' => 'required|numeric',
-            'ExpenseTransport' => 'required|numeric',
-            'ExpenseFood' => 'required|numeric',
-            'ExpenseCredit' => 'required|numeric',
-            'ExpenseCouncil' => 'required|numeric',
-            'ExpenseOther' => 'required|numeric',
-            'BankCard' => 'required|string',
-            'BankAccountNumber' => 'required|string',
-            'BankSortCode' => 'required|string',
-            'ConsentMarketing' => 'required|boolean',
+            'Loan.LoanAmount' => 'required|numeric',
+            'Loan.LoanTerm' => 'required|numeric',
+            'Loan.LoanPurpose' => 'required|numeric',
+
+            'Applicant.Title' => 'required|numeric',
+            'Applicant.FirstName' => 'required|string',
+            'Applicant.LastName' => 'required|string',
+            'Applicant.DateOfBirth' => 'required|string',
+            'Applicant.MobilePhone' => 'required|string',
+            'Applicant.HomePhone' => 'nullable|string',
+            'Applicant.Email' => 'required|email',
+            'Applicant.Dependants' => 'required|numeric',
+
+            'Employer.EmploymentStatus' => 'required|numeric',
+            'Employer.EmployerName' => 'required|string',
+            'Employer.JobTitle' => 'required|string',
+            'Employer.NetMonthlyIncome' => 'required|numeric',
+            'Employer.EmployerIndustry' => 'required|numeric',
+            'Employer.EmployerYears' => 'required|numeric',
+            'Employer.NextPayDate' => 'required|date',
+            'Employer.FollowingPayDate' => 'required|date',
+            'Employer.IncomeFrequency' => 'required|numeric',
+
+            'Residence.HouseNameNumber' => 'required|string',
+            'Residence.StreetAddress' => 'required|string',
+            'Residence.County' => 'required|string',
+            'Residence.City' => 'required|string',
+            'Residence.Postcode' => 'required|string',
+            'Residence.AddressYears' => 'required|numeric',
+            'Residence.ResidentialStatus' => 'required|numeric',
+
+            'Expense.MortgageRentExpense' => 'required|numeric',
+            'Expense.ExpenseTransport' => 'required|numeric',
+            'Expense.UtilitiesExpense' => 'required|numeric',
+            'Expense.ExpenseFood' => 'required|numeric',
+            'Expense.ExpenseCredit' => 'required|numeric',
+            'Expense.ExpenseCouncil' => 'required|numeric',
+            'Expense.ExpenseOther' => 'required|numeric',
+
+            'Bank.BankCard' => 'required|numeric',
+            'Bank.BankAccountNumber' => 'required|string',
+            'Bank.BankSortCode' => 'required|string',
+            'Consent.MarketingSms' => 'boolean',
+            'Consent.MarketingEmail' => 'boolean',
+            'Consent.MarketingPhone' => 'boolean',
         ]);
 
         // Save the loan application
@@ -61,29 +74,103 @@ class LoanApplicationController extends Controller
 
         // Prepare data to send to the portal
         $portalData = [
-            'LoanAmount' => $validated['LoanAmount'],
-            'LoanTerm' => $validated['LoanTerm'],
-            'LoanPurpose' => $validated['LoanPurpose'],
-            'Title' => $validated['Title'],
-            'FirstName' => $validated['FirstName'],
-            'LastName' => $validated['LastName'],
-            'DateOfBirth' => $validated['DateOfBirth'],
-            'MobilePhone' => $validated['MobilePhone'],
-            'HomePhone' => $validated['HomePhone'],
-            'Email' => $validated['Email'],
-            // Add any other fields you want to send to the portal
+            'MinCommission' => null,
+            'MaxCommission' => null,
+
+            'Source' => [
+                'VendorID' => 'TESTER1',
+                'OfferID' => 2,
+                'Campaign' => 'SpringPromo',
+                'AffSub' => $validated['AffSub'] ?? 'sub1',
+                'AffSub2' => $validated['AffSub2'] ?? 'sub2',
+                'AffSub3' => $validated['AffSub3'] ?? 'sub3',
+                'AffSub4' => $validated['AffSub4'] ?? 'sub4',
+                'AffSub5' => $validated['AffSub5'] ?? 'sub5',
+                'CreationUrl' => $validated['CreationUrl'] ?? request()->fullUrl(),
+                'ReferrerUrl' => $validated['ReferrerUrl'] ?? request()->headers->get('referer'),
+                'IpAddress' => $validated['IpAddress'] ?? request()->ip(),
+                'UserAgent' => $validated['UserAgent'] ?? request()->userAgent(),
+            ],
+
+            'Loan' => [
+                'LoanAmount' => $validated['LoanAmount'],
+                'LoanTerms' => $validated['LoanTerm'],
+                'LoanPurpose' => $validated['LoanPurpose'],
+            ],
+
+            'Applicant' => [
+                'Title' => $validated['Title'],
+                'FirstName' => $validated['FirstName'],
+                'LastName' => $validated['LastName'],
+                'Email' => $validated['Email'],
+                'MobilePhone' => $validated['MobilePhone'],
+                'HomePhone' => $validated['HomePhone'],
+                'WorkPhone' => $validated['WorkPhone'] ?? null,
+                'DateOfBirth' => $validated['DateOfBirth'],
+                'MaritalStatus' => $validated['MaritalStatus'] ?? 1,
+                'Dependants' => $validated['Dependants'] ?? null,
+                'RecentLoanCount' =>  1,
+                'AdultsLivingWith' =>  1,
+            ],
+
+            'Residence' => [
+                'ResidentialStatus' => $validated['ResidentialStatus'],
+                'AddressNameOrNumber' => $validated['HouseNameNumber'],
+                'AddressStreet' => $validated['StreetAddress'],
+                'AddressCounty' => $validated['County'],
+                'AddressTown' => $validated['City'],
+                'AddressPostcode' => $validated['Postcode'],
+                'AddressYears' => $validated['AddressYears'],
+            ],
+
+            'Employment' => [
+                'EmploymentStatus' => $validated['EmploymentStatus'],
+                'IncomeFrequency' => $validated['IncomeFrequency'],
+                'JobTitle' => $validated['JobTitle'],
+                'EmployerName' => $validated['EmployerName'],
+                'EmploymentIndustry' => $validated['EmployerIndustry'],
+//                'WorkPhone' => $validated['WorkPhone'],
+                'NextPayDate' => $validated['NextPayDate'],
+                'FollowingPayDate' => $validated['FollowingPayDate'],
+                'NetMonthlyIncome' => $validated['NetMonthlyIncome'],
+                'YearsAtEmployer' => $validated['EmployerYears'],
+            ],
+
+            'Expense' => [
+                'MortgageRentExpense' => $validated['MortgageRentExpense'],
+                'TaxExpense' => $validated['ExpenseCouncil'],
+                'FoodExpense' => $validated['ExpenseFood'],
+                'TransportExpense' => $validated['ExpenseTransport'],
+                'LoanExpense' => $validated['ExpenseCredit'],
+                'UtilitiesExpense' => $validated['UtilitiesExpense'],
+                'OtherExpense' => $validated['ExpenseOther'],
+            ],
+
+            'Bank' => [
+                'BankDirectDeposit' => $validated['BankDirectDeposit'] ?? 1,
+                'BankCardType' => $validated['BankCard'],
+                'BankSortCode' => $validated['BankSortCode'],
+                'BankAccountNumber' => $validated['BankAccountNumber'],
+                'BankYears' => $validated['BankYears'] ?? 1,
+            ],
+
+            'Consent' => [
+                'MarketingSms' => $validated['ConsentMarketing'],
+                'MarketingPhone' => $validated['ConsentMarketing'],
+                'MarketingEmail' => $validated['ConsentMarketing'],
+            ]
         ];
 
         try {
             // Send POST request to external portal (replace with actual endpoint)
-            $response = Http::post('http://portal.test/api/loan-application', $portalData);
+            $response = Http::post('https://portal.test/api/submit', $portalData);
 
             // Check if the request was successful
             if ($response->successful()) {
                 // Return the response from the portal along with the application ID
                 return response()->json([
-                    'status' => 'success',
-                    'applicationId' => $loanApplication->id,
+                    'status' => $response->json(['Status']),
+                    'applicationId' => $response->json(['LeadID']),
                     'portalResponse' => $response->json(), // The response from the portal
                 ], 201);
             } else {
@@ -110,7 +197,7 @@ class LoanApplicationController extends Controller
      * @param int $applicationId
      * @return JsonResponse
      */
-    public function status(int $applicationId)
+    public function status(string $applicationId)
     {
         // Initialize a timeout value in seconds
         $timeout = 10;  // Timeout after 10 seconds
@@ -121,18 +208,18 @@ class LoanApplicationController extends Controller
         while ($elapsedTime < $timeout) {
             try {
                 // Send GET request to check the status of the loan application from the portal
-                $response = Http::get("http://portal.test/api/loan-application/status/{$applicationId}");
+                $response = Http::get("https://portal.test/api/app/status/{$applicationId}");
 
                 // If the response is successful
                 if ($response->successful()) {
                     // Assuming the portal returns the application status in a field called 'applicationStatus'
-                    $applicationStatus = $response->json()['applicationStatus'] ?? null;
+                    $applicationStatus = $response->json(['Status']) ?? null;
 
                     // If the status is not 'pending', return the status
-                    if ($applicationStatus && $applicationStatus !== 'pending') {
+                    if ($applicationStatus && $applicationStatus !== 'processing') {
                         return response()->json([
-                            'status' => 'success',
-                            'applicationStatus' => $applicationStatus,
+                            'Status' => $response['Status'],
+                            'RedirectURL' => $response['RedirectURL'] ?? '',
                         ]);
                     }
                 }

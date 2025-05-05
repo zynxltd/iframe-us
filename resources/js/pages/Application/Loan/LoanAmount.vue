@@ -1,6 +1,6 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">
+        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">
             Loan Amount
             <!-- Tooltip Icon -->
 <!--            <span class="relative inline-block cursor-pointer" @mouseenter="showTooltip" @mouseleave="hideTooltip">-->

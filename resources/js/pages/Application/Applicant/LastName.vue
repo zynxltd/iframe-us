@@ -1,10 +1,10 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Last Name</label>
+        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">Last Name</label>
         <input
             v-model="model"
             type="text"
-            class="w-full px-5 py-3 rounded-xl bg-[#fffff] border-2 border-cyan-500 text-black placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
+            class="w-full px-5 py-3 rounded-xl bg-[#ffff] border-2 border-cyan-500 text-black placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300"
             placeholder="Enter your last name"
         />
         <div v-if="error" class="text-pink-500 text-sm mt-2">{{ error }}</div>

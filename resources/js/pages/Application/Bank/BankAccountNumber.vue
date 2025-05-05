@@ -1,16 +1,8 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Bank Account Number
+        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">Bank Account Number
             <!-- Tooltip Icon -->
-            <span class="relative inline-block cursor-pointer" @mouseenter="showTooltip" @mouseleave="hideTooltip">
-                <span class="absolute -top-2 -right-2 bg-gray-300 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                    ?
-                </span>
-                <!-- Tooltip Content -->
-                <div class="tooltip absolute bg-black text-white text-xs rounded py-1 px-2 bottom-full mb-2 w-max opacity-0 transition-opacity duration-300 ease-in-out">
-                    Enter an 8-digit number associated with your bank account.
-                </div>
-            </span>
+
         </label>
         <input
             v-model="model"

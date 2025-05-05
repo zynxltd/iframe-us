@@ -1,15 +1,15 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Loan Term</label>
+        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">Loan Term</label>
         <!-- 3x3 Grid Layout for Radio Buttons -->
         <div class="grid grid-cols-3 gap-4">
             <label
                 v-for="term in terms"
                 :key="term.value"
-                class="flex items-center justify-center px-5 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300"
+                class="flex items-center justify-center text-center px-5 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300 h-16"
                 :class="modelValue === term.value
-                    ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white border-transparent shadow-lg'
-                    : 'bg-[#fffff] border-cyan-500 text-black-300 hover:bg-cyan-600 hover:text-white hover:border-purple-400'"
+                      ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white border-transparent shadow-lg'
+                    : 'bg-[#ffffff] border-cyan-500 text-black-300 hover:bg-cyan-600 hover:text-white hover:border-purple-400'"
             >
                 <input
                     type="radio"
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 
 // Define props
 const props = defineProps({
@@ -37,15 +37,13 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 // Initialize LoanTerm from localStorage, or default to 2 months if not found
-const initialLoanTerm = localStorage.getItem('LoanTerm') || ''
 
 // Sync initial value with modelValue if it's not set
 const model = computed({
-    get: () => props.modelValue || initialLoanTerm, // Default to initialLoanTerm if modelValue is not available
+    get: () => props.modelValue, // Default to initialLoanTerm if modelValue is not available
     set: (value) => {
         emit('update:modelValue', value)
         // Store the value in localStorage whenever it changes
-        localStorage.setItem('LoanTerm', value)
     }
 })
 

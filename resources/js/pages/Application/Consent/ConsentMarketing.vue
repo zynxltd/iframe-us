@@ -1,9 +1,9 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Consent for Marketing</label>
-        <div class="grid grid-cols-3 gap-4">
+        <label class="block text-sm font-semibold p-4 mb-4 text-neutral-800 mb-2 uppercase tracking-wide text-center">Consent for Marketing</label>
+        <div class="grid grid-cols-3 gap-4 justify-center items-center">
             <!-- SMS Checkbox -->
-            <label class="flex items-center space-x-2">
+            <label class="flex items-center justify-center space-x-2">
                 <input
                     v-model="sms"
                     type="checkbox"
@@ -11,16 +11,16 @@
                     @change="updateConsent('sms')"
                 />
                 <div
-                    :class="{'bg-green-500': sms, 'bg-gray-300': !sms}"
+                    :class="{'bg-cyan-500': sms, 'bg-gray-300': !sms}"
                     class="w-6 h-6 rounded-full flex items-center justify-center"
                 >
                     <span v-if="sms" class="text-white text-sm">✔</span>
                 </div>
-                <span class="text-sm text-cyan-300">SMS</span>
+                <span class="text-sm text-neutral-800">SMS</span>
             </label>
 
             <!-- Email Checkbox -->
-            <label class="flex items-center space-x-2">
+            <label class="flex items-center justify-center space-x-2">
                 <input
                     v-model="email"
                     type="checkbox"
@@ -28,16 +28,16 @@
                     @change="updateConsent('email')"
                 />
                 <div
-                    :class="{'bg-green-500': email, 'bg-gray-300': !email}"
+                    :class="{'bg-cyan-500': email, 'bg-gray-300': !email}"
                     class="w-6 h-6 rounded-full flex items-center justify-center"
                 >
                     <span v-if="email" class="text-white text-sm">✔</span>
                 </div>
-                <span class="text-sm text-cyan-300">Email</span>
+                <span class="text-sm text-neutral-800">Email</span>
             </label>
 
             <!-- Phone Checkbox -->
-            <label class="flex items-center space-x-2">
+            <label class="flex items-center justify-center space-x-2">
                 <input
                     v-model="phone"
                     type="checkbox"
@@ -45,12 +45,12 @@
                     @change="updateConsent('phone')"
                 />
                 <div
-                    :class="{'bg-green-500': phone, 'bg-gray-300': !phone}"
+                    :class="{'bg-cyan-500': phone, 'bg-gray-300': !phone}"
                     class="w-6 h-6 rounded-full flex items-center justify-center"
                 >
                     <span v-if="phone" class="text-white text-sm">✔</span>
                 </div>
-                <span class="text-sm text-cyan-300">Phone</span>
+                <span class="text-sm text-neutral-800">Phone</span>
             </label>
         </div>
     </div>

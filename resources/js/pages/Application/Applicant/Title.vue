@@ -1,6 +1,6 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Select your title</label>
+        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">Select your title</label>
         <div class="flex gap-3 w-full">
             <label
                 v-for="option in options"
@@ -8,7 +8,7 @@
                 class="flex items-center justify-center px-5 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300 w-full"
                 :class="modelValue === option
                     ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white border-transparent shadow-lg'
-                    : 'bg-[#fffff] border-cyan-500 text-black-300 hover:bg-cyan-600 hover:text-white hover:border-purple-400'"
+                    : 'bg-[#fff] border-cyan-500 text-black-300 hover:bg-cyan-600 hover:text-white hover:border-purple-400'"
             >
                 <input
                     type="radio"

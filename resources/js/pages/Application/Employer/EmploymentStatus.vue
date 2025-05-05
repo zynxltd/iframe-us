@@ -1,11 +1,11 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Employment Status</label>
+        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">Employment Status</label>
         <div class="grid grid-cols-3 gap-3">
             <label
                 v-for="option in options"
                 :key="option.value"
-                class="flex items-center justify-center px-5 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300"
+                class="flex items-center justify-center text-center h-16 px-5 py-3 rounded-xl cursor-pointer border-2 transition-all duration-300"
                 :class="model === option.value
                     ? 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white border-transparent shadow-lg'
                     : 'bg-[#ffff] border-cyan-500 text-black-300 hover:bg-cyan-600 hover:text-white hover:border-purple-400'"

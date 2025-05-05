@@ -1,142 +1,7 @@
-<template>
-    <div class="max-w-xl mx-auto py-10 bg-transparent">
-        <form @submit.prevent="submit" class="space-y-6">
-
-            <!-- Progress Bar -->
-            <div class="mb-6">
-                <div class="relative pt-1">
-                    <div class="flex mb-2 items-center justify-between">
-                        <span class="text-sm font-semibold text-teal-400">Step {{ currentStep }} / 6</span>
-                    </div>
-                    <div class="flex mb-2">
-                        <div
-                            class="w-full bg-gray-300 rounded-full"
-                            style="height: 12px; border-radius: 20px"
-                        >
-                        <div
-                            class="bg-cyan-400 h-full rounded-full"
-                            :style="{ width: (currentStep / 6) * 100 + '%' }"
-                        ></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-            <!-- Step 1: Loan Information -->
-            <div v-if="currentStep === 1">
-                <LoanAmount
-                    v-model="form.LoanAmount"
-                    :error="form.errors.LoanAmount"
-                    @blur="form.touched.LoanAmount = true"
-                />
-                <LoanTerm
-                    v-model="form.LoanTerm"
-                    :error="form.errors.LoanTerm"
-                    @blur="form.touched.LoanTerm = true"
-                />
-                <LoanPurpose
-                    v-model="form.LoanPurpose"
-                    :error="form.errors.LoanPurpose"
-                    @blur="form.touched.LoanPurpose = true"
-                />
-            </div>
-
-            <!-- Step 2: Personal Details -->
-            <div v-if="currentStep === 2">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your details</h2>
-                <Title v-model="form.Title" :error="form.errors.Title" />
-                <FirstName v-model="form.FirstName" :error="form.errors.FirstName" />
-                <LastName v-model="form.LastName" :error="form.errors.LastName" />
-                <DateOfBirth v-model="form.DateOfBirth" :error="form.errors.DateOfBirth" />
-                <Email v-model="form.Email" :error="form.errors.Email" />
-                <MobilePhone v-model="form.MobilePhone" :error="form.errors.MobilePhone" />
-                <HomePhone v-model="form.HomePhone" :error="form.errors.HomePhone" />
-                <Dependants v-model="form.Dependants" :error="form.errors.Dependants" />
-            </div>
-
-            <!-- Step 3: Employer Details -->
-            <div v-if="currentStep === 3">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Employer</h2>
-                <EmploymentStatus v-model="form.EmploymentStatus" :error="form.errors.EmploymentStatus" />
-                <EmployerName v-model="form.EmployerName" :error="form.errors.EmployerName" />
-                <JobTitle v-model="form.JobTitle" :error="form.errors.JobTitle" />
-                <EmployerIndustry v-model="form.EmployerIndustry" :error="form.errors.EmployerIndustry" />
-                <EmployerYears v-model="form.EmployerYears" :error="form.errors.EmployerYears" />
-                <NextPayDate v-model="form.NextPayDate" :error="form.errors.NextPayDate" />
-                <FollowingPayDate v-model="form.FollowingPayDate" :error="form.errors.FollowingPayDate" />
-            </div>
-
-            <!-- Step 4: Address Details -->
-            <div v-if="currentStep === 4">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Address</h2>
-                <HouseNameNumber v-model="form.HouseNameNumber" :error="form.errors.HouseNameNumber" />
-                <StreetAddress v-model="form.StreetAddress" :error="form.errors.StreetAddress" />
-                <County v-model="form.County" :error="form.errors.County" />
-                <City v-model="form.City" :error="form.errors.City" />
-                <Postcode v-model="form.Postcode" :error="form.errors.Postcode" />
-                <AddressYears v-model="form.AddressYears" :error="form.errors.AddressYears" />
-            </div>
-
-            <!-- Step 5: Monthly Expenses -->
-            <div v-if="currentStep === 5">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Monthly Expenses</h2>
-<!--                <Transport v-model="form.ExpenseTransport" :error="form.errors.ExpenseTransport" />-->
-                <Food v-model="form.ExpenseFood" :error="form.errors.ExpenseFood" />
-                <Credit v-model="form.ExpenseCredit" :error="form.errors.ExpenseCredit" />
-                <Council v-model="form.ExpenseCouncil" :error="form.errors.ExpenseCouncil" />
-                <Other v-model="form.ExpenseOther" :error="form.errors.ExpenseOther" />
-            </div>
-
-            <!-- Step 6: Additional Information -->
-            <div v-if="currentStep === 6">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Last bit...?</h2>
-                <p class="text-xl font-bold text-cyan-300 border-2 border-cyan-500 rounded-xl px-5 py-3 mb-6 shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent">
-                    We need these details to deposit the funds and verify.
-                </p>
-
-                <BankCard v-model="form.BankCard" :error="form.errors.BankCard" />
-                <BankAccountNumber v-model="form.BankAccountNumber" :error="form.errors.BankAccountNumber" />
-                <BankSortCode v-model="form.BankSortCode" :error="form.errors.BankSortCode" />
-                <ConsentMarketing v-model="form.ConsentMarketing" :error="form.errors.ConsentMarketing" />
-            </div>
-
-            <!-- Navigation Buttons -->
-            <div class="flex justify-between">
-                <!-- Previous Button -->
-                <button v-if="currentStep > 1" @click="prevStep" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">
-                    Previous
-                </button>
-
-                <!-- Next Button -->
-                <button
-                    v-if="currentStep < 6"
-                    @click="nextStep"
-                    class="px-6 py-3 bg-cyan-400 text-white rounded-md hover:bg-cyan-600 transition-all duration-300"
-                    :class="{'ml-auto': currentStep === 1}"
-                    :disabled="!isStepValid"
-                >
-                    Next
-                </button>
-
-                <!-- Submit Button -->
-                <button
-                    v-if="currentStep === 6"
-                    type="submit"
-                    @click="submitApplication"
-                    :disabled="!isStepValid"
-                    class="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-white rounded-md hover:bg-cyan-600"
-                >
-                    Submit
-                </button>
-            </div>
-
-        </form>
-    </div>
-</template>
-
-
 <script setup>
-import {computed, reactive, ref, watch} from 'vue'
+import { Inertia } from '@inertiajs/inertia';
+import axios from 'axios'; // Make sure you import axios
+import {computed, ref} from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 import Title from "@/pages/Application/Applicant/Title.vue";
 import FirstName from "@/pages/Application/Applicant/FirstName.vue";
@@ -183,7 +48,7 @@ const nextStep = () => {
         }
 
         // Move to the next step if not the last step
-        if (currentStep.value < 6) {
+        if (currentStep.value < 7) {
             currentStep.value++;
         }
     }
@@ -194,358 +59,690 @@ const prevStep = () => {
     }
 }
 const form = useForm({
-    LoanAmount: localStorage.getItem('LoanAmount') || '',
-    LoanTerm: localStorage.getItem('LoanTerm') || '',
-    LoanPurpose: localStorage.getItem('LoanPurpose') || '',
+    AffID: '',
+    OfferID: '',
+    Campaign: '',
+    AffSub: '',
+    AffSub2: '',
+    AffSub3: '',
+    AffSub4: '',
+    AffSub5: '',
+    CreationUrl: '',
+    ReferrerUrl: '',
+    IpAddress: '',
+    UserAgent: '',
+    LoanAmount: '',
+    LoanTerm: '',
+    LoanPurpose: '',
+    Title: '',
+    FirstName: '',
+    LastName: '',
+    DateOfBirth: '',
+    MobilePhone: '',
+    HomePhone: '',
+    Email: '',
+    Dependants: '',
+    HouseNameNumber: '',
+    StreetAddress: '',
+    County: '',
+    City: '',
+    Postcode: '',
+    AddressYears: '',
+    EmploymentStatus: '',
+    EmployerName: '',
+    JobTitle: '',
+    EmployerIndustry: '',
+    EmployerYears: '',
+    NextPayDate: '',
+    FollowingPayDate: '',
+    ExpenseTransport: '',
+    ExpenseFood: '',
+    ExpenseCredit: '',
+    ExpenseCouncil: '',
+    ExpenseOther: '',
+    BankCard: '',
+    BankAccountNumber: '',
+    BankSortCode: '',
+    ConsentMarketing: '',
+    MarketingSms: '',
+    MarketingEmail: '',
+    MarketingPhone: '',
 
-    Title: localStorage.getItem('Title') || '',
-    FirstName: localStorage.getItem('FirstName') || '',
-    LastName: localStorage.getItem('LastName') || '',
-    DateOfBirth: localStorage.getItem('DateOfBirth') || '',
-    MobilePhone: localStorage.getItem('MobilePhone') || '',
-    HomePhone: localStorage.getItem('HomePhone') || '',
-    Email: localStorage.getItem('Email') || '',
-    Dependants: localStorage.getItem('Dependants') || '',
-
-    EmploymentStatus: localStorage.getItem('EmploymentStatus') || '',
-    EmployerName: localStorage.getItem('EmployerName') || '',
-    JobTitle: localStorage.getItem('JobTitle') || '',
-    EmployerIndustry: localStorage.getItem('EmployerIndustry') || '',
-    EmployerYears: localStorage.getItem('EmployerYears') || '',
-    NextPayDate: localStorage.getItem('NextPayDate') || '',
-    FollowingPayDate: localStorage.getItem('FollowingPayDate') || '',
-
-    HouseNameNumber: localStorage.getItem('HouseNameNumber') || '',
-    StreetAddress: localStorage.getItem('StreetAddress') || '',
-    County: localStorage.getItem('County') || '',
-    City: localStorage.getItem('City') || '',
-    Postcode: localStorage.getItem('Postcode') || '',
-    AddressYears: localStorage.getItem('AddressYears') || '',
-
-    ExpenseTransport: localStorage.getItem('ExpenseTransport') || '',
-    ExpenseFood: localStorage.getItem('ExpenseFood') || '',
-    ExpenseCredit: localStorage.getItem('ExpenseCredit') || '',
-    ExpenseCouncil: localStorage.getItem('ExpenseCouncil') || '',
-    ExpenseOther: localStorage.getItem('ExpenseOther') || '',
-
-    BankCard: localStorage.getItem('BankCard') || '',
-    BankAccountNumber: localStorage.getItem('BankAccountNumber') || '',
-    BankSortCode: localStorage.getItem('BankSortCode') || '',
-    ConsentMarketing: localStorage.getItem('ConsentMarketing') || '',
 
     touched: {
-        LoanAmount: false,
-        LoanTerm: false,
-        LoanPurpose: false
+            AffID: false,
+            OfferID: false,
+            Campaign: false,
+            AffSub: false,
+            AffSub2: false,
+            AffSub3: false,
+            AffSub4: false,
+            AffSub5: false,
+            CreationUrl: false,
+            ReferrerUrl: false,
+            IpAddress: false,
+            UserAgent: false,
+            LoanAmount: false,
+            LoanTerm: false,
+            LoanPurpose: false,
+            Title: false,
+            FirstName: false,
+            LastName: false,
+            DateOfBirth: false,
+            MobilePhone: false,
+            HomePhone: false,
+            Email: false,
+            Dependants: false,
+            HouseNameNumber: false,
+            StreetAddress: false,
+            County: false,
+            City: false,
+            Postcode: false,
+            AddressYears: false,
+            EmploymentStatus: false,
+            EmployerName: false,
+            JobTitle: false,
+            EmployerIndustry: false,
+            EmployerYears: false,
+            NextPayDate: false,
+            FollowingPayDate: false,
+            ExpenseTransport: false,
+            ExpenseFood: false,
+            ExpenseCredit: false,
+            ExpenseCouncil: false,
+            ExpenseOther: false,
+            BankCard: false,
+            BankAccountNumber: false,
+            BankSortCode: false,
+            ConsentMarketing: false,
+            MarketingSms: false,
+            MarketingEmail: false,
+            MarketingPhone: ''
     },
-    // errors: {
-    //     LoanAmount: '',
-    //     LoanTerm: '',
-    //     LoanPurpose: ''
-    // },
 
-})
-// Function to save form data to local storage whenever it changes
-const saveFormToLocalStorage = () => {
-    Object.keys(form).forEach(key => {
-        localStorage.setItem(key, form[key])
-    })
-}
-// Watch for changes in form and save to local storage
-watch(form, saveFormToLocalStorage, { deep: true })
+    errors: {
+        AffID: '',
+        OfferID: '',
+        Campaign: '',
+        AffSub: '',
+        AffSub2: '',
+        AffSub3: '',
+        AffSub4: '',
+        AffSub5: '',
+        CreationUrl: '',
+        ReferrerUrl: '',
+        IpAddress: '',
+        UserAgent: '',
+        LoanAmount: '',
+        LoanTerm: '',
+        LoanPurpose: '',
+        Title: '',
+        FirstName: '',
+        LastName: '',
+        DateOfBirth: '',
+        MobilePhone: '',
+        HomePhone: '',
+        Email: '',
+        Dependants: '',
+        HouseNameNumber: '',
+        StreetAddress: '',
+        County: '',
+        City: '',
+        Postcode: '',
+        AddressYears: '',
+        EmploymentStatus: '',
+        EmployerName: '',
+        JobTitle: '',
+        EmployerIndustry: '',
+        EmployerYears: '',
+        NextPayDate: '',
+        FollowingPayDate: '',
+        ExpenseTransport: '',
+        ExpenseFood: '',
+        ExpenseCredit: '',
+        ExpenseCouncil: '',
+        ExpenseOther: '',
+        BankCard: '',
+        BankAccountNumber: '',
+        BankSortCode: '',
+        ConsentMarketing: '',
+        MarketingSms: '',
+        MarketingEmail: '',
+        MarketingPhone: ''
+    }
+});
+// const testApplicationData = {
+//     VendorID: "TESTER1",
+//     OfferID: 2,
+//     Campaign: "SpringPromo",
+//     AffSub: "sub1",
+//     AffSub2: "sub2",
+//     AffSub3: "sub3",
+//     AffSub4: "sub4",
+//     AffSub5: "sub5",
+//     CreationUrl: "https://example.com/loan-app",
+//     ReferrerUrl: "https://affiliate.example.com",
+//     IpAddress: "192.168.1.100",
+//     UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+//     LoanAmount: "2000",
+//     LoanTerm: 3,
+//     LoanPurpose: 2,
+//     Title: 1,
+//     FirstName: "John",
+//     LastName: "Doe",
+//     Email: "john.doe@example.com",
+//     MobilePhone: "07123456789",
+//     HomePhone: "02081234567",
+//     DateOfBirth: "15/06/1990",
+//     MaritalStatus: 2,
+//     Dependants: 2,
+//     RecentLoanCount: 1,
+//     AdultsLivingWith: 2,
+//
+//     ResidentialStatus: 1,
+//     HouseNameNumber: "22B",
+//     StreetAddress: "Baker Street",
+//     County: "Greater London",
+//     City: "London",
+//     Postcode: "W1U7EU",
+//     AddressYears: 5,
+//
+//     EmploymentStatus: 1,
+//     EmployerIndustry: 1,
+//     EmployerYears: 1,
+//     IncomeFrequency: 1,
+//     JobTitle: "Software Engineer",
+//     EmployerName: "TechCorp Ltd",
+//     WorkPhone: "02081234567",
+//     NextPayDate: "2025-05-28",
+//     FollowingPayDate: "2025-06-28",
+//     NetMonthlyIncome: 2800.50,
+//     YearsAtEmployer: 3,
+//
+//     MortgageRentExpense: 900.00,
+//     TaxExpense: 300.00,
+//     ExpenseFood: 250.00,
+//     ExpenseTransport: 150.00,
+//     ExpenseCredit: 100.00,
+//     ExpenseCouncil: 100.00,
+//     UtilitiesExpense: 50.00,
+//     ExpenseOther: 75.00,
+//
+//     BankDirectDeposit: 1,
+//     BankCard: 2,
+//     BankSortCode: "123456", // Use digits only if backend requires
+//     BankAccountNumber: "12345678",
+//     BankYears: 8,
+//     ConsentMarketing: true,
+// };
+
+const handleNextStep = () => {
+    let hasErrors = false;
+    let errorMessages = [];
+    debugger
+
+    if (currentStep.value === 1) {
+        form.touched.LoanAmount = true;
+        form.touched.LoanTerm = true;
+        form.touched.LoanPurpose = true;
+
+        // Check for errors for Step 1
+        if (!form.LoanAmount) {
+            form.errors.LoanAmount = 'Loan amount is required.';
+            hasErrors = true;
+            errorMessages.push('Loan amount is required.');
+        } else {
+            form.errors.LoanAmount = ''; // Remove error if valid
+        }
+
+        if (!form.LoanTerm) {
+            form.errors.LoanTerm = 'Loan term is required.';
+            hasErrors = true;
+            errorMessages.push('Loan term is required.');
+        } else {
+            form.errors.LoanTerm = ''; // Remove error if valid
+        }
+
+        if (!form.LoanPurpose) {
+            form.errors.LoanPurpose = 'Loan purpose is required.';
+            hasErrors = true;
+            errorMessages.push('Loan purpose is required.');
+        } else {
+            form.errors.LoanPurpose = ''; // Remove error if valid
+        }
+    }
+    if (currentStep.value === 2) {
+        form.touched.Title = true;
+        form.touched.FirstName = true;
+        form.touched.LastName = true;
+        form.touched.DateOfBirth = true;
+        form.touched.Email = true;
+        form.touched.MobilePhone = true;
+        form.touched.HomePhone = true;
+        form.touched.Dependants = true;
+
+        // Validate Title
+        if (!form.Title) {
+            form.errors.Title = 'Title is required.';
+            hasErrors = true;
+            errorMessages.push('Title is required.');
+        } else {
+            form.errors.Title = ''; // Remove error if valid
+        }
+
+        // Validate FirstName
+        const firstNamePattern = /^[A-Za-z\s]+$/;
+        if (!form.FirstName) {
+            form.errors.FirstName = 'First name is required.';
+            hasErrors = true;
+            errorMessages.push('First name is required.');
+        } else if (!firstNamePattern.test(form.FirstName)) {
+            form.errors.FirstName = 'First name should not contain numbers or special characters.';
+            hasErrors = true;
+            errorMessages.push('First name should not contain numbers or special characters.');
+        } else {
+            form.errors.FirstName = ''; // Remove error if valid
+        }
+
+        // Validate LastName
+        const lastNamePattern = /^[A-Za-z\s]+$/;
+        if (!form.LastName) {
+            form.errors.LastName = 'Last name is required.';
+            hasErrors = true;
+            errorMessages.push('Last name is required.');
+        } else if (!lastNamePattern.test(form.LastName)) {
+            form.errors.LastName = 'Last name should not contain numbers or special characters.';
+            hasErrors = true;
+            errorMessages.push('Last name should not contain numbers or special characters.');
+        } else if (form.FirstName && form.FirstName.toLowerCase() === form.LastName.toLowerCase()) {
+            form.errors.LastName = 'Last name cannot be the same as first name.';
+            hasErrors = true;
+            errorMessages.push('Last name cannot be the same as first name.');
+        } else {
+            form.errors.LastName = ''; // Remove error if valid
+        }
+
+        // Validate DateOfBirth
+        const dob = form.DateOfBirth ? form.DateOfBirth.split('/') : [];
+        if (dob.length !== 3 || dob.some(part => part === '')) {
+            form.errors.DateOfBirth = 'Date of birth is required and must be a valid date.';
+            hasErrors = true;
+            errorMessages.push('Date of birth is required and must be a valid date.');
+        } else {
+            const [day, month, year] = dob;
+            const validDay = parseInt(day);
+            const validMonth = parseInt(month);
+            const validYear = parseInt(year);
+
+            const date = new Date(validYear, validMonth - 1, validDay);
+            if (date.getFullYear() !== validYear || date.getMonth() !== validMonth - 1 || date.getDate() !== validDay) {
+                form.errors.DateOfBirth = 'Please enter a valid date of birth.';
+                hasErrors = true;
+                errorMessages.push('Please enter a valid date of birth.');
+            }
+
+            // Check for age validity
+            const today = new Date();
+            const age = today.getFullYear() - validYear;
+            if (age > 120) {
+                form.errors.DateOfBirth = 'Age cannot be greater than 120 years.';
+                hasErrors = true;
+                errorMessages.push('Age cannot be greater than 120 years.');
+            } else if (age < 18) {
+                form.errors.DateOfBirth = 'You must be at least 18 years old.';
+                hasErrors = true;
+                errorMessages.push('You must be at least 18 years old.');
+            } else {
+                form.errors.DateOfBirth = ''; // Remove error if valid
+            }
+        }
+
+        // Validate Email
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if (!form.Email || !emailPattern.test(form.Email)) {
+            form.errors.Email = 'Please enter a valid email address.';
+            hasErrors = true;
+            errorMessages.push('Please enter a valid email address.');
+        } else {
+            form.errors.Email = ''; // Remove error if valid
+        }
+
+        // Validate MobilePhone
+        const mobilePhonePattern = /^07\d{9}$/;
+        if (!form.MobilePhone || !mobilePhonePattern.test(form.MobilePhone)) {
+            form.errors.MobilePhone = 'Please enter a valid mobile phone number (starts with 07 and has 11 digits).';
+            hasErrors = true;
+            errorMessages.push('Please enter a valid mobile phone number (starts with 07 and has 11 digits).');
+        } else {
+            form.errors.MobilePhone = ''; // Remove error if valid
+        }
+
+        // Validate HomePhone
+        const homePhonePattern = /^0\d{10}$/;
+        if (form.HomePhone && !homePhonePattern.test(form.HomePhone)) {
+            form.errors.HomePhone = 'Please enter a valid home phone number (starts with 0 and has exactly 11 digits).';
+            hasErrors = true;
+            errorMessages.push('Please enter a valid home phone number (starts with 0 and has exactly 11 digits).');
+        } else {
+            form.errors.HomePhone = ''; // Remove error if valid
+        }
+
+        // Validate Dependants
+        if (!form.Dependants) {
+            form.errors.Dependants = 'Dependants information is required.';
+            hasErrors = true;
+            errorMessages.push('Dependants information is required.');
+        } else {
+            form.errors.Dependants = ''; // Remove error if valid
+        }
+    }
+    if (currentStep.value === 3) {
+        const today = new Date().setHours(0, 0, 0, 0);
+        const nextPayDate = form.NextPayDate ? new Date(form.NextPayDate).setHours(0, 0, 0, 0) : null;
+        const followingPayDate = form.FollowingPayDate ? new Date(form.FollowingPayDate).setHours(0, 0, 0, 0) : null;
+
+        const requiresEmployerDetails = ['Full time', 'Part time', 'Self employed'].includes(form.EmploymentStatus);
+
+        form.touched.EmploymentStatus = true;
+        form.touched.EmployerName = true;
+        form.touched.JobTitle = true;
+        form.touched.EmployerIndustry = true;
+        form.touched.EmployerYears = true;
+        form.touched.NextPayDate = true;
+        form.touched.FollowingPayDate = true;
+
+        // Employment Status
+        if (!form.EmploymentStatus) {
+            form.errors.EmploymentStatus = 'Employment status is required.';
+            hasErrors = true;
+            errorMessages.push('Employment status is required.');
+        } else {
+            form.errors.EmploymentStatus = '';
+        }
+
+        // Employer Name
+        if (requiresEmployerDetails && !form.EmployerName) {
+            form.errors.EmployerName = 'Employer name is required.';
+            hasErrors = true;
+            errorMessages.push('Employer name is required.');
+        } else {
+            form.errors.EmployerName = '';
+        }
+
+        // Job Title
+        if (requiresEmployerDetails && !form.JobTitle) {
+            form.errors.JobTitle = 'Job title is required.';
+            hasErrors = true;
+            errorMessages.push('Job title is required.');
+        } else {
+            form.errors.JobTitle = '';
+        }
+
+        // Employer Industry
+        if (!form.EmployerIndustry) {
+            form.errors.EmployerIndustry = 'Employer industry is required.';
+            hasErrors = true;
+            errorMessages.push('Employer industry is required.');
+        } else {
+            form.errors.EmployerIndustry = '';
+        }
+
+        // Employer Years
+        if (!form.EmployerYears) {
+            form.errors.EmployerYears = 'Employer years is required.';
+            hasErrors = true;
+            errorMessages.push('Employer years is required.');
+        } else {
+            form.errors.EmployerYears = '';
+        }
+
+        // Next Pay Date
+        if (!form.NextPayDate) {
+            form.errors.NextPayDate = 'Next pay date is required.';
+            hasErrors = true;
+            errorMessages.push('Next pay date is required.');
+        } else if (nextPayDate < today) {
+            form.errors.NextPayDate = 'Next pay date must be today or a future date.';
+            hasErrors = true;
+            errorMessages.push('Next pay date must be today or a future date.');
+        } else if (nextPayDate === followingPayDate) {
+            form.errors.NextPayDate = 'Next pay date cannot be the same as following pay date.';
+            hasErrors = true;
+            errorMessages.push('Next pay date cannot be the same as following pay date.');
+        } else {
+            form.errors.NextPayDate = '';
+        }
+
+        // Following Pay Date
+        if (!form.FollowingPayDate) {
+            form.errors.FollowingPayDate = 'Following pay date is required.';
+            hasErrors = true;
+            errorMessages.push('Following pay date is required.');
+        } else if (followingPayDate < today) {
+            form.errors.FollowingPayDate = 'Following pay date must be today or a future date.';
+            hasErrors = true;
+            errorMessages.push('Following pay date must be today or a future date.');
+        } else if (nextPayDate === followingPayDate) {
+            form.errors.FollowingPayDate = 'Following pay date cannot be the same as next pay date.';
+            hasErrors = true;
+            errorMessages.push('Following pay date cannot be the same as next pay date.');
+        } else {
+            form.errors.FollowingPayDate = '';
+        }
+    }
+    if (currentStep.value === 4) {
+        form.touched.HouseNameNumber = true;
+        form.touched.StreetAddress = true;
+        form.touched.County = true;
+        form.touched.City = true;
+        form.touched.Postcode = true;
+        form.touched.AddressYears = true;
+
+        let hasErrors = false;
+        const errorMessages = [];
 
 
+        // House Name/Number
+        if (!form.HouseNameNumber) {
+            form.errors.HouseNameNumber = 'House name/number is required.';
+            hasErrors = true;
+            errorMessages.push('House name/number is required.');
+        } else {
+            form.errors.HouseNameNumber = '';
+        }
 
+        // Street Address
+        if (!form.StreetAddress) {
+            form.errors.StreetAddress = 'Street address is required.';
+            hasErrors = true;
+            errorMessages.push('Street address is required.');
+        } else {
+            form.errors.StreetAddress = '';
+        }
 
-// Validation
-// Form Validation for Step 1
-const isStep1Valid = computed(() => {
-    // Reset errors only if the user tries to progress
-    let valid = true
+        // County
+        if (!form.County) {
+            form.errors.County = 'County is required.';
+            hasErrors = true;
+            errorMessages.push('County is required.');
+        } else {
+            form.errors.County = '';
+        }
 
-    // Validate LoanAmount
-    if (!form.LoanAmount && form.touched.LoanAmount) {
-        form.errors.LoanAmount = 'Loan amount is required.'
-        valid = false
+        // City
+        if (!form.City) {
+            form.errors.City = 'City is required.';
+            hasErrors = true;
+            errorMessages.push('City is required.');
+        } else {
+            form.errors.City = '';
+        }
+
+        // Postcode (validating UK postcode)
+        const ukPostcodeRegex = /^([A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})$/i;
+        if (!form.Postcode) {
+            form.errors.Postcode = 'Postcode is required.';
+            hasErrors = true;
+            errorMessages.push('Postcode is required.');
+        } else if (!ukPostcodeRegex.test(form.Postcode.trim())) {
+            form.errors.Postcode = 'Enter a valid UK postcode.';
+            hasErrors = true;
+            errorMessages.push('Enter a valid UK postcode.');
+        } else {
+            form.errors.Postcode = '';
+        }
+
+        // Address Years
+        if (!form.AddressYears) {
+            form.errors.AddressYears = 'Address years is required.';
+            hasErrors = true;
+            errorMessages.push('Address years is required.');
+        } else {
+            form.errors.AddressYears = '';
+        }
+
+        // If errors exist, return false, otherwise return true
+        // return !hasErrors;
+    }
+    if (currentStep.value === 5) {
+        form.touched.ExpenseFood = true;
+        form.touched.ExpenseCredit = true;
+        form.touched.ExpenseCouncil = true;
+        form.touched.ExpenseOther = true;
+
+        debugger
+        let hasErrors = false;
+        const errorMessages = [];
+
+        // Expense Food
+        if (!form.ExpenseFood) {
+            form.errors.ExpenseFood = 'Food expense is required.';
+            hasErrors = true;
+            errorMessages.push('Food expense is required.');
+        } else if (isNaN(form.ExpenseFood) || form.ExpenseFood < 0) {
+            form.errors.ExpenseFood = 'Food expense must be a positive number.';
+            hasErrors = true;
+            errorMessages.push('Food expense must be a positive number.');
+        } else {
+            form.errors.ExpenseFood = '';
+        }
+
+        // Expense Credit
+        if (!form.ExpenseCredit) {
+            form.errors.ExpenseCredit = 'Credit expense is required.';
+            hasErrors = true;
+            errorMessages.push('Credit expense is required.');
+        } else if (isNaN(form.ExpenseCredit) || form.ExpenseCredit < 0) {
+            form.errors.ExpenseCredit = 'Credit expense must be a positive number.';
+            hasErrors = true;
+            errorMessages.push('Credit expense must be a positive number.');
+        } else {
+            form.errors.ExpenseCredit = '';
+        }
+
+        // Expense Council
+        if (!form.ExpenseCouncil) {
+            form.errors.ExpenseCouncil = 'Council tax expense is required.';
+            hasErrors = true;
+            errorMessages.push('Council tax expense is required.');
+        } else if (isNaN(form.ExpenseCouncil) || form.ExpenseCouncil < 0) {
+            form.errors.ExpenseCouncil = 'Council tax expense must be a positive number.';
+            hasErrors = true;
+            errorMessages.push('Council tax expense must be a positive number.');
+        } else {
+            form.errors.ExpenseCouncil = '';
+        }
+
+        // Expense Other
+        if (!form.ExpenseOther) {
+            form.errors.ExpenseOther = 'Other expense is required.';
+            hasErrors = true;
+            errorMessages.push('Other expense is required.');
+        } else if (isNaN(form.ExpenseOther) || form.ExpenseOther < 0) {
+            form.errors.ExpenseOther = 'Other expense must be a positive number.';
+            hasErrors = true;
+            errorMessages.push('Other expense must be a positive number.');
+        } else {
+            form.errors.ExpenseOther = '';
+        }
+
+        // If errors exist, return false, otherwise return true
+        // return !hasErrors;
+    }
+    if (currentStep.value === 6) {
+        form.touched.BankCard = true;
+        form.touched.BankAccountNumber = true;
+        form.touched.BankSortCode = true;
+        form.touched.ConsentMarketing = true;
+
+        let hasErrors = false;
+        const errorMessages = [];
+
+        // Bank Card
+        if (!form.BankCard) {
+            form.errors.BankCard = 'Bank card is required.';
+            hasErrors = true;
+            errorMessages.push('Bank card is required.');
+        } else {
+            form.errors.BankCard = '';
+        }
+
+        // Bank Account Number
+        if (!form.BankAccountNumber) {
+            form.errors.BankAccountNumber = 'Bank account number is required.';
+            hasErrors = true;
+            errorMessages.push('Bank account number is required.');
+        } else if (isNaN(form.BankAccountNumber) || form.BankAccountNumber.length < 8) {
+            form.errors.BankAccountNumber = 'Account number must be a valid 8-digit number.';
+            hasErrors = true;
+            errorMessages.push('Account number must be a valid 8-digit number.');
+        } else {
+            form.errors.BankAccountNumber = '';
+        }
+
+        // Bank Sort Code
+        const sortCodeRegex = /^[0-9]{6}$/; // UK sort code format (6 digits)
+        if (!form.BankSortCode) {
+            form.errors.BankSortCode = 'Bank sort code is required.';
+            hasErrors = true;
+            errorMessages.push('Bank sort code is required.');
+        } else if (!sortCodeRegex.test(form.BankSortCode)) {
+            form.errors.BankSortCode = 'Sort code must be a valid 6-digit number.';
+            hasErrors = true;
+            errorMessages.push('Sort code must be a valid 6-digit number.');
+        } else {
+            form.errors.BankSortCode = '';
+        }
+
+        // Consent to Marketing
+        if (form.ConsentMarketing === null) {
+            form.errors.ConsentMarketing = 'Consent to marketing is required.';
+            hasErrors = true;
+            errorMessages.push('Consent to marketing is required.');
+        } else {
+            form.errors.ConsentMarketing = '';
+        }
+
+        // Return the result based on errors
+        // return !hasErrors;
     }
 
-    // Validate LoanTerm
-    if (!form.LoanTerm && form.touched.LoanTerm) {
-        form.errors.LoanTerm = 'Loan term is required.'
-        valid = false
-    }
-
-    // Validate LoanPurpose
-    if (!form.LoanPurpose && form.touched.LoanPurpose) {
-        form.errors.LoanPurpose = 'Loan purpose is required.'
-        valid = false
-    }
-
-    return valid
-})
-// Validation for Step 2: (Applicant)
-const isStep2Valid = computed(() => {
-    form.errors.Title = ''
-    form.errors.FirstName = ''
-    form.errors.LastName = ''
-    form.errors.DateOfBirth = ''
-    form.errors.Email = ''
-    form.errors.MobilePhone = ''
-    form.errors.HomePhone = ''
-    form.errors.Dependants = ''
-
-    let valid = true
-
-    // Validate Title
-    if (!form.Title) {
-        form.errors.Title = 'Title is required.'
-        valid = false
-    }
-
-    const firstNamePattern = /^[A-Za-z\s]+$/; // Only letters and spaces allowed
-    if (!form.FirstName) {
-        form.errors.FirstName = 'First name is required.'
-        valid = false
-    } else if (!firstNamePattern.test(form.FirstName)) {
-        form.errors.FirstName = 'First name should not contain numbers or special characters.'
-        valid = false
-    }
-
-    // Validate LastName - check for numbers, special characters, and not being the same as FirstName
-    const lastNamePattern = /^[A-Za-z\s]+$/; // Only letters and spaces allowed
-    if (!form.LastName) {
-        form.errors.LastName = 'Last name is required.'
-        valid = false
-    } else if (!lastNamePattern.test(form.LastName)) {
-        form.errors.LastName = 'Last name should not contain numbers or special characters.'
-        valid = false
-    } else if (form.FirstName && form.FirstName.toLowerCase() === form.LastName.toLowerCase()) {
-        form.errors.LastName = 'Last name cannot be the same as first name.'
-        valid = false
-    }
-
-    // Validate DateOfBirth - Ensure it's a valid date
-    const dob = form.DateOfBirth ? form.DateOfBirth.split('/') : [];
-    if (dob.length !== 3 || dob.some(part => part === '')) {
-        form.errors.DateOfBirth = 'Date of birth is required and must be a valid date.'
-        valid = false
+    // If there are any errors, show an alert
+    if (hasErrors) {
+        alert('Please fix the following errors:\n\n' + errorMessages.join('\n'));
     } else {
-        const [day, month, year] = dob;
-        const validDay = parseInt(day);
-        const validMonth = parseInt(month);
-        const validYear = parseInt(year);
-
-        // Check if the date is a valid day/month/year combination
-        const date = new Date(validYear, validMonth - 1, validDay);
-        if (date.getFullYear() !== validYear || date.getMonth() !== validMonth - 1 || date.getDate() !== validDay) {
-            form.errors.DateOfBirth = 'Please enter a valid date of birth.'
-            valid = false
-        }
-
-        // Check age validity (e.g., can't be older than 120 years)
-        const today = new Date();
-        const age = today.getFullYear() - validYear;
-        if (age > 120) {
-            form.errors.DateOfBirth = 'Age cannot be greater than 120 years.'
-            valid = false
-        } else if (age < 18) {
-            form.errors.DateOfBirth = 'You must be at least 18 years old.'
-            valid = false
-        }
+        // If the step is valid, proceed to the next step
+        nextStep();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scrolling
+        });
     }
+};
 
-    // Validate Email
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-    if (!form.Email || !emailPattern.test(form.Email)) {
-        form.errors.Email = 'Please enter a valid email address.'
-        valid = false
-    }
-
-    // Validate MobilePhone (Starts with 07 and has 11 digits)
-    const mobilePhonePattern = /^07\d{9}$/;
-    if (!form.MobilePhone || !mobilePhonePattern.test(form.MobilePhone)) {
-        form.errors.MobilePhone = 'Please enter a valid mobile phone number (starts with 07 and has 11 digits).'
-        valid = false
-    }
-
-    // Validate HomePhone (Starts with 0 and has exactly 11 digits)
-    const homePhonePattern = /^0\d{10}$/;
-    if (form.HomePhone && !homePhonePattern.test(form.HomePhone)) {
-        form.errors.HomePhone = 'Please enter a valid home phone number (starts with 0 and has exactly 11 digits).'
-        valid = false
-    }
-
-
-    // Validate Dependants
-    if (!form.Dependants) {
-        form.errors.Dependants = 'Dependants information is required.'
-        valid = false
-    }
-
-    return valid
-})
-// Validation for Step 3 (Employer Details)
-const isStep3Valid = computed(() => {
-    form.errors.EmploymentStatus = ''
-    form.errors.EmployerName = ''
-    form.errors.JobTitle = ''
-    form.errors.EmployerIndustry = ''
-    form.errors.EmployerYears = ''
-    form.errors.NextPayDate = ''
-    form.errors.FollowingPayDate = ''
-
-    let valid = true
-
-    if (!form.EmploymentStatus) {
-        form.errors.EmploymentStatus = 'Employment status is required.'
-        valid = false
-    }
-
-    if (!form.EmployerName) {
-        form.errors.EmployerName = 'Employer name is required.'
-        valid = false
-    }
-
-    if (!form.JobTitle) {
-        form.errors.JobTitle = 'Job title is required.'
-        valid = false
-    }
-
-    if (!form.EmployerIndustry) {
-        form.errors.EmployerIndustry = 'Employer industry is required.'
-        valid = false
-    }
-
-    if (!form.EmployerYears) {
-        form.errors.EmployerYears = 'Employer years is required.'
-        valid = false
-    }
-
-    if (!form.NextPayDate) {
-        form.errors.NextPayDate = 'Next pay date is required.'
-        valid = false
-    }
-
-    if (!form.FollowingPayDate) {
-        form.errors.FollowingPayDate = 'Following pay date is required.'
-        valid = false
-    }
-
-    return valid
-})
-// Validation for Step 4 (Address Details)
-const isStep4Valid = computed(() => {
-    form.errors.HouseNameNumber = ''
-    form.errors.StreetAddress = ''
-    form.errors.County = ''
-    form.errors.City = ''
-    form.errors.Postcode = ''
-    form.errors.AddressYears = ''
-
-    let valid = true
-
-    if (!form.HouseNameNumber) {
-        form.errors.HouseNameNumber = 'House name/number is required.'
-        valid = false
-    }
-
-    if (!form.StreetAddress) {
-        form.errors.StreetAddress = 'Street address is required.'
-        valid = false
-    }
-
-    if (!form.County) {
-        form.errors.County = 'County is required.'
-        valid = false
-    }
-
-    if (!form.City) {
-        form.errors.City = 'City is required.'
-        valid = false
-    }
-
-    if (!form.Postcode) {
-        form.errors.Postcode = 'Postcode is required.'
-        valid = false
-    }
-
-    if (!form.AddressYears) {
-        form.errors.AddressYears = 'Address years is required.'
-        valid = false
-    }
-
-    return valid
-})
-// Validation for Step 5 (Monthly Expenses)
-const isStep5Valid = computed(() => {
-    form.errors.ExpenseTransport = ''
-    form.errors.ExpenseFood = ''
-    form.errors.ExpenseCredit = ''
-    form.errors.ExpenseCouncil = ''
-    form.errors.ExpenseOther = ''
-
-    let valid = true
-
-    if (!form.ExpenseTransport) {
-        form.errors.ExpenseTransport = 'Transport expense is required.'
-        valid = false
-    }
-
-    if (!form.ExpenseFood) {
-        form.errors.ExpenseFood = 'Food expense is required.'
-        valid = false
-    }
-
-    if (!form.ExpenseCredit) {
-        form.errors.ExpenseCredit = 'Credit expense is required.'
-        valid = false
-    }
-
-    if (!form.ExpenseCouncil) {
-        form.errors.ExpenseCouncil = 'Council expense is required.'
-        valid = false
-    }
-
-    if (!form.ExpenseOther) {
-        form.errors.ExpenseOther = 'Other expense is required.'
-        valid = false
-    }
-
-    return valid
-})
-// Validation for Step 6 (Additional Info)
-const isStep6Valid = computed(() => {
-    form.errors.BankCard = ''
-    form.errors.BankAccountNumber = ''
-    form.errors.BankSortCode = ''
-    form.errors.ConsentMarketing = ''
-
-    let valid = true
-
-    if (!form.BankCard) {
-        form.errors.BankCard = 'Bank card information is required.'
-        valid = false
-    }
-
-    if (!form.BankAccountNumber) {
-        form.errors.BankAccountNumber = 'Bank account number is required.'
-        valid = false
-    }
-
-    if (!form.BankSortCode) {
-        form.errors.BankSortCode = 'Bank sort code is required.'
-        valid = false
-    }
-
-    if (!form.ConsentMarketing) {
-        form.errors.ConsentMarketing = 'Consent marketing is required.'
-        valid = false
-    }
-
-    return valid
-})
 
 const isStepValid = computed(() => {
+    // debugger
     // Dynamically map the current step to the corresponding validation function
     const stepValidationMap = {
         1: isStep1Valid,
@@ -557,48 +754,1165 @@ const isStepValid = computed(() => {
     };
 
     // Return the validation result for the current step
-    return stepValidationMap[currentStep.value]?.value || true;  // Defaults to `true` if no match
+    return stepValidationMap[currentStep.value]?.value;  // Defaults to `true` if no match
+});
+
+// Step Validation
+const isStep1Valid = computed(() => {
+    let valid = true;
+
+    // Validate LoanAmount
+    if (!form.LoanAmount && form.touched.LoanAmount) {
+        form.errors.LoanAmount = 'Loan amount is required.';
+        valid = false;
+    }
+
+    // Validate LoanTerm
+    if (!form.LoanTerm && form.touched.LoanTerm) {
+        form.errors.LoanTerm = 'Loan term is required.';
+        valid = false;
+    }
+
+    // Validate LoanPurpose
+    if (!form.LoanPurpose && form.touched.LoanPurpose) {
+        form.errors.LoanPurpose = 'Loan purpose is required.';
+        valid = false;
+    }
+
+    return valid;
+});
+const isStep2Valid = computed(() => {
+    let valid = true;
+
+    // Validate Title
+    if (form.touched.Title && !form.Title) {
+        form.errors.Title = 'Title is required.';
+        valid = false;
+    } else {
+        form.errors.Title = ''; // Clear error if valid
+    }
+
+    const firstNamePattern = /^[A-Za-z\s]+$/; // Only letters and spaces allowed
+    if (form.touched.FirstName && !form.FirstName) {
+        form.errors.FirstName = 'First name is required.';
+        valid = false;
+    } else if (form.touched.FirstName && !firstNamePattern.test(form.FirstName)) {
+        form.errors.FirstName = 'First name should not contain numbers or special characters.';
+        valid = false;
+    } else {
+        form.errors.FirstName = ''; // Clear error if valid
+    }
+
+    // Validate LastName
+    const lastNamePattern = /^[A-Za-z\s]+$/; // Only letters and spaces allowed
+    if (form.touched.LastName && !form.LastName) {
+        form.errors.LastName = 'Last name is required.';
+        valid = false;
+    } else if (form.touched.LastName && !lastNamePattern.test(form.LastName)) {
+        form.errors.LastName = 'Last name should not contain numbers or special characters.';
+        valid = false;
+    } else if (form.touched.LastName && form.FirstName && form.FirstName.toLowerCase() === form.LastName.toLowerCase()) {
+        form.errors.LastName = 'Last name cannot be the same as first name.';
+        valid = false;
+    } else {
+        form.errors.LastName = ''; // Clear error if valid
+    }
+
+    // Validate DateOfBirth
+    const dob = form.DateOfBirth ? form.DateOfBirth.split('/') : [];
+    if (form.touched.DateOfBirth && (dob.length !== 3 || dob.some(part => part === ''))) {
+        form.errors.DateOfBirth = 'Date of birth is required and must be a valid date.';
+        valid = false;
+    } else {
+        form.errors.DateOfBirth = ''; // Clear error if valid
+    }
+
+    // Validate Email
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (form.touched.Email && (!form.Email || !emailPattern.test(form.Email))) {
+        form.errors.Email = 'Please enter a valid email address.';
+        valid = false;
+    } else {
+        form.errors.Email = ''; // Clear error if valid
+    }
+
+    // Validate MobilePhone
+    const mobilePhonePattern = /^07\d{9}$/;
+    if (form.touched.MobilePhone && (!form.MobilePhone || !mobilePhonePattern.test(form.MobilePhone))) {
+        form.errors.MobilePhone = 'Please enter a valid mobile phone number (starts with 07 and has 11 digits).';
+        valid = false;
+    } else {
+        form.errors.MobilePhone = ''; // Clear error if valid
+    }
+
+    // Validate HomePhone
+    const homePhonePattern = /^0\d{10}$/;
+    if (form.touched.HomePhone && form.HomePhone && !homePhonePattern.test(form.HomePhone)) {
+        form.errors.HomePhone = 'Please enter a valid home phone number (starts with 0 and has exactly 11 digits).';
+        valid = false;
+    } else {
+        form.errors.HomePhone = ''; // Clear error if valid
+    }
+
+    // Validate Dependants
+    if (form.touched.Dependants && !form.Dependants) {
+        form.errors.Dependants = 'Dependants information is required.';
+        valid = false;
+    } else {
+        form.errors.Dependants = ''; // Clear error if valid
+    }
+
+    return valid;
+});
+const isStep3Valid = computed(() => {
+    let valid = true;
+    const today = new Date().setHours(0, 0, 0, 0);
+    const nextPayDate = form.NextPayDate ? new Date(form.NextPayDate).setHours(0, 0, 0, 0) : null;
+    const followingPayDate = form.FollowingPayDate ? new Date(form.FollowingPayDate).setHours(0, 0, 0, 0) : null;
+
+    const requiresEmployerDetails = ['Full time', 'Part time', 'Self employed'].includes(form.EmploymentStatus);
+
+    // Employment Status
+    if (form.touched.EmploymentStatus && !form.EmploymentStatus) {
+        form.errors.EmploymentStatus = 'Employment status is required.';
+        valid = false;
+    } else {
+        form.errors.EmploymentStatus = '';
+    }
+
+    // Employer Name (conditionally validated)
+    if (requiresEmployerDetails && form.touched.EmployerName && !form.EmployerName) {
+        form.errors.EmployerName = 'Employer name is required.';
+        valid = false;
+    } else {
+        form.errors.EmployerName = '';
+    }
+
+    // Job Title (conditionally validated)
+    if (requiresEmployerDetails && form.touched.JobTitle && !form.JobTitle) {
+        form.errors.JobTitle = 'Job title is required.';
+        valid = false;
+    } else {
+        form.errors.JobTitle = '';
+    }
+
+    // Employer Industry
+    if (form.touched.EmployerIndustry && !form.EmployerIndustry) {
+        form.errors.EmployerIndustry = 'Employer industry is required.';
+        valid = false;
+    } else {
+        form.errors.EmployerIndustry = '';
+    }
+
+    // Employer Years
+    if (form.touched.EmployerYears && !form.EmployerYears) {
+        form.errors.EmployerYears = 'Employer years is required.';
+        valid = false;
+    } else {
+        form.errors.EmployerYears = '';
+    }
+
+    // Next Pay Date
+    if (form.touched.NextPayDate && !form.NextPayDate) {
+        form.errors.NextPayDate = 'Next pay date is required.';
+        valid = false;
+    } else if (nextPayDate !== null && nextPayDate < today) {
+        form.errors.NextPayDate = 'Next pay date must be today or a future date.';
+        valid = false;
+    } else if (nextPayDate !== null && followingPayDate !== null && nextPayDate === followingPayDate) {
+        form.errors.NextPayDate = 'Next pay date cannot be the same as following pay date.';
+        valid = false;
+    } else {
+        form.errors.NextPayDate = '';
+    }
+
+    // Following Pay Date
+    if (form.touched.FollowingPayDate && !form.FollowingPayDate) {
+        form.errors.FollowingPayDate = 'Following pay date is required.';
+        valid = false;
+    } else if (followingPayDate !== null && followingPayDate < today) {
+        form.errors.FollowingPayDate = 'Following pay date must be today or a future date.';
+        valid = false;
+    } else if (nextPayDate !== null && followingPayDate !== null && nextPayDate === followingPayDate) {
+        form.errors.FollowingPayDate = 'Following pay date cannot be the same as next pay date.';
+        valid = false;
+    } else {
+        form.errors.FollowingPayDate = '';
+    }
+
+    return valid;
+});
+const isStep4Valid = computed(() => {
+    let valid = true;
+
+    debugger
+    // House Name/Number
+    if (form.touched.HouseNameNumber && !form.HouseNameNumber) {
+        form.errors.HouseNameNumber = 'House name/number is required.';
+        valid = false;
+    } else {
+        form.errors.HouseNameNumber = '';
+    }
+
+    // Street Address
+    if (form.touched.StreetAddress && !form.StreetAddress) {
+        form.errors.StreetAddress = 'Street address is required.';
+        valid = false;
+    } else {
+        form.errors.StreetAddress = '';
+    }
+
+    // County
+    if (form.touched.County && !form.County) {
+        form.errors.County = 'County is required.';
+        valid = false;
+    } else {
+        form.errors.County = '';
+    }
+
+    // City
+    if (form.touched.City && !form.City) {
+        form.errors.City = 'City is required.';
+        valid = false;
+    } else {
+        form.errors.City = '';
+    }
+
+    // Postcode
+    const ukPostcodeRegex = /^([A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})$/i;
+    if (form.touched.Postcode && !form.Postcode) {
+        form.errors.Postcode = 'Residence.Postcode is required.';
+        valid = false;
+    } else if (form.Postcode && !ukPostcodeRegex.test(form.Postcode.trim())) {
+        form.errors.Postcode = 'Enter a valid UK postcode.';
+        valid = false;
+    } else {
+        form.errors.Postcode = '';
+    }
+
+    // Address Years
+    if (form.touched.AddressYears && !form.AddressYears) {
+        form.errors.AddressYears = 'Address years is required.';
+        valid = false;
+    } else {
+        form.errors.AddressYears = '';
+    }
+
+    return valid;
+});
+const isStep5Valid = computed(() => {
+    let valid = true;
+
+    // Expense Food
+    if (form.touched.ExpenseFood && !form.ExpenseFood) {
+        form.errors.ExpenseFood = 'Food expense is required.';
+        valid = false;
+    } else if (form.ExpenseFood && (isNaN(form.ExpenseFood) || form.ExpenseFood < 0)) {
+        form.errors.ExpenseFood = 'Food expense must be a positive number.';
+        valid = false;
+    } else {
+        form.errors.ExpenseFood = '';
+    }
+
+    // Expense Credit
+    if (form.touched.ExpenseCredit && !form.ExpenseCredit) {
+        form.errors.ExpenseCredit = 'Credit expense is required.';
+        valid = false;
+    } else if (form.ExpenseCredit && (isNaN(form.ExpenseCredit) || form.ExpenseCredit < 0)) {
+        form.errors.ExpenseCredit = 'Credit expense must be a positive number.';
+        valid = false;
+    } else {
+        form.errors.ExpenseCredit = '';
+    }
+
+    // Expense Council
+    if (form.touched.ExpenseCouncil && !form.ExpenseCouncil) {
+        form.errors.ExpenseCouncil = 'Council tax expense is required.';
+        valid = false;
+    } else if (form.ExpenseCouncil && (isNaN(form.ExpenseCouncil) || form.ExpenseCouncil < 0)) {
+        form.errors.ExpenseCouncil = 'Council tax expense must be a positive number.';
+        valid = false;
+    } else {
+        form.errors.ExpenseCouncil = '';
+    }
+
+    // Expense Other
+    if (form.touched.ExpenseOther && !form.ExpenseOther) {
+        form.errors.ExpenseOther = 'Other expense is required.';
+        valid = false;
+    } else if (form.ExpenseOther && (isNaN(form.ExpenseOther) || form.ExpenseOther < 0)) {
+        form.errors.ExpenseOther = 'Other expense must be a positive number.';
+        valid = false;
+    } else {
+        form.errors.ExpenseOther = '';
+    }
+
+    return valid;
+});
+const isStep6Valid = computed(() => {
+    let valid = true;
+
+    // Bank Card
+    if (form.touched.BankCard && !form.BankCard) {
+        form.errors.BankCard = 'Bank card is required.';
+        valid = false;
+    } else {
+        form.errors.BankCard = '';
+    }
+
+    // Bank Account Number
+    if (form.touched.BankAccountNumber && !form.BankAccountNumber) {
+        form.errors.BankAccountNumber = 'Bank account number is required.';
+        valid = false;
+    } else if (form.BankAccountNumber && (isNaN(form.BankAccountNumber) || form.BankAccountNumber.length < 8)) {
+        form.errors.BankAccountNumber = 'Account number must be a valid 8-digit number.';
+        valid = false;
+    } else {
+        form.errors.BankAccountNumber = '';
+    }
+
+    // Bank Sort Code
+    const sortCodeRegex = /^[0-9]{6}$/; // UK sort code format (6 digits)
+    if (form.touched.BankSortCode && !form.BankSortCode) {
+        form.errors.BankSortCode = 'Bank sort code is required.';
+        valid = false;
+    } else if (form.BankSortCode && !sortCodeRegex.test(form.BankSortCode)) {
+        form.errors.BankSortCode = 'Sort code must be a valid 6-digit number.';
+        valid = false;
+    } else {
+        form.errors.BankSortCode = '';
+    }
+
+    // Consent to Marketing
+    if (form.touched.ConsentMarketing && form.ConsentMarketing === null) {
+        form.errors.ConsentMarketing = 'Consent to marketing is required.';
+        valid = false;
+    } else {
+        form.errors.ConsentMarketing = '';
+    }
+
+    return valid;
 });
 
 
 
-// submit logic
-const submitApplication = async () => {
-    try {
-        const response = await axios.post('/api/loan-application', form)
-
-        if (response.status === 200) {
-            applicationId.value = response.data.applicationId
-            applicationStatus.value = 'pending'
-            startStatusCheck()
-        }
-    } catch (error) {
-        console.error('Error submitting application:', error)
+// Validate
+const validateLoanAmount = () => {
+    if (!form.LoanAmount) {
+        form.errors.LoanAmount = 'Loan amount is required.'; // Set error message if invalid
+    } else {
+        form.errors.LoanAmount = ''; // Clear error if valid
     }
-}
-const startStatusCheck = () => {
-    checkingStatus.value = true
-    const interval = setInterval(async () => {
-        if (!applicationId.value) {
-            clearInterval(interval)
-            return
-        }
+};
+const validateLoanTerm = () => {
+    if (!form.LoanTerm) {
+        form.errors.LoanTerm = 'Loan term is required.'; // Set error message if invalid
+    } else {
+        form.errors.LoanTerm = ''; // Clear error if valid
+    }
+};
+const validateLoanPurpose = () => {
+    if (!form.LoanPurpose) {
+        form.errors.LoanPurpose = 'Loan purpose is required.'; // Set error message if invalid
+    } else {
+        form.errors.LoanPurpose = ''; // Clear error if valid
+    }
+};
+const validateTitle = () => {
+    if (!form.Title) {
+        form.errors.Title = 'Title is required.';
+    } else {
+        form.errors.Title = ''; // Clear error if valid
+    }
+};
+const validateFirstName = () => {
+    if (!form.FirstName) {
+        form.errors.FirstName = 'First name is required.';
+    } else {
+        form.errors.FirstName = ''; // Clear error if valid
+    }
+};
+const validateLastName = () => {
+    if (!form.LastName) {
+        form.errors.LastName = 'Last name is required.';
+    } else {
+        form.errors.LastName = ''; // Clear error if valid
+    }
+};
+const validateDateOfBirth = () => {
+    if (!form.DateOfBirth) {
+        form.errors.DateOfBirth = 'Date of birth is required.';
+    } else {
+        form.errors.DateOfBirth = ''; // Clear error if valid
+    }
+};
+const validateEmail = () => {
+    if (!form.Email) {
+        form.errors.Email = 'Email is required.';
+    } else {
+        form.errors.Email = ''; // Clear error if valid
+    }
+};
+const validateMobilePhone = () => {
+    if (!form.MobilePhone) {
+        form.errors.MobilePhone = 'Mobile phone is required.';
+    } else {
+        form.errors.MobilePhone = ''; // Clear error if valid
+    }
+};
+const validateHomePhone = () => {
+    if (!form.HomePhone) {
+        form.errors.HomePhone = 'Home phone is required.';
+    } else {
+        form.errors.HomePhone = ''; // Clear error if valid
+    }
+};
+const validateDependants = () => {
+    if (!form.Dependants) {
+        form.errors.Dependants = 'Dependants are required.';
+    } else {
+        form.errors.Dependants = ''; // Clear error if valid
+    }
+};
+const validateEmploymentStatus = () => {
+    if (!form.EmploymentStatus) {
+        form.errors.EmploymentStatus = 'Employment status is required.';
+    } else {
+        form.errors.EmploymentStatus = ''; // Clear error if valid
+    }
+};
+const validateEmployerName = () => {
+    if (!form.EmployerName) {
+        form.errors.EmployerName = 'Employer name is required.';
+    } else {
+        form.errors.EmployerName = ''; // Clear error if valid
+    }
+};
+const validateJobTitle = () => {
+    if (!form.JobTitle) {
+        form.errors.JobTitle = 'Job title is required.';
+    } else {
+        form.errors.JobTitle = ''; // Clear error if valid
+    }
+};
+const validateEmployerIndustry = () => {
+    if (!form.EmployerIndustry) {
+        form.errors.EmployerIndustry = 'Employer industry is required.';
+    } else {
+        form.errors.EmployerIndustry = ''; // Clear error if valid
+    }
+};
+const validateEmployerYears = () => {
+    if (!form.EmployerYears) {
+        form.errors.EmployerYears = 'Employer years is required.';
+    } else {
+        form.errors.EmployerYears = ''; // Clear error if valid
+    }
+};
+const validateNextPayDate = () => {
+    const today = new Date().setHours(0, 0, 0, 0);
+    const nextPayDate = new Date(form.NextPayDate).setHours(0, 0, 0, 0);
+    const followingPayDate = form.FollowingPayDate ? new Date(form.FollowingPayDate).setHours(0, 0, 0, 0) : null;
 
+    if (!form.NextPayDate) {
+        form.errors.NextPayDate = 'Next pay date is required.';
+    } else if (nextPayDate < today) {
+        form.errors.NextPayDate = 'Next pay date must be today or a future date.';
+    } else if (followingPayDate && nextPayDate === followingPayDate) {
+        form.errors.NextPayDate = 'Next pay date cannot be the same as following pay date.';
+    } else {
+        form.errors.NextPayDate = '';
+    }
+};
+const validateFollowingPayDate = () => {
+    const today = new Date().setHours(0, 0, 0, 0);
+    const followingPayDate = new Date(form.FollowingPayDate).setHours(0, 0, 0, 0);
+    const nextPayDate = form.NextPayDate ? new Date(form.NextPayDate).setHours(0, 0, 0, 0) : null;
+
+    if (!form.FollowingPayDate) {
+        form.errors.FollowingPayDate = 'Following pay date is required.';
+    } else if (followingPayDate < today) {
+        form.errors.FollowingPayDate = 'Following pay date must be today or a future date.';
+    } else if (nextPayDate && followingPayDate === nextPayDate) {
+        form.errors.FollowingPayDate = 'Following pay date cannot be the same as next pay date.';
+    } else {
+        form.errors.FollowingPayDate = '';
+    }
+};
+const validateHouseNameNumber = () => {
+    if (!form.HouseNameNumber) {
+        form.errors.HouseNameNumber = 'House name or number is required.';
+    } else {
+        form.errors.HouseNameNumber = '';
+    }
+};
+const validateStreetAddress = () => {
+    if (!form.StreetAddress) {
+        form.errors.StreetAddress = 'Street address is required.';
+    } else {
+        form.errors.StreetAddress = '';
+    }
+};
+const validateCounty = () => {
+    if (!form.County) {
+        form.errors.County = 'County is required.';
+    } else {
+        form.errors.County = '';
+    }
+};
+const validateCity = () => {
+    if (!form.City) {
+        form.errors.City = 'City is required.';
+    } else {
+        form.errors.City = '';
+    }
+};
+const validatePostcode = () => {
+    const ukPostcodeRegex = /^([A-Z]{1,2}\d{1,2}[A-Z]?\s?\d[A-Z]{2})$/i;
+
+    if (!form.Postcode) {
+        form.errors.Postcode = 'Postcode is required.';
+    } else if (!ukPostcodeRegex.test(form.Postcode.trim())) {
+        form.errors.Postcode = 'Enter a valid UK postcode.';
+    } else {
+        form.errors.Postcode = '';
+    }
+};
+const validateAddressYears = () => {
+    if (!form.AddressYears) {
+        form.errors.AddressYears = 'Address years is required.';
+    } else {
+        form.errors.AddressYears = '';
+    }
+};
+const validateExpenseFood = () => {
+    if (!form.ExpenseFood) {
+        form.errors.ExpenseFood = 'Food expense is required.';
+    } else if (isNaN(form.ExpenseFood) || form.ExpenseFood < 0) {
+        form.errors.ExpenseFood = 'Food expense must be a positive number.';
+    } else {
+        form.errors.ExpenseFood = '';
+    }
+};
+const validateExpenseCredit = () => {
+    if (!form.ExpenseCredit) {
+        form.errors.ExpenseCredit = 'Credit expense is required.';
+    } else if (isNaN(form.ExpenseCredit) || form.ExpenseCredit < 0) {
+        form.errors.ExpenseCredit = 'Credit expense must be a positive number.';
+    } else {
+        form.errors.ExpenseCredit = '';
+    }
+};
+const validateExpenseCouncil = () => {
+    if (!form.ExpenseCouncil) {
+        form.errors.ExpenseCouncil = 'Council tax expense is required.';
+    } else if (isNaN(form.ExpenseCouncil) || form.ExpenseCouncil < 0) {
+        form.errors.ExpenseCouncil = 'Council tax expense must be a positive number.';
+    } else {
+        form.errors.ExpenseCouncil = '';
+    }
+};
+const validateExpenseOther = () => {
+    if (!form.ExpenseOther) {
+        form.errors.ExpenseOther = 'Other expense is required.';
+    } else if (isNaN(form.ExpenseOther) || form.ExpenseOther < 0) {
+        form.errors.ExpenseOther = 'Other expense must be a positive number.';
+    } else {
+        form.errors.ExpenseOther = '';
+    }
+};
+const validateBankCard = () => {
+    // debugger
+    if (!form.BankCard) {
+        form.errors.BankCard = 'Bank card is required.';
+    } else {
+        // Optionally add more complex validation for card number format here (e.g., Luhn algorithm for checking card number validity).
+        form.errors.BankCard = '';
+    }
+};
+const validateBankAccountNumber = () => {
+    if (!form.BankAccountNumber) {
+        form.errors.BankAccountNumber = 'Bank account number is required.';
+    } else if (isNaN(form.BankAccountNumber) || form.BankAccountNumber.length < 8) {
+        form.errors.BankAccountNumber = 'Account number must be a valid 8-digit number.';
+    } else {
+        form.errors.BankAccountNumber = '';
+    }
+};
+const validateBankSortCode = () => {
+    const sortCodeRegex = /^[0-9]{6}$/; // UK sort code format (6 digits).
+    if (!form.BankSortCode) {
+        form.errors.BankSortCode = 'Bank sort code is required.';
+    } else if (!sortCodeRegex.test(form.BankSortCode)) {
+        form.errors.BankSortCode = 'Sort code must be a valid 6-digit number.';
+    } else {
+        form.errors.BankSortCode = '';
+    }
+};
+const validateConsentMarketing = () => {
+    if (form.ConsentMarketing === null) {
+        form.errors.ConsentMarketing = 'Consent to marketing is required.';
+    } else {
+        form.errors.ConsentMarketing = '';
+    }
+};
+
+
+const isSubmitting = ref(false);
+const isFinished = ref(false);
+const isAccepted = ref(false);
+const isRejected = ref(false);
+const isError = ref(false);
+const applicationId = ref(null);
+const applicationStatus = ref(null);
+const pollInterval = ref(null);
+const progressText = ref('Submitting your application...'); // Dynamic text during submission
+
+
+
+// const submitApplication = async (event) => {
+//     event.preventDefault(); // Always prevent default form submit behavior
+//     form.touched.BankCard = true;
+//     form.touched.BankAccountNumber = true;
+//     form.touched.BankSortCode = true;
+//     form.touched.ConsentMarketing = true;
+//
+//     if (currentStep.value === 1) {
+//         console.log(form)
+//         console.log(isStep6Valid.value)
+//         debugger
+//         if (!isStep6Valid.value) {
+//             alert('Please fix the errors in Step 6 before submitting.');
+//             return;
+//         }
+//     }
+//
+//     // Show the spinner and progress text
+//     isSubmitting.value = true;
+//     isFinished.value = false;
+//     isAccepted.value = false;
+//     isRejected.value = false;
+//     progressText.value = 'Validating your details...';
+//
+//     try {
+//         // Submit the form using axios
+//         const response = await axios.post('/api/submit', form);
+//
+//         if (response.status === 201) {
+//             applicationId.value = response.data.applicationId;
+//
+//             // Start polling the status
+//             progressText.value = 'Checking application status...';
+//             pollStatus(applicationId.value);
+//         }
+//     } catch (error) {
+//         console.error('Error submitting application:', error);
+//         isSubmitting.value = false;
+//         progressText.value = 'Submission failed. Please try again.';
+//     }
+// };
+
+const pollStatus = (applicationId) => {
+    pollInterval.value = setInterval(async () => {
         try {
-            const response = await axios.get(`/api/loan-application/status/${applicationId.value}`)
+            const response = await axios.get(`/api/status/${applicationId}`);
 
-            if (response.status === 200 && response.data.applicationStatus) {
-                applicationStatus.value = response.data.applicationStatus
-                clearInterval(interval)
+            debugger
+
+            if (response.status === 200) {
+                const status = response.data.Status;
+                applicationStatus.value = status;
+                debugger
+
+                if (status === 'accepted') {
+                    clearInterval(pollInterval.value);
+                    // isSubmitting.value = false; // hide spinner
+                    progressText.value = 'We found you a lender. Redirecting in 5 seconds...';
+                    isFinished.value = true;
+                    isAccepted.value = true;
+
+                    // Start countdown
+                    let countdown = 5;
+                    const countdownInterval = setInterval(() => {
+                        countdown--;
+                        progressText.value = `We found you a lender. Redirecting in ${countdown} seconds...`;
+
+                        if (countdown <= 0) {
+                            clearInterval(countdownInterval);
+                            window.location.href = response.data.RedirectURL;
+                        }
+                    }, 1000);
+                }
+
+                if (status === 'rejected') {
+                    clearInterval(pollInterval.value);
+                    // isSubmitting.value = false; // hide spinner
+                    isFinished.value = true;
+                    isRejected.value = true;
+                    progressText.value = 'Unfortunately, we couldn’t match you with a lender at this time.';
+                }
             }
         } catch (error) {
-            console.error('Error checking application status:', error)
+            console.error('Error checking application status:', error);
+            clearInterval(pollInterval.value);
+            isSubmitting.value = false;
+            progressText.value = 'Error checking status. Please try again.';
         }
-    }, 3000)
-}
+    }, 5000); // Poll every 5 seconds
+};
+
+const stopPolling = () => {
+    if (pollInterval.value) {
+        clearInterval(pollInterval.value);
+    }
+};
 
 
 </script>
+
+<template>
+    <div class="max-w-xl mx-auto py-10 bg-transparent">
+        <form @submit.prevent="submitApplication" v-if="!isSubmitting" id="iframe" class="space-y-4 ">
+            <!-- Progress Bar -->
+            <div class="mb-6">
+                <div class="relative pt-1">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm font-semibold text-teal-400">Step {{ currentStep }} / 6</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div
+                            v-for="step in 6"
+                            :key="step"
+                            @click="updateStep(step)"
+                            class="relative flex-1 cursor-pointer group"
+                        >
+                            <!-- Circle -->
+                            <div
+                                class="w-6 h-6 mx-auto rounded-full text-sm flex items-center justify-center font-bold transition-all"
+                                :class="{
+              'bg-cyan-400 text-white': step <= currentStep,
+              'bg-gray-300 text-gray-700': step > currentStep
+            }"
+                            >
+                                {{ step }}
+                            </div>
+                            <!-- Line -->
+                            <div
+                                v-if="step < 6"
+                                class="absolute top-3 left-1/2 w-full h-1"
+                                :class="step < currentStep ? 'bg-cyan-400' : 'bg-gray-300'"
+                                style="transform: translateX(50%); width: calc(100% - 1.5rem); z-index: -1;"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="hasErrors" class="fixed top-0 left-0 right-0 bg-red-500 text-white p-4 text-center z-50">
+                <div class="max-w-2xl mx-auto">
+                    <strong class="text-lg">Please fix the following errors:</strong>
+                    <ul class="mt-2">
+                        <li v-for="(error, index) in errorMessages" :key="index" class="text-sm mt-1">
+                            - {{ error }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <!-- Step 1: Loan Information -->
+            <div v-if="currentStep === 1">
+                <LoanAmount
+                    v-model="form.LoanAmount"
+                    :error="form.errors.LoanAmount"
+                    @change="validateLoanAmount"
+                    :class="{'border-red-400  bg-red-100': form.errors.LoanAmount}"
+                />
+
+                <LoanTerm
+                    v-model="form.LoanTerm"
+                    :error="form.errors.LoanTerm"
+                    @blur="form.touched.LoanTerm = true"
+                    @change="validateLoanTerm"
+                    :class="{'border-red-400  bg-red-100': form.errors.LoanTerm}"
+                />
+                <LoanPurpose
+                    v-model="form.LoanPurpose"
+                    :error="form.errors.LoanPurpose"
+                    @blur="form.touched.LoanPurpose = true"
+                    @change="validateLoanPurpose"
+                    :class="{'border-red-400  bg-red-100': form.errors.LoanPurpose}"
+                />
+            </div>
+
+            <!-- Step 2: Personal Details -->
+            <div v-if="currentStep === 2">
+                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your details</h2>
+
+                <Title
+                    v-model="form.Title"
+                    :error="form.errors.Title"
+                    :class="{'border-red-500 bg-red-100': form.errors.Title}"
+                    @blur="validateTitle"
+                    @change="validateTitle"
+                />
+
+                <FirstName
+                    v-model="form.FirstName"
+                    :error="form.errors.FirstName"
+                    :class="{'border-red-500 bg-red-100': form.errors.FirstName}"
+                    @blur="validateFirstName"
+                    @input="validateFirstName"
+                />
+
+                <LastName
+                    v-model="form.LastName"
+                    :error="form.errors.LastName"
+                    :class="{'border-red-500 bg-red-100': form.errors.LastName}"
+                    @blur="validateLastName"
+                    @input="validateLastName"
+                />
+
+                <DateOfBirth
+                    v-model="form.DateOfBirth"
+                    :error="form.errors.DateOfBirth"
+                    :class="{'border-red-500 bg-red-100': form.errors.DateOfBirth}"
+                    @blur="validateDateOfBirth"
+                    @input="validateDateOfBirth"
+                />
+
+                <Email
+                    v-model="form.Email"
+                    :error="form.errors.Email"
+                    :class="{'border-red-500 bg-red-100': form.errors.Email}"
+                    @blur="validateEmail"
+                    @input="validateEmail"
+                />
+
+                <MobilePhone
+                    v-model="form.MobilePhone"
+                    :error="form.errors.MobilePhone"
+                    :class="{'border-red-500 bg-red-100': form.errors.MobilePhone}"
+                    @blur="validateMobilePhone"
+                    @input="validateMobilePhone"
+                />
+
+                <HomePhone
+                    v-model="form.HomePhone"
+                    :error="form.errors.HomePhone"
+                    :class="{'border-red-500 bg-red-100': form.errors.HomePhone}"
+                    @blur="validateHomePhone"
+                    @input="validateHomePhone"
+                />
+
+                <Dependants
+                    v-model="form.Dependants"
+                    :error="form.errors.Dependants"
+                    :class="{'border-red-500 bg-red-100': form.errors.Dependants}"
+                    @blur="validateDependants"
+                    @change="validateDependants"
+                />
+            </div>
+
+
+            <!-- Step 3: Employer Details -->
+            <div v-if="currentStep === 3">
+                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Employer</h2>
+
+                <!-- Employment Status -->
+                <EmploymentStatus
+                    v-model="form.EmploymentStatus"
+                    :error="form.errors.EmploymentStatus"
+                    :class="{'border-red-500 bg-red-100': form.errors.EmploymentStatus}"
+                    @change="validateEmploymentStatus"
+                    @blur="validateEmploymentStatus"
+                />
+
+                <!-- Employer Name & Job Title (conditionally shown) -->
+                <template v-if="['Full time', 'Part time', 'Self employed'].includes(form.EmploymentStatus)">
+                    <!-- Employer Name -->
+                    <EmployerName
+                        v-model="form.EmployerName"
+                        :error="form.errors.EmployerName"
+                        :class="{'border-red-500 bg-red-100': form.errors.EmployerName}"
+                        @input="validateEmployerName"
+                        @blur="validateEmployerName"
+                    />
+
+                    <!-- Job Title -->
+                    <JobTitle
+                        v-model="form.JobTitle"
+                        :error="form.errors.JobTitle"
+                        :class="{'border-red-500 bg-red-100': form.errors.JobTitle}"
+                        @input="validateJobTitle"
+                        @blur="validateJobTitle"
+                    />
+                </template>
+
+                <!-- Employer Industry -->
+                <EmployerIndustry
+                    v-model="form.EmployerIndustry"
+                    :error="form.errors.EmployerIndustry"
+                    :class="{'border-red-500 bg-red-100': form.errors.EmployerIndustry}"
+                    @change="validateEmployerIndustry"
+                    @blur="validateEmployerIndustry"
+                />
+
+                <!-- Employer Years -->
+                <EmployerYears
+                    v-model="form.EmployerYears"
+                    :error="form.errors.EmployerYears"
+                    :class="{'border-red-500 bg-red-100': form.errors.EmployerYears}"
+                    @change="validateEmployerYears"
+                    @blur="validateEmployerYears"
+                />
+
+                <!-- Next Pay Date -->
+                <NextPayDate
+                    v-model="form.NextPayDate"
+                    :error="form.errors.NextPayDate"
+                    :class="{'border-red-500 bg-red-100': form.errors.NextPayDate}"
+                    @input="validateNextPayDate"
+                    @blur="validateNextPayDate"
+                />
+
+                <!-- Following Pay Date -->
+                <FollowingPayDate
+                    v-model="form.FollowingPayDate"
+                    :error="form.errors.FollowingPayDate"
+                    :class="{'border-red-500 bg-red-100': form.errors.FollowingPayDate}"
+                    @input="validateFollowingPayDate"
+                    @blur="validateFollowingPayDate"
+                />
+            </div>
+
+
+            <!-- Step 4: Address Details -->
+            <div v-if="currentStep === 4">
+                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Address</h2>
+
+                <HouseNameNumber
+                    v-model="form.HouseNameNumber"
+                    :error="form.errors.HouseNameNumber"
+                    :class="{ 'border-red-500 bg-red-100': form.errors.HouseNameNumber }"
+                    @input="validateHouseNameNumber"
+                    @blur="validateHouseNameNumber"
+                />
+
+                <StreetAddress
+                    v-model="form.StreetAddress"
+                    :error="form.errors.StreetAddress"
+                    :class="{ 'border-red-500 bg-red-100': form.errors.StreetAddress }"
+                    @input="validateStreetAddress"
+                    @blur="validateStreetAddress"
+                />
+
+                <County
+                    v-model="form.County"
+                    :error="form.errors.County"
+                    :class="{ 'border-red-500 bg-red-100': form.errors.County }"
+                    @change="validateCounty"
+                    @blur="validateCounty"
+                />
+
+                <City
+                    v-model="form.City"
+                    :error="form.errors.City"
+                    :class="{ 'border-red-500 bg-red-100': form.errors.City }"
+                    @change="validateCity"
+                    @blur="validateCity"
+                />
+
+                <Postcode
+                    v-model="form.Postcode"
+                    :error="form.errors.Postcode"
+                    :class="{ 'border-red-500 bg-red-100': form.errors.Postcode }"
+                    @input="validatePostcode"
+                    @blur="validatePostcode"
+                />
+
+                <AddressYears
+                    v-model="form.AddressYears"
+                    :error="form.errors.AddressYears"
+                    :class="{ 'border-red-500 bg-red-100': form.errors.AddressYears }"
+                    @change="validateAddressYears"
+                    @blur="validateAddressYears"
+                />
+            </div>
+
+
+            <!-- Step 5: Monthly Expenses -->
+            <div v-if="currentStep === 5">
+                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Monthly Expenses</h2>
+
+<!--                <MortgageRentExpense-->
+<!--                    v-model="form.MortgageRentExpense"-->
+<!--                    :error="form.errors.MortgageRentExpense"-->
+<!--                    @input="validateMortgageRentExpense"-->
+<!--                    @blur="validateMortgageRentExpense"-->
+<!--                    :class="{'border-red-500 bg-red-100': form.errors.MortgageRentExpense}"-->
+<!--                />-->
+<!--                <Transport-->
+<!--                    v-model="form.ExpenseTransport"-->
+<!--                    :error="form.errors.ExpenseTransport"-->
+<!--&lt;!&ndash;                    @input="validateExpenseTransport"&ndash;&gt;-->
+<!--&lt;!&ndash;                    @blur="validateExpenseTransport"&ndash;&gt;-->
+<!--                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseTransport}"-->
+<!--                />-->
+                <!-- Food -->
+                <Food
+                    v-model="form.ExpenseFood"
+                    :error="form.errors.ExpenseFood"
+                    @input="validateExpenseFood"
+                    @blur="validateExpenseFood"
+                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseFood}"
+                />
+
+                <!-- Credit -->
+                <Credit
+                    v-model="form.ExpenseCredit"
+                    :error="form.errors.ExpenseCredit"
+                    @input="validateExpenseCredit"
+                    @blur="validateExpenseCredit"
+                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseCredit}"
+                />
+
+                <!-- Council -->
+                <Council
+                    v-model="form.ExpenseCouncil"
+                    :error="form.errors.ExpenseCouncil"
+                    @input="validateExpenseCouncil"
+                    @blur="validateExpenseCouncil"
+                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseCouncil}"
+                />
+
+                <!-- Other -->
+                <Other
+                    v-model="form.ExpenseOther"
+                    :error="form.errors.ExpenseOther"
+                    @input="validateExpenseOther"
+                    @blur="validateExpenseOther"
+                    :class="{'border-red-500 bg-red-100': form.errors.ExpenseOther}"
+                />
+            </div>
+
+
+            <!-- Step 6: Additional Information -->
+            <div v-if="currentStep === 6">
+                <h3 class="text-3xl font-bold text-neutral-800 mb-6 text-center">Last bit...</h3>
+                <p class="text-lg font-bold text-neutral-800 border-2 border-cyan-500 rounded-xl px-5 py-3 mb-6 shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent text-center mx-auto">
+                    We need these details to deposit the funds and verify your application
+                </p>
+
+
+                <BankCard
+                    v-model="form.BankCard"
+                    :error="form.errors.BankCard"
+                    @blur="validateBankCard"
+                    @change="validateBankCard"
+                    :class="{'border-red-500 bg-red-100': form.errors.BankCard}"
+                />
+                <BankAccountNumber
+                    v-model="form.BankAccountNumber"
+                    :error="form.errors.BankAccountNumber"
+                    @input="validateBankAccountNumber"
+                    @blur="validateBankAccountNumber"
+                    :class="{'border-red-500 bg-red-100': form.errors.BankAccountNumber}"
+                />
+                <BankSortCode
+                    v-model="form.BankSortCode"
+                    :error="form.errors.BankSortCode"
+                    @input="validateBankSortCode"
+                    @blur="validateBankSortCode"
+                    :class="{'border-red-500 bg-red-100': form.errors.BankSortCode}"
+                />
+                <ConsentMarketing
+                    v-model="form.ConsentMarketing"
+                    :error="form.errors.ConsentMarketing"
+                    @input="validateConsentMarketing"
+                    @blur="validateConsentMarketing"
+                    @change="validateConsentMarketing"
+                />
+            </div>
+
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between">
+                <!-- Previous Button - Hide when currentStep is 6 -->
+                <button v-if="currentStep > 1 && currentStep < 6" @click="prevStep" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">
+                    Previous
+                </button>
+
+                <!-- Next Button -->
+                <button
+                    v-if="currentStep < 6"
+                    @click="handleNextStep"
+                    class="px-6 py-3 bg-cyan-400 text-white rounded-md hover:bg-cyan-600 transition-all duration-300"
+                    :class="{'ml-auto': currentStep === 1}"
+                    :disabled="!isStepValid"
+                >
+                    Next
+                </button>
+
+<!--                 Submit Button - Only shown if currentStep is 6, and bigger size-->
+                <div class="flex justify-center w-full" v-if="currentStep === 6">
+                    <button
+                        type="submit"
+                        @click="submitApplication"
+                        :disabled="!isStep6Valid"
+                        class="px-8 py-4 bg-gradient-to-r from-cyan-400 to-purple-500 text-white rounded-md hover:bg-cyan-600 text-xl"
+                    >
+                        Submit
+                    </button>
+                </div>
+            </div>
+
+<!--    </div>-->
+
+        </form>
+        <!-- Progress Spinner and Dynamic Text -->
+        <div v-if="isSubmitting" class="flex items-center justify-center">
+            <!-- Spinner (while waiting for response) -->
+            <template v-if="!isFinished">
+                <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 border-solid border-current rounded-full text-blue-600" role="status"></div>
+                <div class="ml-4">
+                    <span class="visually-hidden">Processing...</span>
+                    <p>{{ progressText }}</p>
+                </div>
+            </template>
+
+            <!-- Accepted State -->
+            <template v-else-if="isAccepted">
+                <div class="text-green-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p>{{ progressText }}</p>
+                </div>
+            </template>
+
+            <!-- Rejected State -->
+            <template v-else-if="isRejected">
+                <div class="text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </div>
+                <div class="ml-4">
+                    <p>{{ progressText }}</p>
+                </div>
+            </template>
+        </div>
+
+
+
+    </div>
+</template>
+
+
 
 <style scoped>
 input {
@@ -615,4 +1929,48 @@ h2 {
 #app > div {
     background-color: transparent;
 }
+/* You can customize your spinner style here */
+.spinner-border {
+    border-top-color: transparent; /* Hides the top part of the circle to create the spinning effect */
+    border-radius: 50%; /* Make it circular */
+    animation: spin 1s linear infinite; /* The spin animation */
+}
+
+.spinner-border::before {
+    content: ''; /* Ensure the spinner is created */
+    display: block;
+    width: 2rem; /* Width of the spinner */
+    height: 2rem; /* Height of the spinner */
+    border: 0.25rem solid #f3f4f6; /* Light gray border */
+    border-top-color: #1d4ed8; /* Blue color for the top part */
+    border-radius: 50%; /* Circular spinner */
+    animation: spin 1s linear infinite; /* The spin animation */
+}
+
+/* Define the keyframes for the spinner rotation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); /* Start the spinner at 0 degrees */
+    }
+    100% {
+        transform: rotate(360deg); /* Rotate it 360 degrees */
+    }
+}
+
+/* Additional styling for the surrounding container */
+.spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.spinner-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1d4ed8; /* Blue color for the text */
+    margin-left: 0.5rem;
+}
+
 </style>

@@ -1,10 +1,11 @@
 <?php
 
 
+use Illuminate\Support\Facades\Route;
 
 // routes/api.php
 use App\Http\Controllers\LoanApplicationController;
 
-Route::post('/loan-application', [LoanApplicationController::class, 'store']);
-Route::get('/loan-application/status/{applicationId}', [LoanApplicationController::class, 'status']);
+Route::post('/submit', [LoanApplicationController::class, 'store']);
+Route::get('/status/{applicationId}', [LoanApplicationController::class, 'status']);
 

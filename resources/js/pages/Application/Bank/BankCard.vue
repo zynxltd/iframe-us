@@ -1,8 +1,12 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Bank Card</label>
-        <div class="flex space-x-6">
-            <div class="text-center">
+        <label class="block text-sm font-semibold text-neutral-800 mb-4 uppercase tracking-wide text-center">
+            Bank Card
+        </label>
+        <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto">
+
+        <!-- Visa -->
+            <div class="text-center w-full">
                 <input
                     type="radio"
                     id="visa"
@@ -13,19 +17,16 @@
                 />
                 <label
                     for="visa"
-                    class="cursor-pointer block rounded-xl p-3 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
+                    class="w-full cursor-pointer block rounded-xl p-4 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
                     :class="model === 'Visa' ? 'ring-2 ring-cyan-400' : ''"
                 >
-                    <img
-                        src="/path/to/visa-logo.png"
-                        alt="Visa"
-                        class="w-16 h-16 mx-auto"
-                    />
-                    <p class="text-cyan-300 text-sm mt-2">Visa</p>
+                    <img src="/images/visa-2.png" alt="Visa" class="w-16 h-16 mx-auto" />
+                    <p class="text-neutral-800 text-sm mt-2 font-bold">Visa Debit</p>
                 </label>
             </div>
 
-            <div class="text-center">
+            <!-- Mastercard -->
+            <div class="text-center w-full">
                 <input
                     type="radio"
                     id="mastercard"
@@ -36,19 +37,16 @@
                 />
                 <label
                     for="mastercard"
-                    class="cursor-pointer block rounded-xl p-3 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
+                    class="w-full cursor-pointer block rounded-xl p-4 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
                     :class="model === 'Mastercard' ? 'ring-2 ring-cyan-400' : ''"
                 >
-                    <img
-                        src="/images/mastercard-logo.png"
-                        alt="Mastercard"
-                        class="w-16 h-16 mx-auto"
-                    />
-                    <p class="text-cyan-300 text-sm mt-2">Mastercard</p>
+                    <img src="/images/mastercard-2.png" alt="Mastercard" class="w-16 h-16 mx-auto" />
+                    <p class="text-neutral-800 text-sm mt-2 font-bold">mastercard</p>
                 </label>
             </div>
 
-            <div class="text-center">
+            <!-- Other -->
+            <div class="text-center w-full">
                 <input
                     type="radio"
                     id="other"
@@ -59,21 +57,18 @@
                 />
                 <label
                     for="other"
-                    class="cursor-pointer block rounded-xl p-3 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
+                    class="w-full cursor-pointer block rounded-xl p-4 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
                     :class="model === 'Other' ? 'ring-2 ring-cyan-400' : ''"
                 >
-                    <img
-                        src="/images/other-card-logo.png"
-                        alt="Other"
-                        class="w-16 h-16 mx-auto"
-                    />
-                    <p class="text-cyan-300 text-sm mt-2">Other</p>
+                    <img src="/images/other-card-form.png" alt="Other" class="w-16 h-16 mx-auto" />
+<!--                    <p class="text-neutral-800 text-sm mt-2">Other</p>-->
                 </label>
             </div>
         </div>
-        <div v-if="error" class="text-pink-500 text-sm mt-2">{{ error }}</div>
+        <div v-if="error" class="text-pink-500 text-sm mt-4 text-center">{{ error }}</div>
     </div>
 </template>
+
 
 <script setup>
 import { ref, watch } from 'vue'

@@ -1,6 +1,6 @@
 <template>
     <div class="mb-6">
-        <label class="block text-sm font-semibold text-teal-400 mb-2 uppercase tracking-wide">Bank Sort Code</label>
+        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">Bank Sort Code</label>
         <div class="grid grid-cols-3 gap-2">
             <!-- First input field (First 2 digits) -->
             <input
@@ -65,7 +65,8 @@ const thirdPart = ref('')
 
 // Watch the parts and update the model value
 watch([firstPart, secondPart, thirdPart], () => {
-    model.value = `${firstPart.value}-${secondPart.value}-${thirdPart.value}`
+    // Update model without hyphens
+    model.value = `${firstPart.value}${secondPart.value}${thirdPart.value}`
 })
 
 // Format the sort code input
