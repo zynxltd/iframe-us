@@ -18,6 +18,7 @@ Route::get('dashboard', function () {
 //})->name('form');
 //
 Route::get('/form', [FormController::class, 'index'])->name('form');
+Route::get('/form/moola', [FormController::class, 'index'])->name('form');
 
 
 

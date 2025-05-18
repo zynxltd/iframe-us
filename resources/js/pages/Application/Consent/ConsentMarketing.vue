@@ -1,5 +1,6 @@
 <template>
-    <div class="mb-6">
+    <div class="mb-6 p-4">
+
         <label class="block text-sm font-semibold p-4 mb-4 text-neutral-800 mb-2 uppercase tracking-wide text-center">Consent for Marketing</label>
         <div class="grid grid-cols-3 gap-4 justify-center items-center">
             <!-- SMS Checkbox -->

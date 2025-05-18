@@ -1,27 +1,27 @@
 <template>
-    <div class="mb-6">
-        <label class="block text-sm font-semibold text-neutral-800 mb-4 uppercase tracking-wide text-center">
+    <div data-cy="bank-card" class="mb-6 p-4">
+        <label class="block text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide text-center">
             Bank Card
         </label>
         <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto">
-
-        <!-- Visa -->
+            <!-- Visa -->
             <div class="text-center w-full">
                 <input
                     type="radio"
                     id="visa"
                     name="bankCard"
-                    value="Visa"
+                    value=1
                     v-model="model"
                     class="hidden"
                 />
                 <label
                     for="visa"
-                    class="w-full cursor-pointer block rounded-xl p-4 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
-                    :class="model === 'Visa' ? 'ring-2 ring-cyan-400' : ''"
+                    data-cy="bank-card-1"
+                    class="w-full block rounded-lg p-4 bg-white cursor-pointer transition-all duration-200 hover:bg-gray-100"
+                    :class="model === '1' ? 'ring-2 ring-black shadow' : 'ring-transparent'"
                 >
                     <img src="/images/visa-2.png" alt="Visa" class="w-16 h-16 mx-auto" />
-                    <p class="text-neutral-800 text-sm mt-2 font-bold">Visa Debit</p>
+                    <p class="text-gray-800 text-sm mt-2 font-bold">Visa Debit</p>
                 </label>
             </div>
 
@@ -31,17 +31,18 @@
                     type="radio"
                     id="mastercard"
                     name="bankCard"
-                    value="Mastercard"
+                    value=2
                     v-model="model"
                     class="hidden"
                 />
                 <label
                     for="mastercard"
-                    class="w-full cursor-pointer block rounded-xl p-4 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
-                    :class="model === 'Mastercard' ? 'ring-2 ring-cyan-400' : ''"
+                    data-cy="bank-card-2"
+                    class="w-full block rounded-lg p-4 bg-white cursor-pointer transition-all duration-200 hover:bg-gray-100"
+                    :class="model === '2' ? 'ring-2 ring-black shadow' : 'ring-transparent'"
                 >
                     <img src="/images/mastercard-2.png" alt="Mastercard" class="w-16 h-16 mx-auto" />
-                    <p class="text-neutral-800 text-sm mt-2 font-bold">mastercard</p>
+                    <p class="text-gray-800 text-sm mt-2 font-bold">Mastercard</p>
                 </label>
             </div>
 
@@ -51,30 +52,29 @@
                     type="radio"
                     id="other"
                     name="bankCard"
-                    value="Other"
+                    value=3
                     v-model="model"
                     class="hidden"
                 />
                 <label
                     for="other"
-                    class="w-full cursor-pointer block rounded-xl p-4 bg-[#fff] transition-all duration-300 hover:ring-2 hover:ring-cyan-400"
-                    :class="model === 'Other' ? 'ring-2 ring-cyan-400' : ''"
+                    data-cy="bank-card-3"
+                    class="w-full block rounded-lg p-4 bg-white cursor-pointer transition-all duration-200 hover:bg-gray-100"
+                    :class="model === '3' ? 'ring-2 ring-black shadow' : 'ring-transparent'"
                 >
                     <img src="/images/other-card-form.png" alt="Other" class="w-16 h-16 mx-auto" />
-<!--                    <p class="text-neutral-800 text-sm mt-2">Other</p>-->
                 </label>
             </div>
         </div>
-        <div v-if="error" class="text-pink-500 text-sm mt-4 text-center">{{ error }}</div>
+        <div v-if="error" class="text-red-500 text-sm mt-4 text-center">{{ error }}</div>
     </div>
 </template>
-
 
 <script setup>
 import { ref, watch } from 'vue'
 
 const props = defineProps({
-    modelValue: String,
+    modelValue: [String, Number],
     error: String,
 })
 
@@ -82,11 +82,11 @@ const emit = defineEmits(['update:modelValue'])
 
 const model = ref(props.modelValue || '')
 
-watch(model, (newValue) => {
+watch(model, newValue => {
     emit('update:modelValue', newValue)
 })
 </script>
 
 <style scoped>
-/* No extra styles needed, all handled via Tailwind */
+/* All styling handled via Tailwind utility classes */
 </style>

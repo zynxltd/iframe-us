@@ -1,78 +1,88 @@
 <template>
-    <div class="mb-6">
-        <label class="block text-sm font-semibold text-neutral-800 mb-2 uppercase tracking-wide">Following Pay Date</label>
+    <div class="mb-6 p-4">
+        <label class="block text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">
+            Following Pay Date
+        </label>
         <input
-            type="date"
-            :min="minDate"
+            data-cy="following-pay-date"
             v-model="model"
-            class="w-full rounded-xl border-2 border-cyan-500 bg-[#ffff] p-3 text-black placeholder-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-purple-500 transition-all duration-300"
-            @change="validateDate"
+            type="text"
+            class="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 transition-all duration-200"
+            placeholder="DD/MM/YYYY"
+            @blur="validateDate"
         />
-        <div v-if="localError" class="text-pink-500 text-sm mt-2">{{ localError }}</div>
-        <div v-else-if="error" class="text-pink-500 text-sm mt-2">{{ error }}</div>
+        <div v-if="localError" class="text-red-500 text-sm mt-2">{{ localError }}</div>
+        <div v-else-if="error" class="text-red-500 text-sm mt-2">{{ error }}</div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 
 // Props
 const props = defineProps({
     modelValue: String,
     error: String,
-    nextPayDate: String, // Pass in the NextPayDate for comparison
 })
 
 const emit = defineEmits(['update:modelValue'])
 
 const model = computed({
     get: () => props.modelValue,
-    set: (value) => emit('update:modelValue', value),
+    set: value => emit('update:modelValue', value),
 })
 
 const localError = ref('')
 
-// Minimum selectable date
-const minDate = computed(() => {
-    if (props.nextPayDate) {
-        // Add 1 day to nextPayDate
-        const next = new Date(props.nextPayDate)
-        next.setDate(next.getDate() + 1)
-        return next.toISOString().split('T')[0]
-    }
-    return new Date().toISOString().split('T')[0]
-})
+// Today's date (no time) for min validation
+const today = new Date()
+today.setHours(0, 0, 0, 0)
 
-// Validate selected date
+// Validate DD/MM/YYYY format, weekday, and after today
 const validateDate = () => {
     localError.value = ''
     if (!model.value) return
 
-    const selected = new Date(model.value)
-    const selectedDay = selected.getDay()
+    const pattern = /^(\d{2})\/(\d{2})\/(\d{4})$/
+    const match = pattern.exec(model.value.trim())
+    if (!match) {
+        localError.value = 'Date must be in DD/MM/YYYY format.'
+        return
+    }
 
-    if (selectedDay === 0 || selectedDay === 6) {
+    const day = parseInt(match[1], 10)
+    const month = parseInt(match[2], 10) - 1
+    const year = parseInt(match[3], 10)
+    const dateObj = new Date(year, month, day)
+
+    // Check valid date components
+    if (
+        dateObj.getFullYear() !== year ||
+        dateObj.getMonth() !== month ||
+        dateObj.getDate() !== day
+    ) {
+        localError.value = 'Please enter a valid date.'
+        return
+    }
+
+    // Check not weekend
+    const weekday = dateObj.getDay()
+    if (weekday === 0 || weekday === 6) {
         localError.value = 'Pay date cannot be on a weekend.'
-        model.value = '' // Clear if invalid
+        return
     }
 
-    if (props.nextPayDate) {
-        const nextPay = new Date(props.nextPayDate)
-        if (selected <= nextPay) {
-            localError.value = 'Following pay date must be after next pay date.'
-            model.value = '' // Clear if invalid
-        }
+    // Check it is after the reference date (today)
+    if (dateObj <= today) {
+        localError.value = 'Pay date must be after today.'
+        return
     }
+
+    // Passed validation
+    emit('update:modelValue', model.value)
 }
-
-// Watch if nextPayDate changes to revalidate
-watch(() => props.nextPayDate, () => {
-    validateDate()
-})
 </script>
 
 <style scoped>
-input {
-    outline: none;
-}
+/* All styling handled via Tailwind utility classes */
 </style>

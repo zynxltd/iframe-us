@@ -1,10 +1,13 @@
 <template>
-    <div class="flex gap-2">
+    <div data-cy="months-at-employer" class="flex gap-2 p-4">
         <label
             v-for="option in options"
             :key="option"
-            class="flex items-center px-4 py-2 border rounded cursor-pointer hover:bg-blue-100 transition-colors"
-            :class="modelValue === option ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'"
+            :data-cy="`months-at-employer-${option}`"
+            class="flex-1 flex items-center justify-center px-4 py-2 border rounded-lg cursor-pointer transition-all duration-200"
+            :class="modelValue === option
+        ? 'bg-black text-white border-transparent shadow'
+        : 'bg-white border-gray-300 text-gray-800 hover:bg-gray-100 hover:border-gray-400'"
         >
             <input
                 type="radio"
@@ -35,3 +38,7 @@ const model = computed({
     set: (value) => emit('update:modelValue', value)
 })
 </script>
+
+<style scoped>
+/* All styling via Tailwind utility classes */
+</style>

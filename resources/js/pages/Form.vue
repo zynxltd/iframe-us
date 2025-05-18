@@ -16,9 +16,9 @@ import Email from "@/pages/Application/Applicant/Email.vue";
 import EmploymentStatus from "@/pages/Application/Employer/EmploymentStatus.vue";
 import EmployerName from "@/pages/Application/Employer/EmployerName.vue";
 import JobTitle from "@/pages/Application/Employer/JobTitle.vue";
-import EmployerIndustry from "@/pages/Application/Employer/EmployerIndustry.vue";
+import EmploymentIndustry from "@/pages/Application/Employer/EmploymentIndustry.vue";
 import EmployerYears from "@/pages/Application/Employer/EmployerYears.vue";
-import AddressYears from "@/pages/Application/Employer/AddressYears.vue";
+import AddressYears from "@/pages/Application/Residence/AddressYears.vue";
 import NextPayDate from "@/pages/Application/Employer/NextPayDate.vue";
 import FollowingPayDate from "@/pages/Application/Employer/FollowingPayDate.vue";
 import StreetAddress from "@/pages/Application/Residence/StreetAddress.vue";
@@ -39,9 +39,11 @@ import MonthlyMortgageRent from '@/pages/Application/Expense/MonthlyMortgageRent
 import MaritalStatus from '@/pages/Application/Applicant/MaritalStatus.vue';
 import ResidentialStatus from '@/pages/Application/Residence/ResidentialStatus.vue';
 import Utilities from '@/pages/Application/Expense/Utilities.vue';
-import RecentLoanCount from '@/pages/Application/Applicant/RecentLoanCount.vue';
+import RecentLoanCount from '@/pages/Application/Loan/RecentLoanCount.vue';
 import AdultsLivingWith from '@/pages/Application/Applicant/AdultsLivingWith.vue';
 import { usePage } from '@inertiajs/vue3';
+import NetMonthlyIncome from '@/pages/Application/Employer/NetMonthlyIncome.vue';
+import IncomeFrequency from '@/pages/Application/Employer/IncomeFrequency.vue';
 
 const currentStep = ref(1)
 
@@ -101,7 +103,7 @@ window.addEventListener('message', function(event) {
         AffSub: parentParams.AffSub || '',
         AffSub2: parentParams.AffSub2 || '',
         CreationUrl: window.location.href, // Current page URL
-        ReferrerUrl: document.referrer || '', // URL of the page that referred to this one
+        ReferrerUrl: document.referrer || window.location.href, // URL of the page that referred to this one
         IpAddress: '127.0.0.1', // You would need to get this from the backend
         UserAgent: navigator.userAgent, // Browser information
     });
@@ -115,16 +117,16 @@ window.addEventListener('message', function(event) {
 console.log(getCookie())
 
 const form = useForm({
-    AffID: trackingParams.AffID,
-    OfferID:  trackingParams.OfferID,
-    Campaign: trackingParams.Campaign,
-    AffSub: trackingParams.AffSub,
-    AffSub2:  trackingParams.AffSub2,
-    AffSub3:  trackingParams.AffSub3,
-    AffSub4:  trackingParams.AffSub4,
-    AffSub5:  trackingParams.AffSub5,
+    AffID: trackingParams.AffID ?? 'Default',
+    OfferID:  trackingParams.OfferID ?? 1,
+    Campaign: trackingParams.Campaign ?? '',
+    AffSub: trackingParams.AffSub ?? '',
+    AffSub2:  trackingParams.AffSub2 ?? '',
+    AffSub3:  trackingParams.AffSub3 ?? '',
+    AffSub4:  trackingParams.AffSub4 ?? '',
+    AffSub5:  trackingParams.AffSub5 ?? '',
     CreationUrl: window.location.href, // Current page URL
-    ReferrerUrl: document.referrer || '', // URL of the page that referred to this one
+    ReferrerUrl: document.referrer || window.location.href, // URL of the page that referred to this one
     IpAddress: '127.0.0.1', // You would need to get this from the backend
     UserAgent: navigator.userAgent, // Browser information
 
@@ -153,26 +155,31 @@ const form = useForm({
     AddressYears: '',
 
     EmploymentStatus: '',
+    IncomeFrequency: '',
     EmployerName: '',
     JobTitle: '',
-    EmployerIndustry: '',
-    EmployerYears: '',
+    EmploymentIndustry: '',
+    WorkPhone: '',
     NextPayDate: '',
     FollowingPayDate: '',
+    EmployerYears: '',
+    NetMonthlyIncome: '',
 
     ExpenseMonthlyMortgageRent: '',
-    ExpenseUtilities: '',
-    ExpenseTransport: '',
-    ExpenseFood: '',
-    ExpenseCredit: '',
     ExpenseCouncil: '',
+    ExpenseFood: '',
+    ExpenseTransport: '',
+    ExpenseCredit: '',
+    ExpenseUtilities: '',
     ExpenseOther: '',
 
+    BankDirectDeposit: 1,
     BankCard: '',
     BankAccountNumber: '',
     BankSortCode: '',
+    BankYears: '',
 
-    ConsentMarketing: '',
+    ConsentFinancial: 1,
     MarketingSms: '',
     MarketingEmail: '',
     MarketingPhone: '',
@@ -217,25 +224,31 @@ const form = useForm({
             AddressYears: false,
 
             EmploymentStatus: false,
+            IncomeFrequency: false,
             EmployerName: false,
             JobTitle: false,
-            EmployerIndustry: false,
-            EmployerYears: false,
+            EmploymentIndustry: false,
+            WorkPhone: false,
             NextPayDate: false,
             FollowingPayDate: false,
+            EmployerYears: false,
+            NetMonthlyIncome: false,
 
-            ExpenseTransport: false,
-            ExpenseUtilities: false,
             ExpenseMonthlyMortgageRent: false,
-            ExpenseFood: false,
-            ExpenseCredit: false,
             ExpenseCouncil: false,
+            ExpenseFood: false,
+            ExpenseTransport: false,
+            ExpenseCredit: false,
+            ExpenseUtilities: false,
             ExpenseOther: false,
 
+            BankDirectDeposit: false,
             BankCard: false,
             BankAccountNumber: false,
             BankSortCode: false,
-            ConsentMarketing: false,
+            BankYears: false,
+
+            ConsentFinancial: false,
             MarketingSms: false,
             MarketingEmail: false,
             MarketingPhone: ''
@@ -280,95 +293,36 @@ const form = useForm({
         AddressYears: '',
 
         EmploymentStatus: '',
+        IncomeFrequency: '',
         EmployerName: '',
         JobTitle: '',
-        EmployerIndustry: '',
-        EmployerYears: '',
+        EmploymentIndustry: '',
+        WorkPhone: '',
         NextPayDate: '',
         FollowingPayDate: '',
+        EmployerYears: '',
+        NetMonthlyIncome: '',
 
-        ExpenseTransport: '',
-        ExpenseUtilities: '',
         ExpenseMonthlyMortgageRent: '',
-        ExpenseFood: '',
-        ExpenseCredit: '',
         ExpenseCouncil: '',
+        ExpenseFood: '',
+        ExpenseTransport: '',
+        ExpenseCredit: '',
+        ExpenseUtilities: '',
         ExpenseOther: '',
 
+        BankDirectDeposit: '',
         BankCard: '',
         BankAccountNumber: '',
         BankSortCode: '',
+        BankYears: '',
 
-        ConsentMarketing: '',
+        ConsentFinancial: '',
         MarketingSms: '',
         MarketingEmail: '',
-        MarketingPhone: ''
+        MarketingPhone: '',
     }
 });
-// const testApplicationData = {
-//     VendorID: "TESTER1",
-//     OfferID: 2,
-//     Campaign: "SpringPromo",
-//     AffSub: "sub1",
-//     AffSub2: "sub2",
-//     AffSub3: "sub3",
-//     AffSub4: "sub4",
-//     AffSub5: "sub5",
-//     CreationUrl: "https://example.com/loan-app",
-//     ReferrerUrl: "https://affiliate.example.com",
-//     IpAddress: "192.168.1.100",
-//     UserAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-//     LoanAmount: "2000",
-//     LoanTerm: 3,
-//     LoanPurpose: 2,
-//     Title: 1,
-//     FirstName: "John",
-//     LastName: "Doe",
-//     Email: "john.doe@example.com",
-//     MobilePhone: "07123456789",
-//     HomePhone: "02081234567",
-//     DateOfBirth: "15/06/1990",
-//     MaritalStatus: 2,
-//     Dependants: 2,
-//     RecentLoanCount: 1,
-//     AdultsLivingWith: 2,
-//
-//     ResidentialStatus: 1,
-//     HouseNameNumber: "22B",
-//     StreetAddress: "Baker Street",
-//     County: "Greater London",
-//     City: "London",
-//     Postcode: "W1U7EU",
-//     AddressYears: 5,
-//
-//     EmploymentStatus: 1,
-//     EmployerIndustry: 1,
-//     EmployerYears: 1,
-//     IncomeFrequency: 1,
-//     JobTitle: "Software Engineer",
-//     EmployerName: "TechCorp Ltd",
-//     WorkPhone: "02081234567",
-//     NextPayDate: "2025-05-28",
-//     FollowingPayDate: "2025-06-28",
-//     NetMonthlyIncome: 2800.50,
-//     YearsAtEmployer: 3,
-//
-//     MortgageRentExpense: 900.00,
-//     TaxExpense: 300.00,
-//     ExpenseFood: 250.00,
-//     ExpenseTransport: 150.00,
-//     ExpenseCredit: 100.00,
-//     ExpenseCouncil: 100.00,
-//     UtilitiesExpense: 50.00,
-//     ExpenseOther: 75.00,
-//
-//     BankDirectDeposit: 1,
-//     BankCard: 2,
-//     BankSortCode: "123456", // Use digits only if backend requires
-//     BankAccountNumber: "12345678",
-//     BankYears: 8,
-//     ConsentMarketing: true,
-// };
 
 const handleNextStep = () => {
 
@@ -382,8 +336,8 @@ const handleNextStep = () => {
         form.touched.LoanPurpose = true;
         form.touched.RecentLoanCount = true;
 
-        const hasErrors = ref(false)
-        const errorMessages = ref([])
+        // const hasErrors = ref(false)
+        // const errorMessages = ref([])
 
         // Check for errors for Step 1
         if (!form.LoanAmount) {
@@ -430,8 +384,8 @@ const handleNextStep = () => {
         form.touched.MaritalStatus = true;
         form.touched.AdultsLivingWith = true;
 
-        const hasErrors = ref(false)
-        const errorMessages = ref([])
+        // const hasErrors = ref(false)
+        // const errorMessages = ref([])
 
         // Validate Title
         if (!form.Title) {
@@ -576,19 +530,19 @@ const handleNextStep = () => {
     }
     if (currentStep.value === 3) {
 
-        const hasErrors = ref(false)
-        const errorMessages = ref([])
+        // const hasErrors = ref(false)
+        // const errorMessages = ref([])
 
         const today = new Date().setHours(0, 0, 0, 0);
         const nextPayDate = form.NextPayDate ? new Date(form.NextPayDate).setHours(0, 0, 0, 0) : null;
         const followingPayDate = form.FollowingPayDate ? new Date(form.FollowingPayDate).setHours(0, 0, 0, 0) : null;
 
-        const requiresEmployerDetails = ['Full time', 'Part time', 'Self employed'].includes(form.EmploymentStatus);
+        const requiresEmployerDetails = [1,2,3].includes(form.EmploymentStatus);
 
         form.touched.EmploymentStatus = true;
         form.touched.EmployerName = true;
         form.touched.JobTitle = true;
-        form.touched.EmployerIndustry = true;
+        form.touched.EmploymentIndustry = true;
         form.touched.EmployerYears = true;
         form.touched.NextPayDate = true;
         form.touched.FollowingPayDate = true;
@@ -600,6 +554,15 @@ const handleNextStep = () => {
             errorMessages.value.push('Employment status is required.');
         } else {
             form.errors.EmploymentStatus = '';
+        }
+
+        // Employment Status
+        if (!form.IncomeFrequency) {
+            form.errors.IncomeFrequency = 'Income Frequency is required.';
+            hasErrors.value = true;
+            errorMessages.value.push('Income Frequency is required.');
+        } else {
+            form.errors.IncomeFrequency = '';
         }
 
         // Employer Name
@@ -621,12 +584,12 @@ const handleNextStep = () => {
         }
 
         // Employer Industry
-        if (!form.EmployerIndustry) {
-            form.errors.EmployerIndustry = 'Employer industry is required.';
+        if (!form.EmploymentIndustry) {
+            form.errors.EmploymentIndustry = 'Employer industry is required.';
             hasErrors.value = true;
             errorMessages.value.push('Employer industry is required.');
         } else {
-            form.errors.EmployerIndustry = '';
+            form.errors.EmploymentIndustry = '';
         }
 
         // Employer Years
@@ -680,8 +643,8 @@ const handleNextStep = () => {
         form.touched.Postcode = true;
         form.touched.AddressYears = true;
 
-        const hasErrors = ref(false)
-        const errorMessages = ref([])
+        // const hasErrors = ref(false)
+        // const errorMessages = ref([])
 
 
         // House Name/Number
@@ -756,8 +719,8 @@ const handleNextStep = () => {
         form.touched.ExpenseOther = true;
 
 
-        const hasErrors = ref(false)
-        const errorMessages = ref([])
+        // const hasErrors = ref(false)
+        // const errorMessages = ref([])
 
         // Expense Food
         if (!form.ExpenseFood) {
@@ -820,8 +783,8 @@ const handleNextStep = () => {
         form.touched.BankSortCode = true;
         form.touched.ConsentMarketing = true;
 
-        const hasErrors = ref(false)
-        const errorMessages = ref([])
+        // const hasErrors = ref(false)
+        // const errorMessages = ref([])
 
         // Bank Card
         if (!form.BankCard) {
@@ -873,17 +836,29 @@ const handleNextStep = () => {
     }
 
     // If there are any errors, show an alert
-    if (hasErrors) {
+    // if (hasErrors.value === true) {
         // hasErrors.value = errorMessages.value;
         // alert('Please fix the following errors:\n\n' + errorMessages.value.join('\n'));
-    } else {
+    // } else {
+    debugger
+        if (currentStep.value === 1 && isStep1Valid.value === true) {
+            currentStep.value = 2;
+        } else if (currentStep.value === 2 && isStep2Valid.value === true) {
+            currentStep.value = 3;
+        } else if (currentStep.value === 3 && isStep2Valid.value === true) {
+            currentStep.value = 4;
+        } else if (currentStep.value === 4 && isStep2Valid.value === true) {
+            currentStep.value = 5;
+        } else if (currentStep.value === 5 && isStep2Valid.value === true) {
+            currentStep.value = 6;
+        }
         // If the step is valid, proceed to the next step
-        nextStep();
+        // nextStep();
         window.scrollTo({
             top: 0,
             behavior: 'smooth' // Smooth scrolling
         });
-    }
+    // }
 };
 
 
@@ -1038,7 +1013,7 @@ const isStep3Valid = computed(() => {
     const nextPayDate = form.NextPayDate ? new Date(form.NextPayDate).setHours(0, 0, 0, 0) : null;
     const followingPayDate = form.FollowingPayDate ? new Date(form.FollowingPayDate).setHours(0, 0, 0, 0) : null;
 
-    const requiresEmployerDetails = ['Full time', 'Part time', 'Self employed'].includes(form.EmploymentStatus);
+    const requiresEmployerDetails = [1, 2, 3].includes(form.EmploymentStatus);
 
     // Employment Status
     if (form.touched.EmploymentStatus && !form.EmploymentStatus) {
@@ -1046,6 +1021,13 @@ const isStep3Valid = computed(() => {
         valid = false;
     } else {
         form.errors.EmploymentStatus = '';
+    }
+    // IncomeFrequency
+    if (form.touched.IncomeFrequency && !form.IncomeFrequency) {
+        form.errors.IncomeFrequency = 'Employment status is required.';
+        valid = false;
+    } else {
+        form.errors.IncomeFrequency = '';
     }
 
     // Employer Name (conditionally validated)
@@ -1065,11 +1047,11 @@ const isStep3Valid = computed(() => {
     }
 
     // Employer Industry
-    if (form.touched.EmployerIndustry && !form.EmployerIndustry) {
-        form.errors.EmployerIndustry = 'Employer industry is required.';
+    if (form.touched.EmploymentIndustry && !form.EmploymentIndustry) {
+        form.errors.EmploymentIndustry = 'Employer industry is required.';
         valid = false;
     } else {
-        form.errors.EmployerIndustry = '';
+        form.errors.EmploymentIndustry = '';
     }
 
     // Employer Years
@@ -1403,6 +1385,13 @@ const validateEmploymentStatus = () => {
         form.errors.EmploymentStatus = ''; // Clear error if valid
     }
 };
+const validateIncomeFrequency = () => {
+    if (!form.IncomeFrequency) {
+        form.errors.IncomeFrequency = 'Income Frequency is required.';
+    } else {
+        form.errors.IncomeFrequency = ''; // Clear error if valid
+    }
+};
 const validateEmployerName = () => {
     if (!form.EmployerName) {
         form.errors.EmployerName = 'Employer name is required.';
@@ -1417,11 +1406,18 @@ const validateJobTitle = () => {
         form.errors.JobTitle = ''; // Clear error if valid
     }
 };
-const validateEmployerIndustry = () => {
-    if (!form.EmployerIndustry) {
-        form.errors.EmployerIndustry = 'Employer industry is required.';
+const validateNetMonthlyIncome = () => {
+    if (!form.NetMonthlyIncome) {
+        form.errors.NetMonthlyIncome = 'Net Monthly Income is required.';
     } else {
-        form.errors.EmployerIndustry = ''; // Clear error if valid
+        form.errors.NetMonthlyIncome = ''; // Clear error if valid
+    }
+};
+const validateEmploymentIndustry = () => {
+    if (!form.EmploymentIndustry) {
+        form.errors.EmploymentIndustry = 'Employer industry is required.';
+    } else {
+        form.errors.EmploymentIndustry = ''; // Clear error if valid
     }
 };
 const validateEmployerYears = () => {
@@ -1628,26 +1624,13 @@ const progressText = ref('Submitting your application...'); // Dynamic text duri
 const submitApplication = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    // Validate each step first
-    if (!isStep1Valid.value) {
-        goToStep(1);
-        return; // Exit if Step 1 is not valid
-    } else if (!isStep2Valid.value) {
-        goToStep(2);
-        return; // Exit if Step 2 is not valid
-    } else if (!isStep3Valid.value) {
-        goToStep(3);
-        return; // Exit if Step 3 is not valid
-    } else if (!isStep4Valid.value) {
-        goToStep(4);
-        return; // Exit if Step 4 is not valid
-    } else if (!isStep5Valid.value) {
-        goToStep(5);
-        return; // Exit if Step 5 is not valid
-    } else if (!isStep6Valid.value) {
-        goToStep(6);
-        return; // Exit if Step 6 is not valid
+    // Check if the current step is valid
+    if (isStepValid.value === false) {
+        // Optionally re-trigger the validation UI or logic for the current step
+        console.warn(`Step ${currentStep.value} is not valid`);
+        return; // Exit early if the current step is not valid
     }
+    debugger
 
     // If all steps are valid, proceed with submission
     form.touched.BankCard = true;
@@ -1661,7 +1644,7 @@ const submitApplication = async (event) => {
     if (currentStep.value === 6) {
         console.log(form);
         if (!isStep6Valid.value) {
-            hasErrors.value = true;
+            // hasErrors.value = true;
             return; // Stop if Step 6 has validation errors
         } else {
             // Show the spinner and progress text
@@ -1686,6 +1669,8 @@ const submitApplication = async (event) => {
             }
         }
     }
+
+    return;
 };
 
 
@@ -1739,17 +1724,17 @@ const pollStatus = (applicationId) => {
     }, 5000); // Poll every 5 seconds
 };
 
-const stopPolling = () => {
-    if (pollInterval.value) {
-        clearInterval(pollInterval.value);
-    }
-};
+// const stopPolling = () => {
+//     if (pollInterval.value) {
+//         clearInterval(pollInterval.value);
+//     }
+// };
 
 
 </script>
 
 <template>
-    <div class="max-w-xl mx-auto py-10 bg-transparent">
+    <div class="max-w-xl mx-auto py-10 p-6  bg-transparent ">
 
         <form @submit.prevent="submitApplication" v-if="!isSubmitting" id="iframe" class=" w-full ">
             <!-- Progress Bar -->
@@ -1787,25 +1772,25 @@ const stopPolling = () => {
                 </div>
             </div>
 
-            <div v-if="hasErrors" class="fixed top-0 left-0 right-0 flex justify-center z-50">
-                <div class="bg-red-500 text-white p-4 w-full max-w-2xl text-center relative rounded shadow">
-                    <!-- Dismiss Button -->
-                    <button
-                        @click="hasErrors = false"
-                        class="absolute top-2 right-2 text-white hover:text-gray-200 text-lg font-bold"
-                        aria-label="Close"
-                    >
-                        &times;
-                    </button>
+<!--            <div v-if="hasErrors" class="fixed top-0 left-0 right-0 flex justify-center z-50">-->
+<!--                <div class="bg-red-500 text-white p-4 w-full max-w-2xl text-center relative rounded shadow">-->
+<!--                    &lt;!&ndash; Dismiss Button &ndash;&gt;-->
+<!--                    <button-->
+<!--                        @click="hasErrors = false"-->
+<!--                        class="absolute top-2 right-2 text-white hover:text-gray-200 text-lg font-bold"-->
+<!--                        aria-label="Close"-->
+<!--                    >-->
+<!--                        &times;-->
+<!--                    </button>-->
 
-                    <strong class="text-lg block">Please fix the following errors:</strong>
-                    <ul class="mt-2">
-                        <li v-for="(error, index) in errorMessages" :key="index" class="text-sm mt-1">
-                            - {{ error }}
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!--                    <strong class="text-lg block">Please fix the following errors:</strong>-->
+<!--                    <ul class="mt-2">-->
+<!--                        <li v-for="(error, index) in errorMessages" :key="index" class="text-sm mt-1">-->
+<!--                            - {{ error }}-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div
                 v-if="showLoanInfo"
@@ -1863,20 +1848,11 @@ const stopPolling = () => {
                     @change="validateRecentLoanCount"
                     :class="{'border-red-400  bg-red-100': form.errors.RecentLoanCount}"
                 />
-                <!-- Floating Info Icon -->
-<!--                <button-->
-<!--                    v-if="!showLoanInfo"-->
-<!--                    @click="showLoanInfo = true"-->
-<!--                    class="fixed  bg-white  text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 transition"-->
-<!--                    title="Show Info"-->
-<!--                >-->
-<!--                    ℹ️-->
-<!--                </button>-->
             </div>
 
             <!-- Step 2: Personal Details -->
             <div v-if="currentStep === 2">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your details</h2>
+                <h3 class="text-3xl font-bold text-black mb-6 text-center">Your details</h3>
 
                 <Title
                     v-model="form.Title"
@@ -1960,7 +1936,7 @@ const stopPolling = () => {
 
             <!-- Step 3: Employer Details -->
             <div v-if="currentStep === 3">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Employer</h2>
+                <h3 class="text-3xl font-bold text-black mb-6 text-center">Your Employer</h3>
 
                 <!-- Employment Status -->
                 <EmploymentStatus
@@ -1971,8 +1947,16 @@ const stopPolling = () => {
                     @blur="validateEmploymentStatus"
                 />
 
+                <IncomeFrequency
+                    v-model="form.IncomeFrequency"
+                    :error="form.errors.IncomeFrequency"
+                    :class="{'border-red-500 bg-red-100': form.errors.IncomeFrequency}"
+                    @change="validateIncomeFrequency"
+                    @blur="validateIncomeFrequency"
+                />
+
                 <!-- Employer Name & Job Title (conditionally shown) -->
-                <template v-if="['Full time', 'Part time', 'Self employed'].includes(form.EmploymentStatus)">
+                <template v-if="[1, 2, 3].includes(form.EmploymentStatus)">
                     <!-- Employer Name -->
                     <EmployerName
                         v-model="form.EmployerName"
@@ -1993,12 +1977,12 @@ const stopPolling = () => {
                 </template>
 
                 <!-- Employer Industry -->
-                <EmployerIndustry
-                    v-model="form.EmployerIndustry"
-                    :error="form.errors.EmployerIndustry"
-                    :class="{'border-red-500 bg-red-100': form.errors.EmployerIndustry}"
-                    @change="validateEmployerIndustry"
-                    @blur="validateEmployerIndustry"
+                <EmploymentIndustry
+                    v-model="form.EmploymentIndustry"
+                    :error="form.errors.EmploymentIndustry"
+                    :class="{'border-red-500 bg-red-100': form.errors.EmploymentIndustry}"
+                    @change="validateEmploymentIndustry"
+                    @blur="validateEmploymentIndustry"
                 />
 
                 <!-- Employer Years -->
@@ -2027,11 +2011,19 @@ const stopPolling = () => {
                     @input="validateFollowingPayDate"
                     @blur="validateFollowingPayDate"
                 />
+
+                <NetMonthlyIncome
+                    v-model="form.NetMonthlyIncome"
+                    :error="form.errors.NetMonthlyIncome"
+                    :class="{'border-red-500 bg-red-100': form.errors.NetMonthlyIncome}"
+                    @input="validateNetMonthlyIncome"
+                    @blur="validateNetMonthlyIncome"
+                />
             </div>
 
             <!-- Step 4: Address Details -->
             <div v-if="currentStep === 4">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Address</h2>
+                <h3 class="text-3xl font-bold text-black mb-6 text-center">Your Address</h3>
 
                 <ResidentialStatus
                     v-model="form.ResidentialStatus"
@@ -2092,7 +2084,7 @@ const stopPolling = () => {
 
             <!-- Step 5: Monthly Expenses -->
             <div v-if="currentStep === 5">
-                <h2 class="text-3xl font-bold text-teal-400 mb-6 text-center">Your Monthly Expenses</h2>
+                <h3 class="text-3xl font-bold text-black mb-6 text-center">Your Monthly Expenses</h3>
 
                 <MonthlyMortgageRent
                     v-model="form.ExpenseMonthlyMortgageRent"
@@ -2184,7 +2176,7 @@ const stopPolling = () => {
                     :class="{'border-red-500 bg-red-100': form.errors.BankSortCode}"
                 />
                 <ConsentMarketing
-                    v-model="form.ConsentMarketing"
+                    v-model="form.ConsentFinancial"
                     :error="form.errors.ConsentMarketing"
                     @input="validateConsentMarketing"
                     @blur="validateConsentMarketing"
@@ -2194,35 +2186,42 @@ const stopPolling = () => {
 
 
             <!-- Navigation Buttons -->
-            <div class="flex justify-between">
-                <!-- Previous Button - Hide when currentStep is 6 -->
-                <button v-if="currentStep > 1 && currentStep < 6" @click="prevStep" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">
-                    Previous
-                </button>
-
-                <!-- Next Button -->
-                <button
-                    v-if="currentStep < 6"
-                    @click="handleNextStep"
-                    class="px-6 py-3 bg-cyan-400 text-white rounded-md hover:bg-cyan-600 transition-all duration-300"
-                    :class="{'ml-auto': currentStep === 1}"
-                    :disabled="!isStepValid"
-                >
-                    Next
-                </button>
-
-<!--                 Submit Button - Only shown if currentStep is 6, and bigger size-->
-                <div class="flex justify-center w-full" v-if="currentStep === 6">
+                <div class="flex justify-between">
+                    <!-- Previous Button -->
                     <button
-                        type="submit"
-                        @click="submitApplication"
-                        :disabled="!isStep6Valid"
-                        class="px-8 py-4 bg-gradient-to-r from-cyan-400 to-purple-500 text-white rounded-md hover:bg-cyan-600 text-xl"
+                        v-if="currentStep > 1 && currentStep < 6"
+                        @click="prevStep"
+                        data-cy="prev-button"
+                        class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
                     >
-                        Submit
+                        Previous
                     </button>
+
+                    <!-- Next Button -->
+                    <button
+                        v-if="currentStep < 6"
+                        @click="handleNextStep"
+                        data-cy="next-button"
+                        class="px-6 py-3 bg-cyan-400 text-white rounded-md hover:bg-cyan-600 transition-all duration-300"
+                        :class="{ 'ml-auto': currentStep === 1 }"
+                        :disabled="!isStepValid"
+                    >
+                        Next
+                    </button>
+
+                    <!-- Submit Button on Step 6 -->
+                    <div class="flex justify-center w-full" v-if="currentStep === 6">
+                        <button
+                            type="submit"
+                            @click="submitApplication"
+                            data-cy="submit-button"
+                            :disabled="!isStep6Valid"
+                            class="px-8 py-4 bg-gradient-to-r from-cyan-400 to-purple-500 text-white rounded-md hover:bg-cyan-600 text-xl"
+                        >
+                            Submit
+                        </button>
+                    </div>
                 </div>
-            </div>
 
 <!--    </div>-->
 

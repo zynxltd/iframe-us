@@ -56,7 +56,7 @@ onMounted(() => {
 <style scoped>
 .loader {
     border: 6px solid #f3f3f3;
-    border-top: 6px solid #3498db;
+    border-top: 6px solid #000000;
     border-radius: 50%;
     width: 48px;
     height: 48px;
