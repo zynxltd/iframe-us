@@ -62,7 +62,9 @@
                     class="w-full block rounded-lg p-4 bg-white cursor-pointer transition-all duration-200 hover:bg-gray-100"
                     :class="model === '3' ? 'ring-2 ring-black shadow' : 'ring-transparent'"
                 >
-                    <img src="/images/other-card-form.png" alt="Other" class="w-16 h-16 mx-auto" />
+                    <img src="/images/other-card.png" alt="Other" class="w-16 h-16 mx-auto" />
+                    <p class="text-gray-800 text-sm mt-2 font-bold">Other</p>
+
                 </label>
             </div>
         </div>
