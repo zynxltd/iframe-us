@@ -33,9 +33,9 @@ return new class extends Migration
             $table->date('FollowingPayDate');
             $table->string('HouseNameNumber');
             $table->string('StreetAddress');
-            $table->string('County');
+            $table->string('State');
             $table->string('City');
-            $table->string('Postcode');
+            $table->string('Zipcode');
             $table->integer('AddressYears');
             $table->decimal('ExpenseTransport', 10, 2);
             $table->decimal('ExpenseFood', 10, 2);
@@ -44,7 +44,7 @@ return new class extends Migration
             $table->decimal('ExpenseOther', 10, 2);
             $table->string('BankCard');
             $table->string('BankAccountNumber');
-            $table->string('BankSortCode');
+            $table->string('BankRoutingNumber');
             $table->boolean('ConsentMarketing');
             $table->string('Status')->default('pending'); // Adding status column to track application status
             $table->string('ApplicationID');

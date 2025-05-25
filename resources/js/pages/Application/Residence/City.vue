@@ -42,15 +42,15 @@ const model = computed({
 
 const localError = ref('')
 
-// List of UK cities
+// List of major US cities
 const cities = [
-    "Aberdeen", "Belfast", "Birmingham", "Bradford", "Brighton", "Bristol", "Cambridge", "Cardiff", "Carlisle",
-    "Coventry", "Derby", "Dundee", "Edinburgh", "Glasgow", "Hull", "Inverness", "Leeds", "Leicester", "Liverpool",
-    "London", "Manchester", "Newcastle upon Tyne", "Norwich", "Nottingham", "Oxford", "Plymouth", "Portsmouth",
-    "Reading", "Sheffield", "Southampton", "Stoke-on-Trent", "Sunderland", "Wolverhampton", "York"
+    "New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas",
+    "San Jose", "Austin", "Jacksonville", "Fort Worth", "Columbus", "Charlotte", "San Francisco", "Indianapolis",
+    "Seattle", "Denver", "Washington", "Boston", "El Paso", "Nashville", "Detroit", "Oklahoma City", "Portland",
+    "Las Vegas", "Memphis", "Louisville", "Baltimore", "Milwaukee"
 ]
 
-// Validate city
+// Validate city selection
 const validateCity = () => {
     localError.value = ''
     if (!model.value) {
@@ -60,5 +60,5 @@ const validateCity = () => {
 </script>
 
 <style scoped>
-/* All styling handled via Tailwind CSS utility classes */
+/* All styling handled via Tailwind utility classes */
 </style>

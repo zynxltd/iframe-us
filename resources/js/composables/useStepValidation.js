@@ -7,23 +7,28 @@ export function useStepValidation(form, currentStep) {
         if (form.touched.LoanAmount      && !form.LoanAmount)       v = false
         if (form.touched.LoanTerm        && !form.LoanTerm)         v = false
         if (form.touched.LoanPurpose     && !form.LoanPurpose)      v = false
-        if (form.touched.RecentLoanCount && !form.RecentLoanCount)  v = false
         return v
     })
 
     const isStep2Valid = computed(() => {
         let v = true
         const nameRe = /^[A-Za-z\s]+$/
-        if (form.touched.Title             && !form.Title)             v = false
+
+        if (form.touched.Title             && !form.Title)                                  v = false
         if (form.touched.FirstName         && (!form.FirstName || !nameRe.test(form.FirstName))) v = false
         if (form.touched.LastName          && (!form.LastName  || !nameRe.test(form.LastName)))  v = false
-        if (form.touched.DateOfBirth       && !form.DateOfBirth)       v = false
-        if (form.touched.Email             && !/.+@.+\..+/.test(form.Email))                      v = false
-        if (form.touched.MobilePhone       && !/^07\d{9}$/.test(form.MobilePhone))               v = false
-        if (form.touched.HomePhone         && form.HomePhone && !/^0\d{10}$/.test(form.HomePhone)) v = false
-        if (form.touched.Dependants        && !form.Dependants)        v = false
-        if (form.touched.MaritalStatus     && !form.MaritalStatus)     v = false
-        if (form.touched.AdultsLivingWith  && !form.AdultsLivingWith)  v = false
+        if (form.touched.DateOfBirth       && !form.DateOfBirth)                            v = false
+        if (form.touched.Email             && !/.+@.+\..+/.test(form.Email))               v = false
+
+        // Mobile: exactly 10 digits
+        if (form.touched.MobilePhone       && !/^\d{10}$/.test(form.MobilePhone))          v = false
+
+        // Home: if filled, must also be exactly 10 digits
+        if (form.touched.HomePhone         && form.HomePhone && !/^\d{10}$/.test(form.HomePhone)) v = false
+
+        if (form.touched.Dependants        && !form.Dependants)                            v = false
+        if (form.touched.MaritalStatus     && !form.MaritalStatus)                         v = false
+
         return v
     })
 
@@ -55,35 +60,24 @@ export function useStepValidation(form, currentStep) {
         let v = true
         if (form.touched.HouseNameNumber && !form.HouseNameNumber) v = false
         if (form.touched.StreetAddress   && !form.StreetAddress)   v = false
-        if (form.touched.County          && !form.County)          v = false
+        if (form.touched.State          && !form.State)          v = false
         if (form.touched.City            && !form.City)            v = false
 
-        if (form.touched.Postcode) {
-            const val = (form.Postcode || '').trim()
-            if (!val || form.errors.Postcode) v = false
+        if (form.touched.Zipcode) {
+            const val = (form.Zipcode || '').trim()
+            if (!val || form.errors.Zipcode) v = false
         }
 
         if (form.touched.AddressYears    && !form.AddressYears)    v = false
         return v
     })
 
+
     const isStep5Valid = computed(() => {
         let v = true
-        const ch = f => form.touched[f] && !form[f]
-        if (ch('ExpenseMonthlyMortgageRent')) v = false
-        if (ch('ExpenseTransport'))           v = false
-        if (ch('ExpenseUtilities'))           v = false
-        if (ch('ExpenseFood'))                v = false
-        if (ch('ExpenseCredit'))              v = false
-        if (ch('ExpenseCouncil'))             v = false
-        if (ch('ExpenseOther'))               v = false
-        return v
-    })
-
-    const isStep6Valid = computed(() => {
-        let v = true
         if (form.touched.BankCard          && !form.BankCard)             v = false
-        if (form.touched.BankAccountNumber && (!form.BankAccountNumber || form.BankAccountNumber.length !== 8)) v = false
+        if (form.touched.BankYears          && !form.BankYears)             v = false
+        // if (form.touched.BankAccountNumber && (!form.BankAccountNumber || form.BankAccountNumber.length !== 8)) v = false
         if (form.touched.BankSortCode      && !/^\d{6}$/.test(form.BankSortCode)) v = false
         return v
     })
@@ -96,7 +90,6 @@ export function useStepValidation(form, currentStep) {
             3: isStep3Valid,
             4: isStep4Valid,
             5: isStep5Valid,
-            6: isStep6Valid,
         }
         return map[currentStep.value]?.value ?? true
     })
@@ -108,7 +101,6 @@ export function useStepValidation(form, currentStep) {
         isStep3Valid,
         isStep4Valid,
         isStep5Valid,
-        isStep6Valid,
     ]
 
     return {
@@ -119,6 +111,5 @@ export function useStepValidation(form, currentStep) {
         isStep3Valid,
         isStep4Valid,
         isStep5Valid,
-        isStep6Valid,
     }
 }

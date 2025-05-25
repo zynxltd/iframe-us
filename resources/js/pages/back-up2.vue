@@ -22,9 +22,9 @@ import NextPayDate from "@/pages/Application/Employer/NextPayDate.vue";
 import FollowingPayDate from "@/pages/Application/Employer/FollowingPayDate.vue";
 import StreetAddress from "@/pages/Application/Residence/StreetAddress.vue";
 import HouseNameNumber from "@/pages/Application/Residence/HouseNameNumber.vue";
-import County from "@/pages/Application/Residence/County.vue";
+import State from "@/pages/Application/Residence/State.vue";
 import City from "@/pages/Application/Residence/City.vue";
-import Postcode from "@/pages/Application/Residence/Postcode.vue";
+import Zipcode from "@/pages/Application/Residence/Zipcode.vue";
 import Transport from "@/pages/Application/Expense/Transport.vue";
 import Credit from "@/pages/Application/Expense/Credit.vue";
 import Food from "@/pages/Application/Expense/Food.vue";
@@ -32,7 +32,7 @@ import Council from "@/pages/Application/Expense/Council.vue";
 import Other from "@/pages/Application/Expense/Other.vue";
 import BankCard from "@/pages/Application/Bank/BankCard.vue";
 import BankAccountNumber from "@/pages/Application/Bank/BankAccountNumber.vue";
-import BankSortCode from "@/pages/Application/Bank/BankSortCode.vue";
+import BankRoutingNumber from "@/pages/Application/Bank/BankRoutingNumber.vue";
 import ConsentMarketing from "@/pages/Application/Consent/ConsentMarketing.vue";
 import MonthlyMortgageRent from '@/pages/Application/Expense/MonthlyMortgageRent.vue';
 import MaritalStatus from '@/pages/Application/Applicant/MaritalStatus.vue';
@@ -668,7 +668,7 @@ const prevStep = () => {
                     @blur="validateStreetAddress"
                 />
 
-                <County
+                <State
                     v-model="form.County"
                     :error="form.errors.County"
                     :class="{ 'border-red-500 bg-red-100': form.errors.County }"
@@ -684,7 +684,7 @@ const prevStep = () => {
                     @blur="validateCity"
                 />
 
-                <Postcode
+                <Zipcode
                     v-model="form.Postcode"
                     :error="form.errors.Postcode"
                     :class="{ 'border-red-500 bg-red-100': form.errors.Postcode }"
@@ -787,7 +787,7 @@ const prevStep = () => {
                     @blur="validateBankAccountNumber"
                     :class="{'border-red-500 bg-red-100': form.errors.BankAccountNumber}"
                 />
-                <BankSortCode
+                <BankRoutingNumber
                     v-model="form.BankSortCode"
                     :error="form.errors.BankSortCode"
                     @input="validateBankSortCode"

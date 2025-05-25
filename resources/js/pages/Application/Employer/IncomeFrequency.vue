@@ -45,7 +45,8 @@ const options = [
     { label: 'Weekly',    value: 1 },
     { label: 'Bi Weekly', value: 2 },
     { label: 'Fortnightly', value: 3 },
-    { label: 'Monthly',    value: 4 },
+    { label: 'Twice Monthly',    value: 4 },
+    { label: 'Monthly',    value: 5 },
 ]
 </script>
 

@@ -56,9 +56,9 @@ class LoanApplicationController extends Controller
             'ResidentialStatus' => 'required|int|in:1,2,3,4,5',
             'HouseNameNumber' => 'required|string|max:100',
             'StreetAddress' => 'required|string|max:255',
-            'County' => 'required|string',
+            'State' => 'required|string',
             'City' => 'required|string',
-            'Postcode' => 'required|string|max:8',
+            'Zipcode' => 'required|string|max:8',
             'AddressYears' => 'required|in:1,2,3,4,5,6,7,8,9,10,11',
 
             'EmploymentStatus' => 'required|int|in:1,2,3,4,5,6',
@@ -83,7 +83,7 @@ class LoanApplicationController extends Controller
             'BankDirectDeposit' => 'required|in:1,2',
             'BankCard' => 'required|int|in:1,2,3',
             'BankAccountNumber' => 'required|string',
-            'BankSortCode' => 'required|string',
+            'BankRoutingNumber' => 'required|string',
 //            'BankYears' => 'in:1,2,3,4,5,6,7,8,9,10',
 
             'ConsentFinancial' => 'required',

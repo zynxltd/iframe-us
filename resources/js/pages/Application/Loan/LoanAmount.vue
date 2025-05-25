@@ -16,7 +16,7 @@
                 :value="amount"
                 class="bg-white text-gray-800"
             >
-                £{{ amount }}
+                ${{ amount }}
             </option>
         </select>
 

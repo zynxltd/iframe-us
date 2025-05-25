@@ -1,23 +1,23 @@
 <template>
     <div class="mb-6 p-4">
         <label class="block text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">
-            County
+            State
         </label>
         <select
-            data-cy="county"
+            data-cy="state"
             v-model="model"
-            @change="validateCounty"
-            @blur="validateCounty"
+            @change="validateState"
+            @blur="validateState"
             class="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 transition-all duration-200"
         >
-            <option value="" disabled>Select a county</option>
+            <option value="" disabled>Select a state</option>
             <option
-                v-for="county in counties"
-                :key="county"
-                :value="county"
-                :data-cy="`county-${county.replace(/\s+/g, '-').toLowerCase()}`"
+                v-for="state in states"
+                :key="state"
+                :value="state"
+                :data-cy="`state-${state.replace(/\s+/g, '-').toLowerCase()}`"
             >
-                {{ county }}
+                {{ state }}
             </option>
         </select>
         <div v-if="localError" class="text-red-500 text-sm mt-2">{{ localError }}</div>
@@ -42,26 +42,23 @@ const model = computed({
 
 const localError = ref('')
 
-// List of UK counties
-const counties = [
-    "Aberdeen", "Aberdeenshire", "Angus", "Argyll and Bute", "Armagh", "Bedfordshire", "Belfast", "Berkshire",
-    "Berwickshire", "Blaenau Gwent", "Bridgend", "Bristol", "Buckinghamshire", "Caernarfonshire", "Cambridgeshire",
-    "Cardiganshire", "Carmarthenshire", "Ceredigion", "Cheshire", "Clwyd", "Conwy", "Cornwall", "Cumbria", "Denbighshire",
-    "Derbyshire", "Derry", "Derry City and Strabane", "Devon", "Dorset", "Down", "Dumfries and Galloway", "Durham",
-    "Dyfed", "East Lothian", "East Riding of Yorkshire", "East Sussex", "Essex", "Fermanagh", "Flintshire", "Gloucestershire",
-    "Greater Manchester", "Gwynedd", "Hampshire", "Hertfordshire", "Highland", "Humberside", "Isle of Anglesey", "Isle of Wight",
-    "Kent", "Kildare", "Kilkenny", "Lancashire", "Leicestershire", "Lincolnshire", "London", "Lothian", "Merseyside", "Middlesex",
-    "Monmouthshire", "Moray", "Northern Ireland", "North Ayrshire", "North Yorkshire", "Nottinghamshire", "Pembrokeshire",
-    "Perthshire", "Peterborough", "Powys", "Renfrewshire", "Rutland", "Shropshire", "Somerset", "South Ayrshire", "South Lanarkshire",
-    "South Yorkshire", "Stirling", "Suffolk", "Surrey", "Tyne and Wear", "Warwickshire", "West Lothian", "West Midlands", "West Sussex",
-    "West Yorkshire", "Westmeath", "Wexford", "Wiltshire", "Worcestershire", "Wrexham", "York"
+// List of US states
+const states = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+    "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+    "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia",
+    "Wisconsin", "Wyoming"
 ]
 
-// Validate county selection
-const validateCounty = () => {
+// Validate state selection
+const validateState = () => {
     localError.value = ''
     if (!model.value) {
-        localError.value = 'Please select a county.'
+        localError.value = 'Please select a state.'
     }
 }
 </script>

@@ -10,11 +10,9 @@ import HomePhone from '@/pages/Application/Applicant/HomePhone.vue'
 import Dependants from '@/pages/Application/Applicant/Dependants.vue'
 import Email from '@/pages/Application/Applicant/Email.vue'
 import MaritalStatus from '@/pages/Application/Applicant/MaritalStatus.vue'
-import AdultsLivingWith from '@/pages/Application/Applicant/AdultsLivingWith.vue'
 import LoanAmount from '@/pages/Application/Loan/LoanAmount.vue'
 import LoanTerm from '@/pages/Application/Loan/LoanTerm.vue'
 import LoanPurpose from '@/pages/Application/Loan/LoanPurpose.vue'
-import RecentLoanCount from '@/pages/Application/Loan/RecentLoanCount.vue'
 import EmploymentStatus from '@/pages/Application/Employer/EmploymentStatus.vue'
 import IncomeFrequency from '@/pages/Application/Employer/IncomeFrequency.vue'
 import EmployerName from '@/pages/Application/Employer/EmployerName.vue'
@@ -27,20 +25,13 @@ import NetMonthlyIncome from '@/pages/Application/Employer/NetMonthlyIncome.vue'
 import ResidentialStatus from '@/pages/Application/Residence/ResidentialStatus.vue'
 import HouseNameNumber from '@/pages/Application/Residence/HouseNameNumber.vue'
 import StreetAddress from '@/pages/Application/Residence/StreetAddress.vue'
-import County from '@/pages/Application/Residence/County.vue'
+import State from '@/pages/Application/Residence/State.vue'
 import City from '@/pages/Application/Residence/City.vue'
-import Postcode from '@/pages/Application/Residence/Postcode.vue'
+import Zipcode from '@/pages/Application/Residence/Zipcode.vue'
 import AddressYears from '@/pages/Application/Residence/AddressYears.vue'
-import MonthlyMortgageRent from '@/pages/Application/Expense/MonthlyMortgageRent.vue'
-import Transport from '@/pages/Application/Expense/Transport.vue'
-import Utilities from '@/pages/Application/Expense/Utilities.vue'
-import Food from '@/pages/Application/Expense/Food.vue'
-import Credit from '@/pages/Application/Expense/Credit.vue'
-import Council from '@/pages/Application/Expense/Council.vue'
-import Other from '@/pages/Application/Expense/Other.vue'
 import BankCard from '@/pages/Application/Bank/BankCard.vue'
 import BankAccountNumber from '@/pages/Application/Bank/BankAccountNumber.vue'
-import BankSortCode from '@/pages/Application/Bank/BankSortCode.vue'
+import BankRoutingNumber from '@/pages/Application/Bank/BankRoutingNumber.vue'
 import ConsentMarketing from '@/pages/Application/Consent/ConsentMarketing.vue'
 import { usePage } from '@inertiajs/vue3'
 import { useValidation } from '@/composables/useValidation'
@@ -87,9 +78,9 @@ const form = useForm({
     ResidentialStatus: '',
     HouseNameNumber: '',
     StreetAddress: '',
-    County: '',
+    State: '',
     City: '',
-    Postcode: '',
+    Zipcode: '',
     AddressYears: '',
 
     EmploymentStatus: '',
@@ -156,9 +147,9 @@ const form = useForm({
         ResidentialStatus: false,
         HouseNameNumber: false,
         StreetAddress: false,
-        County: false,
+        State: false,
         City: false,
-        Postcode: false,
+        Zipcode: false,
         AddressYears: false,
 
         EmploymentStatus: false,
@@ -225,9 +216,9 @@ const form = useForm({
         ResidentialStatus: '',
         HouseNameNumber: '',
         StreetAddress: '',
-        County: '',
+        State: '',
         City: '',
-        Postcode: '',
+        Zipcode: '',
         AddressYears: '',
 
         EmploymentStatus: '',
@@ -261,6 +252,7 @@ const form = useForm({
         MarketingPhone: '',
     }
 });
+const isEmployed = () => [1,2,3].includes(form.EmploymentStatus)
 
 
 
@@ -271,7 +263,6 @@ const {
     validateLoanAmount,
     validateLoanTerm,
     validateLoanPurpose,
-    validateRecentLoanCount,
 
     // Step 2
     validateTitle,
@@ -283,7 +274,6 @@ const {
     validateHomePhone,
     validateDependants,
     validateMaritalStatus,
-    validateAdultsLivingWith,
 
     // Step 3
     validateEmploymentStatus,
@@ -300,19 +290,11 @@ const {
     validateResidentialStatus,
     validateHouseNameNumber,
     validateStreetAddress,
-    validateCounty,
+    validateState,
     validateCity,
-    validatePostcode,
+    validateZipcode,
     validateAddressYears,
 
-    // Step 5
-    validateExpenseMonthlyMortgageRent,
-    validateTransport,
-    validateUtilities,
-    validateFood,
-    validateCredit,
-    validateCouncil,
-    validateOther,
 
     // Step 6
     validateBankCard,
@@ -324,7 +306,6 @@ const validate = {
     LoanAmount:      validateLoanAmount,
     LoanTerm:        validateLoanTerm,
     LoanPurpose:     validateLoanPurpose,
-    RecentLoanCount: validateRecentLoanCount,
 
     Title:           validateTitle,
     FirstName:       validateFirstName,
@@ -335,7 +316,6 @@ const validate = {
     HomePhone:       validateHomePhone,
     Dependants:      validateDependants,
     MaritalStatus:   validateMaritalStatus,
-    AdultsLivingWith:validateAdultsLivingWith,
 
     EmploymentStatus:        validateEmploymentStatus,
     IncomeFrequency:         validateIncomeFrequency,
@@ -350,30 +330,22 @@ const validate = {
     ResidentialStatus:    validateResidentialStatus,
     HouseNameNumber:      validateHouseNameNumber,
     StreetAddress:        validateStreetAddress,
-    County:               validateCounty,
+    State:               validateState,
     City:                 validateCity,
-    Postcode:             validatePostcode,
+    Zipcode:             validateZipcode,
     AddressYears:         validateAddressYears,
-
-    ExpenseMonthlyMortgageRent: validateExpenseMonthlyMortgageRent,
-    ExpenseTransport:           validateTransport,
-    ExpenseUtilities:           validateUtilities,
-    ExpenseFood:                validateFood,
-    ExpenseCredit:              validateCredit,
-    ExpenseCouncil:             validateCouncil,
-    ExpenseOther:               validateOther,
 
     BankCard:          validateBankCard,
     BankAccountNumber: validateBankAccountNumber,
     BankSortCode:      validateBankSortCode,
 }
 
-const { isStepValid, validatorsByStep, isStep6Valid } = useStepValidation(form, currentStep)
+const { isStepValid, validatorsByStep, isStep5Valid } = useStepValidation(form, currentStep)
 
 
-// const { isStepValid, isStep6Valid } = useStepValidation(form, currentStep)
+// const { isStepValid, isStep5Valid } = useStepValidation(form, currentStep)
 const { isSubmitting, isFinished, isAccepted, isRejected, progressText, submitApplication } =
-    useSubmission(form, currentStep, isStep6Valid)
+    useSubmission(form, currentStep, isStep5Valid)
 
 // easy class for error highlighting
 const errorClass = computed(() => field => form.errors[field] ? 'border-red-500 bg-red-100' : '')
@@ -384,7 +356,6 @@ const steps = [
             { cmp: LoanAmount,     props: { 'data-cy': 'loan-amount', model: 'LoanAmount' } },
             { cmp: LoanTerm,       props: { model: 'LoanTerm' } },
             { cmp: LoanPurpose,    props: { model: 'LoanPurpose' } },
-            { cmp: RecentLoanCount,props: { model: 'RecentLoanCount' } }
         ]
     },
     { title: 'Your details',   components: [
@@ -397,7 +368,6 @@ const steps = [
             { cmp: HomePhone,    props: { model: 'HomePhone' } },
             { cmp: Dependants,   props: { model: 'Dependants' } },
             { cmp: MaritalStatus,props: { model: 'MaritalStatus' } },
-            { cmp: AdultsLivingWith, props: { model: 'AdultsLivingWith' } }
         ]
     },
     { title: 'Your Employer', components: [
@@ -418,26 +388,17 @@ const steps = [
             { cmp: ResidentialStatus, props: { model: 'ResidentialStatus' } },
             { cmp: HouseNameNumber,   props: { model: 'HouseNameNumber' } },
             { cmp: StreetAddress,     props: { model: 'StreetAddress' } },
-            { cmp: County,            props: { model: 'County' } },
+            { cmp: State,            props: { model: 'State' } },
             { cmp: City,              props: { model: 'City' } },
-            { cmp: Postcode,          props: { model: 'Postcode' } },
+            { cmp: Zipcode,          props: { model: 'Zipcode' } },
             { cmp: AddressYears,      props: { model: 'AddressYears' } }
-        ]
-    },
-    { title: 'Your Monthly Expenses', components: [
-            { cmp: MonthlyMortgageRent, props: { model: 'ExpenseMonthlyMortgageRent' } },
-            { cmp: Transport,           props: { model: 'ExpenseTransport' } },
-            { cmp: Utilities,           props: { model: 'ExpenseUtilities' } },
-            { cmp: Food,                props: { model: 'ExpenseFood' } },
-            { cmp: Credit,              props: { model: 'ExpenseCredit' } },
-            { cmp: Council,             props: { model: 'ExpenseCouncil' } },
-            { cmp: Other,               props: { model: 'ExpenseOther' } }
         ]
     },
     { title: 'Last bit…', components: [
             { cmp: BankCard,            props: { model: 'BankCard' } },
             { cmp: BankAccountNumber,   props: { model: 'BankAccountNumber' } },
-            { cmp: BankSortCode,        props: { model: 'BankSortCode' } },
+            { cmp: BankRoutingNumber,        props: { model: 'BankRoutingNumber' } },
+            // { cmp: BankYears,            props: { model: 'BankYears' } },
             { cmp: ConsentMarketing,    props: { model: 'ConsentFinancial' } }
         ]
     },
@@ -467,7 +428,7 @@ function handleNextStep() {
 
 const selectFields = [
     'LoanAmount',
-    'County',
+    'State',
     'City',
     'AddressYears',
     'EmploymentIndustry',
@@ -502,7 +463,6 @@ function goToStep(target) {
     }
 }
 
-const isEmployed = () => [1,2,3].includes(form.EmploymentStatus)
 </script>
 
 <template>
@@ -639,7 +599,7 @@ const isEmployed = () => [1,2,3].includes(form.EmploymentStatus)
                 <button
                     v-else
                     type="submit"
-                    :disabled="!isStep6Valid"
+                    :disabled="!isStep5Valid"
                     class="px-8 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-white rounded disabled:opacity-50"
                 >
                     Submit
