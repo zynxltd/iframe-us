@@ -1,48 +1,34 @@
 {
-  "_AlertBox-D3mEOyi0.css": {
-    "file": "assets/AlertBox-D3mEOyi0.css",
-    "src": "_AlertBox-D3mEOyi0.css"
-  },
-  "_AlertBox.vue_vue_type_style_index_0_scoped_75fc6ea2_lang-a-fdcAZL.js": {
-    "file": "assets/AlertBox.vue_vue_type_style_index_0_scoped_75fc6ea2_lang-a-fdcAZL.js",
-    "name": "AlertBox.vue_vue_type_style_index_0_scoped_75fc6ea2_lang",
-    "imports": [
-      "resources/js/app.ts"
-    ],
-    "css": [
-      "assets/AlertBox-D3mEOyi0.css"
-    ]
-  },
-  "_Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js": {
-    "file": "assets/Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js",
+  "_Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js": {
+    "file": "assets/Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js",
     "name": "Label.vue_vue_type_script_setup_true_lang",
     "imports": [
       "resources/js/app.ts",
-      "_createLucideIcon-BdPVydml.js",
-      "_useForwardExpose-Boc7Hfec.js"
+      "_createLucideIcon-CB_jhUGb.js",
+      "_useForwardExpose-CgmL2VFH.js"
     ]
   },
-  "_Layout.vue_vue_type_script_setup_true_lang-JaceAbl8.js": {
-    "file": "assets/Layout.vue_vue_type_script_setup_true_lang-JaceAbl8.js",
+  "_Layout.vue_vue_type_script_setup_true_lang-BeXu79X2.js": {
+    "file": "assets/Layout.vue_vue_type_script_setup_true_lang-BeXu79X2.js",
     "name": "Layout.vue_vue_type_script_setup_true_lang",
     "imports": [
       "resources/js/app.ts",
-      "_createLucideIcon-BdPVydml.js",
-      "_useForwardExpose-Boc7Hfec.js",
-      "_RovingFocusGroup-a1xfCCW6.js"
+      "_createLucideIcon-CB_jhUGb.js",
+      "_useForwardExpose-CgmL2VFH.js",
+      "_RovingFocusGroup-C84-rdft.js"
     ]
   },
-  "_RovingFocusGroup-a1xfCCW6.js": {
-    "file": "assets/RovingFocusGroup-a1xfCCW6.js",
+  "_RovingFocusGroup-C84-rdft.js": {
+    "file": "assets/RovingFocusGroup-C84-rdft.js",
     "name": "RovingFocusGroup",
     "imports": [
-      "_createLucideIcon-BdPVydml.js",
+      "_createLucideIcon-CB_jhUGb.js",
       "resources/js/app.ts",
-      "_useForwardExpose-Boc7Hfec.js"
+      "_useForwardExpose-CgmL2VFH.js"
     ]
   },
-  "_TextLink.vue_vue_type_script_setup_true_lang-CzkAJaZr.js": {
-    "file": "assets/TextLink.vue_vue_type_script_setup_true_lang-CzkAJaZr.js",
+  "_TextLink.vue_vue_type_script_setup_true_lang-5f9AvPus.js": {
+    "file": "assets/TextLink.vue_vue_type_script_setup_true_lang-5f9AvPus.js",
     "name": "TextLink.vue_vue_type_script_setup_true_lang",
     "imports": [
       "resources/js/app.ts"
@@ -52,30 +38,30 @@
     "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
     "name": "_plugin-vue_export-helper"
   },
-  "_createLucideIcon-BdPVydml.js": {
-    "file": "assets/createLucideIcon-BdPVydml.js",
+  "_createLucideIcon-CB_jhUGb.js": {
+    "file": "assets/createLucideIcon-CB_jhUGb.js",
     "name": "createLucideIcon",
     "imports": [
       "resources/js/app.ts"
     ]
   },
-  "_loader-circle-CwILvfG5.js": {
-    "file": "assets/loader-circle-CwILvfG5.js",
+  "_loader-circle-BOHN_G7G.js": {
+    "file": "assets/loader-circle-BOHN_G7G.js",
     "name": "loader-circle",
     "imports": [
-      "_createLucideIcon-BdPVydml.js",
+      "_createLucideIcon-CB_jhUGb.js",
       "resources/js/app.ts"
     ]
   },
-  "_useForwardExpose-Boc7Hfec.js": {
-    "file": "assets/useForwardExpose-Boc7Hfec.js",
+  "_useForwardExpose-CgmL2VFH.js": {
+    "file": "assets/useForwardExpose-CgmL2VFH.js",
     "name": "useForwardExpose",
     "imports": [
       "resources/js/app.ts"
     ]
   },
   "resources/js/app.ts": {
-    "file": "assets/app-Bh6teFlZ.js",
+    "file": "assets/app-C_InKJjW.js",
     "name": "app",
     "src": "resources/js/app.ts",
     "isEntry": true,
@@ -92,7 +78,8 @@
       "resources/js/pages/Application/Applicant/Title.vue",
       "resources/js/pages/Application/Bank/BankAccountNumber.vue",
       "resources/js/pages/Application/Bank/BankCard.vue",
-      "resources/js/pages/Application/Bank/BankSortCode.vue",
+      "resources/js/pages/Application/Bank/BankRoutingNumber.vue",
+      "resources/js/pages/Application/Bank/BankYears.vue",
       "resources/js/pages/Application/Consent/ConsentMarketing.vue",
       "resources/js/pages/Application/Employer/EmployerName.vue",
       "resources/js/pages/Application/Employer/EmployerYears.vue",
@@ -115,15 +102,14 @@
       "resources/js/pages/Application/Loan/LoanAmount.vue",
       "resources/js/pages/Application/Loan/LoanPurpose.vue",
       "resources/js/pages/Application/Loan/LoanTerm.vue",
-      "resources/js/pages/Application/Loan/RecentLoanCount.vue",
       "resources/js/pages/Application/Progress.vue",
       "resources/js/pages/Application/Residence/AddressYears.vue",
       "resources/js/pages/Application/Residence/City.vue",
-      "resources/js/pages/Application/Residence/County.vue",
       "resources/js/pages/Application/Residence/HouseNameNumber.vue",
-      "resources/js/pages/Application/Residence/Postcode.vue",
       "resources/js/pages/Application/Residence/ResidentialStatus.vue",
+      "resources/js/pages/Application/Residence/State.vue",
       "resources/js/pages/Application/Residence/StreetAddress.vue",
+      "resources/js/pages/Application/Residence/Zipcode.vue",
       "resources/js/pages/Application/Step1.vue",
       "resources/js/pages/Application/Step2.vue",
       "resources/js/pages/Application/Step3.vue",
@@ -136,8 +122,6 @@
       "resources/js/pages/auth/Register.vue",
       "resources/js/pages/auth/ResetPassword.vue",
       "resources/js/pages/auth/VerifyEmail.vue",
-      "resources/js/pages/back-up.vue",
-      "resources/js/pages/back-up2.vue",
       "resources/js/pages/settings/Appearance.vue",
       "resources/js/pages/settings/Password.vue",
       "resources/js/pages/settings/Profile.vue"
@@ -147,7 +131,7 @@
     ]
   },
   "resources/js/pages/Application/Applicant/AdultsLivingWith.vue": {
-    "file": "assets/AdultsLivingWith-C4R-YFMF.js",
+    "file": "assets/AdultsLivingWith-wrgDJtMG.js",
     "name": "AdultsLivingWith",
     "src": "resources/js/pages/Application/Applicant/AdultsLivingWith.vue",
     "isDynamicEntry": true,
@@ -156,11 +140,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Applicant/DateOfBirth.vue": {
-    "file": "assets/DateOfBirth-DMM7eHCI.js",
+    "file": "assets/DateOfBirth-DtlqXbkG.js",
     "name": "DateOfBirth",
     "src": "resources/js/pages/Application/Applicant/DateOfBirth.vue",
     "isDynamicEntry": true,
@@ -169,11 +153,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Applicant/Dependants.vue": {
-    "file": "assets/Dependants-GPRIa2bm.js",
+    "file": "assets/Dependants-Psy5qFwi.js",
     "name": "Dependants",
     "src": "resources/js/pages/Application/Applicant/Dependants.vue",
     "isDynamicEntry": true,
@@ -182,11 +166,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Applicant/Email.vue": {
-    "file": "assets/Email-D0qNMRMo.js",
+    "file": "assets/Email-CatZ9iWm.js",
     "name": "Email",
     "src": "resources/js/pages/Application/Applicant/Email.vue",
     "isDynamicEntry": true,
@@ -195,11 +179,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Applicant/FirstName.vue": {
-    "file": "assets/FirstName-DkzDNGMr.js",
+    "file": "assets/FirstName-BtdJ_8hE.js",
     "name": "FirstName",
     "src": "resources/js/pages/Application/Applicant/FirstName.vue",
     "isDynamicEntry": true,
@@ -208,11 +192,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Applicant/HomePhone.vue": {
-    "file": "assets/HomePhone-B_ihzRU8.js",
+    "file": "assets/HomePhone-dgQFMvKm.js",
     "name": "HomePhone",
     "src": "resources/js/pages/Application/Applicant/HomePhone.vue",
     "isDynamicEntry": true,
@@ -221,11 +205,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Applicant/LastName.vue": {
-    "file": "assets/LastName-CEr0AsnQ.js",
+    "file": "assets/LastName-CRuZ1_iW.js",
     "name": "LastName",
     "src": "resources/js/pages/Application/Applicant/LastName.vue",
     "isDynamicEntry": true,
@@ -234,11 +218,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Applicant/MaritalStatus.vue": {
-    "file": "assets/MaritalStatus-COVPRkVo.js",
+    "file": "assets/MaritalStatus-76AC3gF7.js",
     "name": "MaritalStatus",
     "src": "resources/js/pages/Application/Applicant/MaritalStatus.vue",
     "isDynamicEntry": true,
@@ -247,24 +231,20 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Applicant/MobilePhone.vue": {
-    "file": "assets/MobilePhone-CTV8gkX_.js",
+    "file": "assets/MobilePhone-BBGEgfec.js",
     "name": "MobilePhone",
     "src": "resources/js/pages/Application/Applicant/MobilePhone.vue",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/app.ts",
-      "__plugin-vue_export-helper-DlAUqK2U.js"
-    ],
-    "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "resources/js/app.ts"
     ]
   },
   "resources/js/pages/Application/Applicant/Title.vue": {
-    "file": "assets/Title-DkEG-CHn.js",
+    "file": "assets/Title-BW74aKG3.js",
     "name": "Title",
     "src": "resources/js/pages/Application/Applicant/Title.vue",
     "isDynamicEntry": true,
@@ -273,11 +253,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Bank/BankAccountNumber.vue": {
-    "file": "assets/BankAccountNumber-qyU-u_6H.js",
+    "file": "assets/BankAccountNumber-BHPXAZf4.js",
     "name": "BankAccountNumber",
     "src": "resources/js/pages/Application/Bank/BankAccountNumber.vue",
     "isDynamicEntry": true,
@@ -286,11 +266,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Bank/BankCard.vue": {
-    "file": "assets/BankCard-nlE-dy-8.js",
+    "file": "assets/BankCard-CJb3Iirs.js",
     "name": "BankCard",
     "src": "resources/js/pages/Application/Bank/BankCard.vue",
     "isDynamicEntry": true,
@@ -299,24 +279,37 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
-  "resources/js/pages/Application/Bank/BankSortCode.vue": {
-    "file": "assets/BankSortCode-ByNMRjZM.js",
-    "name": "BankSortCode",
-    "src": "resources/js/pages/Application/Bank/BankSortCode.vue",
+  "resources/js/pages/Application/Bank/BankRoutingNumber.vue": {
+    "file": "assets/BankRoutingNumber-C_rfqErX.js",
+    "name": "BankRoutingNumber",
+    "src": "resources/js/pages/Application/Bank/BankRoutingNumber.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
+    ]
+  },
+  "resources/js/pages/Application/Bank/BankYears.vue": {
+    "file": "assets/BankYears-Dd-wDuwa.js",
+    "name": "BankYears",
+    "src": "resources/js/pages/Application/Bank/BankYears.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Consent/ConsentMarketing.vue": {
-    "file": "assets/ConsentMarketing-BkOoc2D7.js",
+    "file": "assets/ConsentMarketing-C6DAMnK6.js",
     "name": "ConsentMarketing",
     "src": "resources/js/pages/Application/Consent/ConsentMarketing.vue",
     "isDynamicEntry": true,
@@ -329,7 +322,7 @@
     ]
   },
   "resources/js/pages/Application/Employer/EmployerName.vue": {
-    "file": "assets/EmployerName-k1pThY2M.js",
+    "file": "assets/EmployerName-5Ltyj2bU.js",
     "name": "EmployerName",
     "src": "resources/js/pages/Application/Employer/EmployerName.vue",
     "isDynamicEntry": true,
@@ -338,11 +331,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/EmployerYears.vue": {
-    "file": "assets/EmployerYears-B56shVCd.js",
+    "file": "assets/EmployerYears-DMTm6XFY.js",
     "name": "EmployerYears",
     "src": "resources/js/pages/Application/Employer/EmployerYears.vue",
     "isDynamicEntry": true,
@@ -351,11 +344,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/EmploymentIndustry.vue": {
-    "file": "assets/EmploymentIndustry-BhahfMUh.js",
+    "file": "assets/EmploymentIndustry-Dxmx_BXh.js",
     "name": "EmploymentIndustry",
     "src": "resources/js/pages/Application/Employer/EmploymentIndustry.vue",
     "isDynamicEntry": true,
@@ -364,11 +357,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/EmploymentStatus.vue": {
-    "file": "assets/EmploymentStatus-CNcBBDiZ.js",
+    "file": "assets/EmploymentStatus-DlYAXfdM.js",
     "name": "EmploymentStatus",
     "src": "resources/js/pages/Application/Employer/EmploymentStatus.vue",
     "isDynamicEntry": true,
@@ -377,11 +370,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/FollowingPayDate.vue": {
-    "file": "assets/FollowingPayDate-C_xxIUAy.js",
+    "file": "assets/FollowingPayDate-DcRYLf5r.js",
     "name": "FollowingPayDate",
     "src": "resources/js/pages/Application/Employer/FollowingPayDate.vue",
     "isDynamicEntry": true,
@@ -390,11 +383,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/IncomeFrequency.vue": {
-    "file": "assets/IncomeFrequency-yyS4mn7S.js",
+    "file": "assets/IncomeFrequency-CZq6tvl7.js",
     "name": "IncomeFrequency",
     "src": "resources/js/pages/Application/Employer/IncomeFrequency.vue",
     "isDynamicEntry": true,
@@ -403,11 +396,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/JobTitle.vue": {
-    "file": "assets/JobTitle-t4HRmJBu.js",
+    "file": "assets/JobTitle-C21GVGE3.js",
     "name": "JobTitle",
     "src": "resources/js/pages/Application/Employer/JobTitle.vue",
     "isDynamicEntry": true,
@@ -416,11 +409,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/MonthsAtEmployer.vue": {
-    "file": "assets/MonthsAtEmployer--kB1Xw52.js",
+    "file": "assets/MonthsAtEmployer-CdLDUzQ1.js",
     "name": "MonthsAtEmployer",
     "src": "resources/js/pages/Application/Employer/MonthsAtEmployer.vue",
     "isDynamicEntry": true,
@@ -429,11 +422,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/NetMonthlyIncome.vue": {
-    "file": "assets/NetMonthlyIncome-FCTS9deM.js",
+    "file": "assets/NetMonthlyIncome-BsKvPCGG.js",
     "name": "NetMonthlyIncome",
     "src": "resources/js/pages/Application/Employer/NetMonthlyIncome.vue",
     "isDynamicEntry": true,
@@ -442,11 +435,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/NextPayDate.vue": {
-    "file": "assets/NextPayDate-BcuGGhcO.js",
+    "file": "assets/NextPayDate-Cxg2I1_g.js",
     "name": "NextPayDate",
     "src": "resources/js/pages/Application/Employer/NextPayDate.vue",
     "isDynamicEntry": true,
@@ -455,11 +448,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Employer/WorkPhone.vue": {
-    "file": "assets/WorkPhone-BtC0qNG5.js",
+    "file": "assets/WorkPhone-BL66mI_A.js",
     "name": "WorkPhone",
     "src": "resources/js/pages/Application/Employer/WorkPhone.vue",
     "isDynamicEntry": true,
@@ -468,7 +461,7 @@
     ]
   },
   "resources/js/pages/Application/Expense/Council.vue": {
-    "file": "assets/Council-Czwypuvl.js",
+    "file": "assets/Council-DNQ2Q5IE.js",
     "name": "Council",
     "src": "resources/js/pages/Application/Expense/Council.vue",
     "isDynamicEntry": true,
@@ -477,11 +470,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Expense/Credit.vue": {
-    "file": "assets/Credit-Dsntge-4.js",
+    "file": "assets/Credit-DzchbD3G.js",
     "name": "Credit",
     "src": "resources/js/pages/Application/Expense/Credit.vue",
     "isDynamicEntry": true,
@@ -490,11 +483,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Expense/Food.vue": {
-    "file": "assets/Food-Cz8pCXZa.js",
+    "file": "assets/Food-mMKXgVy1.js",
     "name": "Food",
     "src": "resources/js/pages/Application/Expense/Food.vue",
     "isDynamicEntry": true,
@@ -503,11 +496,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Expense/MonthlyMortgageRent.vue": {
-    "file": "assets/MonthlyMortgageRent-C8P9Mb-K.js",
+    "file": "assets/MonthlyMortgageRent-Dlu40pit.js",
     "name": "MonthlyMortgageRent",
     "src": "resources/js/pages/Application/Expense/MonthlyMortgageRent.vue",
     "isDynamicEntry": true,
@@ -516,11 +509,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Expense/Other.vue": {
-    "file": "assets/Other-DSGC5o4n.js",
+    "file": "assets/Other-BCrOajUt.js",
     "name": "Other",
     "src": "resources/js/pages/Application/Expense/Other.vue",
     "isDynamicEntry": true,
@@ -529,11 +522,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Expense/Transport.vue": {
-    "file": "assets/Transport-o51hV-Pu.js",
+    "file": "assets/Transport-BOqWhMUS.js",
     "name": "Transport",
     "src": "resources/js/pages/Application/Expense/Transport.vue",
     "isDynamicEntry": true,
@@ -542,11 +535,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Expense/Utilities.vue": {
-    "file": "assets/Utilities-rYiWQDKw.js",
+    "file": "assets/Utilities-BOI3PjeP.js",
     "name": "Utilities",
     "src": "resources/js/pages/Application/Expense/Utilities.vue",
     "isDynamicEntry": true,
@@ -555,11 +548,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Loan/LoanAmount.vue": {
-    "file": "assets/LoanAmount-DWemIuPu.js",
+    "file": "assets/LoanAmount-BsKy__hN.js",
     "name": "LoanAmount",
     "src": "resources/js/pages/Application/Loan/LoanAmount.vue",
     "isDynamicEntry": true,
@@ -568,11 +561,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Loan/LoanPurpose.vue": {
-    "file": "assets/LoanPurpose-DTBROy0e.js",
+    "file": "assets/LoanPurpose-Bpykg5rj.js",
     "name": "LoanPurpose",
     "src": "resources/js/pages/Application/Loan/LoanPurpose.vue",
     "isDynamicEntry": true,
@@ -581,11 +574,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Loan/LoanTerm.vue": {
-    "file": "assets/LoanTerm-CbGM7PIY.js",
+    "file": "assets/LoanTerm-DB4ZMIeU.js",
     "name": "LoanTerm",
     "src": "resources/js/pages/Application/Loan/LoanTerm.vue",
     "isDynamicEntry": true,
@@ -594,24 +587,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
-    ]
-  },
-  "resources/js/pages/Application/Loan/RecentLoanCount.vue": {
-    "file": "assets/RecentLoanCount-CC7wGq4y.js",
-    "name": "RecentLoanCount",
-    "src": "resources/js/pages/Application/Loan/RecentLoanCount.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/app.ts",
-      "__plugin-vue_export-helper-DlAUqK2U.js"
-    ],
-    "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Progress.vue": {
-    "file": "assets/Progress-CQ4QLjcf.js",
+    "file": "assets/Progress-wgD14ISq.js",
     "name": "Progress",
     "src": "resources/js/pages/Application/Progress.vue",
     "isDynamicEntry": true,
@@ -624,7 +604,7 @@
     ]
   },
   "resources/js/pages/Application/Residence/AddressYears.vue": {
-    "file": "assets/AddressYears-CE9fr9UB.js",
+    "file": "assets/AddressYears-CnIyuUMo.js",
     "name": "AddressYears",
     "src": "resources/js/pages/Application/Residence/AddressYears.vue",
     "isDynamicEntry": true,
@@ -633,11 +613,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Residence/City.vue": {
-    "file": "assets/City-C6xdshva.js",
+    "file": "assets/City-D4oQ0aWp.js",
     "name": "City",
     "src": "resources/js/pages/Application/Residence/City.vue",
     "isDynamicEntry": true,
@@ -646,24 +626,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
-    ]
-  },
-  "resources/js/pages/Application/Residence/County.vue": {
-    "file": "assets/County-YLUyjQ7M.js",
-    "name": "County",
-    "src": "resources/js/pages/Application/Residence/County.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/app.ts",
-      "__plugin-vue_export-helper-DlAUqK2U.js"
-    ],
-    "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Residence/HouseNameNumber.vue": {
-    "file": "assets/HouseNameNumber-BaCD9tPa.js",
+    "file": "assets/HouseNameNumber-CN_IdH3L.js",
     "name": "HouseNameNumber",
     "src": "resources/js/pages/Application/Residence/HouseNameNumber.vue",
     "isDynamicEntry": true,
@@ -672,24 +639,11 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
-    ]
-  },
-  "resources/js/pages/Application/Residence/Postcode.vue": {
-    "file": "assets/Postcode-CNCq3XNx.js",
-    "name": "Postcode",
-    "src": "resources/js/pages/Application/Residence/Postcode.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/app.ts",
-      "__plugin-vue_export-helper-DlAUqK2U.js"
-    ],
-    "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Residence/ResidentialStatus.vue": {
-    "file": "assets/ResidentialStatus-BMf7LyYl.js",
+    "file": "assets/ResidentialStatus-C_5ZyQ5w.js",
     "name": "ResidentialStatus",
     "src": "resources/js/pages/Application/Residence/ResidentialStatus.vue",
     "isDynamicEntry": true,
@@ -698,11 +652,24 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
+    ]
+  },
+  "resources/js/pages/Application/Residence/State.vue": {
+    "file": "assets/State-1-nX7ATJ.js",
+    "name": "State",
+    "src": "resources/js/pages/Application/Residence/State.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Residence/StreetAddress.vue": {
-    "file": "assets/StreetAddress-BCpw_LWf.js",
+    "file": "assets/StreetAddress-CwX9DTfN.js",
     "name": "StreetAddress",
     "src": "resources/js/pages/Application/Residence/StreetAddress.vue",
     "isDynamicEntry": true,
@@ -711,7 +678,20 @@
       "__plugin-vue_export-helper-DlAUqK2U.js"
     ],
     "css": [
-      "assets/MonthsAtEmployer-tn0RQdqM.css"
+      "assets/AdultsLivingWith-tn0RQdqM.css"
+    ]
+  },
+  "resources/js/pages/Application/Residence/Zipcode.vue": {
+    "file": "assets/Zipcode-BXGwtfJi.js",
+    "name": "Zipcode",
+    "src": "resources/js/pages/Application/Residence/Zipcode.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/AdultsLivingWith-tn0RQdqM.css"
     ]
   },
   "resources/js/pages/Application/Step1.vue": {
@@ -751,13 +731,12 @@
     ]
   },
   "resources/js/pages/Form.vue": {
-    "file": "assets/Form-BBTXSfAu.js",
+    "file": "assets/Form-DwR1eHG9.js",
     "name": "Form",
     "src": "resources/js/pages/Form.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_AlertBox.vue_vue_type_style_index_0_scoped_75fc6ea2_lang-a-fdcAZL.js",
       "resources/js/pages/Application/Applicant/Title.vue",
       "resources/js/pages/Application/Applicant/FirstName.vue",
       "resources/js/pages/Application/Applicant/LastName.vue",
@@ -767,11 +746,9 @@
       "resources/js/pages/Application/Applicant/Dependants.vue",
       "resources/js/pages/Application/Applicant/Email.vue",
       "resources/js/pages/Application/Applicant/MaritalStatus.vue",
-      "resources/js/pages/Application/Applicant/AdultsLivingWith.vue",
       "resources/js/pages/Application/Loan/LoanAmount.vue",
       "resources/js/pages/Application/Loan/LoanTerm.vue",
       "resources/js/pages/Application/Loan/LoanPurpose.vue",
-      "resources/js/pages/Application/Loan/RecentLoanCount.vue",
       "resources/js/pages/Application/Employer/EmploymentStatus.vue",
       "resources/js/pages/Application/Employer/IncomeFrequency.vue",
       "resources/js/pages/Application/Employer/EmployerName.vue",
@@ -784,22 +761,18 @@
       "resources/js/pages/Application/Residence/ResidentialStatus.vue",
       "resources/js/pages/Application/Residence/HouseNameNumber.vue",
       "resources/js/pages/Application/Residence/StreetAddress.vue",
-      "resources/js/pages/Application/Residence/County.vue",
+      "resources/js/pages/Application/Residence/State.vue",
       "resources/js/pages/Application/Residence/City.vue",
-      "resources/js/pages/Application/Residence/Postcode.vue",
+      "resources/js/pages/Application/Residence/Zipcode.vue",
       "resources/js/pages/Application/Residence/AddressYears.vue",
-      "resources/js/pages/Application/Expense/MonthlyMortgageRent.vue",
-      "resources/js/pages/Application/Expense/Transport.vue",
-      "resources/js/pages/Application/Expense/Utilities.vue",
-      "resources/js/pages/Application/Expense/Food.vue",
-      "resources/js/pages/Application/Expense/Credit.vue",
-      "resources/js/pages/Application/Expense/Council.vue",
-      "resources/js/pages/Application/Expense/Other.vue",
       "resources/js/pages/Application/Bank/BankCard.vue",
       "resources/js/pages/Application/Bank/BankAccountNumber.vue",
-      "resources/js/pages/Application/Bank/BankSortCode.vue",
+      "resources/js/pages/Application/Bank/BankRoutingNumber.vue",
       "resources/js/pages/Application/Consent/ConsentMarketing.vue",
       "__plugin-vue_export-helper-DlAUqK2U.js"
+    ],
+    "css": [
+      "assets/Form-D3mEOyi0.css"
     ]
   },
   "resources/js/pages/Welcome.vue": {
@@ -812,189 +785,125 @@
     ]
   },
   "resources/js/pages/auth/ConfirmPassword.vue": {
-    "file": "assets/ConfirmPassword-B9WDrU5b.js",
+    "file": "assets/ConfirmPassword-Boe_Aw-E.js",
     "name": "ConfirmPassword",
     "src": "resources/js/pages/auth/ConfirmPassword.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js",
-      "_createLucideIcon-BdPVydml.js",
-      "_loader-circle-CwILvfG5.js",
-      "_useForwardExpose-Boc7Hfec.js"
+      "_Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js",
+      "_createLucideIcon-CB_jhUGb.js",
+      "_loader-circle-BOHN_G7G.js",
+      "_useForwardExpose-CgmL2VFH.js"
     ]
   },
   "resources/js/pages/auth/ForgotPassword.vue": {
-    "file": "assets/ForgotPassword-BMdV_C-4.js",
+    "file": "assets/ForgotPassword-B4HAJrrv.js",
     "name": "ForgotPassword",
     "src": "resources/js/pages/auth/ForgotPassword.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js",
-      "_TextLink.vue_vue_type_script_setup_true_lang-CzkAJaZr.js",
-      "_createLucideIcon-BdPVydml.js",
-      "_loader-circle-CwILvfG5.js",
-      "_useForwardExpose-Boc7Hfec.js"
+      "_Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js",
+      "_TextLink.vue_vue_type_script_setup_true_lang-5f9AvPus.js",
+      "_createLucideIcon-CB_jhUGb.js",
+      "_loader-circle-BOHN_G7G.js",
+      "_useForwardExpose-CgmL2VFH.js"
     ]
   },
   "resources/js/pages/auth/Login.vue": {
-    "file": "assets/Login-yJqjQKjA.js",
+    "file": "assets/Login-DnHBQCpf.js",
     "name": "Login",
     "src": "resources/js/pages/auth/Login.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js",
-      "_TextLink.vue_vue_type_script_setup_true_lang-CzkAJaZr.js",
-      "_createLucideIcon-BdPVydml.js",
-      "_RovingFocusGroup-a1xfCCW6.js",
-      "_useForwardExpose-Boc7Hfec.js",
-      "_loader-circle-CwILvfG5.js"
+      "_Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js",
+      "_TextLink.vue_vue_type_script_setup_true_lang-5f9AvPus.js",
+      "_createLucideIcon-CB_jhUGb.js",
+      "_RovingFocusGroup-C84-rdft.js",
+      "_useForwardExpose-CgmL2VFH.js",
+      "_loader-circle-BOHN_G7G.js"
     ]
   },
   "resources/js/pages/auth/Register.vue": {
-    "file": "assets/Register-DuC8SfCH.js",
+    "file": "assets/Register-C6HjIOJ9.js",
     "name": "Register",
     "src": "resources/js/pages/auth/Register.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js",
-      "_TextLink.vue_vue_type_script_setup_true_lang-CzkAJaZr.js",
-      "_createLucideIcon-BdPVydml.js",
-      "_loader-circle-CwILvfG5.js",
-      "_useForwardExpose-Boc7Hfec.js"
+      "_Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js",
+      "_TextLink.vue_vue_type_script_setup_true_lang-5f9AvPus.js",
+      "_createLucideIcon-CB_jhUGb.js",
+      "_loader-circle-BOHN_G7G.js",
+      "_useForwardExpose-CgmL2VFH.js"
     ]
   },
   "resources/js/pages/auth/ResetPassword.vue": {
-    "file": "assets/ResetPassword-Ci9y8gRH.js",
+    "file": "assets/ResetPassword-DwTL2m2p.js",
     "name": "ResetPassword",
     "src": "resources/js/pages/auth/ResetPassword.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js",
-      "_createLucideIcon-BdPVydml.js",
-      "_loader-circle-CwILvfG5.js",
-      "_useForwardExpose-Boc7Hfec.js"
+      "_Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js",
+      "_createLucideIcon-CB_jhUGb.js",
+      "_loader-circle-BOHN_G7G.js",
+      "_useForwardExpose-CgmL2VFH.js"
     ]
   },
   "resources/js/pages/auth/VerifyEmail.vue": {
-    "file": "assets/VerifyEmail-BlqieNtI.js",
+    "file": "assets/VerifyEmail-BNfu8zDA.js",
     "name": "VerifyEmail",
     "src": "resources/js/pages/auth/VerifyEmail.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_TextLink.vue_vue_type_script_setup_true_lang-CzkAJaZr.js",
-      "_createLucideIcon-BdPVydml.js",
-      "_loader-circle-CwILvfG5.js"
-    ]
-  },
-  "resources/js/pages/back-up.vue": {
-    "file": "assets/back-up-DlcGd6b6.js",
-    "name": "back-up",
-    "src": "resources/js/pages/back-up.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "__plugin-vue_export-helper-DlAUqK2U.js"
-    ]
-  },
-  "resources/js/pages/back-up2.vue": {
-    "file": "assets/back-up2-B1USnf9t.js",
-    "name": "back-up2",
-    "src": "resources/js/pages/back-up2.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/app.ts",
-      "_AlertBox.vue_vue_type_style_index_0_scoped_75fc6ea2_lang-a-fdcAZL.js",
-      "resources/js/pages/Application/Applicant/Title.vue",
-      "resources/js/pages/Application/Applicant/FirstName.vue",
-      "resources/js/pages/Application/Applicant/LastName.vue",
-      "resources/js/pages/Application/Loan/LoanTerm.vue",
-      "resources/js/pages/Application/Loan/LoanPurpose.vue",
-      "resources/js/pages/Application/Applicant/DateOfBirth.vue",
-      "resources/js/pages/Application/Loan/LoanAmount.vue",
-      "resources/js/pages/Application/Applicant/MobilePhone.vue",
-      "resources/js/pages/Application/Applicant/HomePhone.vue",
-      "resources/js/pages/Application/Applicant/Dependants.vue",
-      "resources/js/pages/Application/Applicant/Email.vue",
-      "resources/js/pages/Application/Employer/EmploymentStatus.vue",
-      "resources/js/pages/Application/Employer/EmployerName.vue",
-      "resources/js/pages/Application/Employer/JobTitle.vue",
-      "resources/js/pages/Application/Employer/EmploymentIndustry.vue",
-      "resources/js/pages/Application/Employer/EmployerYears.vue",
-      "resources/js/pages/Application/Residence/AddressYears.vue",
-      "resources/js/pages/Application/Employer/NextPayDate.vue",
-      "resources/js/pages/Application/Employer/FollowingPayDate.vue",
-      "resources/js/pages/Application/Residence/StreetAddress.vue",
-      "resources/js/pages/Application/Residence/HouseNameNumber.vue",
-      "resources/js/pages/Application/Residence/County.vue",
-      "resources/js/pages/Application/Residence/City.vue",
-      "resources/js/pages/Application/Residence/Postcode.vue",
-      "resources/js/pages/Application/Expense/Transport.vue",
-      "resources/js/pages/Application/Expense/Credit.vue",
-      "resources/js/pages/Application/Expense/Food.vue",
-      "resources/js/pages/Application/Expense/Council.vue",
-      "resources/js/pages/Application/Expense/Other.vue",
-      "resources/js/pages/Application/Bank/BankCard.vue",
-      "resources/js/pages/Application/Bank/BankAccountNumber.vue",
-      "resources/js/pages/Application/Bank/BankSortCode.vue",
-      "resources/js/pages/Application/Consent/ConsentMarketing.vue",
-      "resources/js/pages/Application/Expense/MonthlyMortgageRent.vue",
-      "resources/js/pages/Application/Applicant/MaritalStatus.vue",
-      "resources/js/pages/Application/Residence/ResidentialStatus.vue",
-      "resources/js/pages/Application/Expense/Utilities.vue",
-      "resources/js/pages/Application/Loan/RecentLoanCount.vue",
-      "resources/js/pages/Application/Applicant/AdultsLivingWith.vue",
-      "resources/js/pages/Application/Employer/NetMonthlyIncome.vue",
-      "resources/js/pages/Application/Employer/IncomeFrequency.vue",
-      "__plugin-vue_export-helper-DlAUqK2U.js"
-    ],
-    "css": [
-      "assets/back-up2-ArkJZJLL.css"
+      "_TextLink.vue_vue_type_script_setup_true_lang-5f9AvPus.js",
+      "_createLucideIcon-CB_jhUGb.js",
+      "_loader-circle-BOHN_G7G.js"
     ]
   },
   "resources/js/pages/settings/Appearance.vue": {
-    "file": "assets/Appearance-Bi7bcxDK.js",
+    "file": "assets/Appearance-C-ltwlSg.js",
     "name": "Appearance",
     "src": "resources/js/pages/settings/Appearance.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_createLucideIcon-BdPVydml.js",
-      "_Layout.vue_vue_type_script_setup_true_lang-JaceAbl8.js",
-      "_useForwardExpose-Boc7Hfec.js",
-      "_RovingFocusGroup-a1xfCCW6.js"
+      "_createLucideIcon-CB_jhUGb.js",
+      "_Layout.vue_vue_type_script_setup_true_lang-BeXu79X2.js",
+      "_useForwardExpose-CgmL2VFH.js",
+      "_RovingFocusGroup-C84-rdft.js"
     ]
   },
   "resources/js/pages/settings/Password.vue": {
-    "file": "assets/Password-CMBxNyOf.js",
+    "file": "assets/Password-DxkqYY9i.js",
     "name": "Password",
     "src": "resources/js/pages/settings/Password.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js",
-      "_Layout.vue_vue_type_script_setup_true_lang-JaceAbl8.js",
-      "_createLucideIcon-BdPVydml.js",
-      "_useForwardExpose-Boc7Hfec.js",
-      "_RovingFocusGroup-a1xfCCW6.js"
+      "_Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js",
+      "_Layout.vue_vue_type_script_setup_true_lang-BeXu79X2.js",
+      "_createLucideIcon-CB_jhUGb.js",
+      "_useForwardExpose-CgmL2VFH.js",
+      "_RovingFocusGroup-C84-rdft.js"
     ]
   },
   "resources/js/pages/settings/Profile.vue": {
-    "file": "assets/Profile-D2sOdnbd.js",
+    "file": "assets/Profile-DMW9w9St.js",
     "name": "Profile",
     "src": "resources/js/pages/settings/Profile.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.ts",
-      "_Layout.vue_vue_type_script_setup_true_lang-JaceAbl8.js",
-      "_Label.vue_vue_type_script_setup_true_lang-DU2Em6up.js",
-      "_createLucideIcon-BdPVydml.js",
-      "_RovingFocusGroup-a1xfCCW6.js",
-      "_useForwardExpose-Boc7Hfec.js"
+      "_Layout.vue_vue_type_script_setup_true_lang-BeXu79X2.js",
+      "_Label.vue_vue_type_script_setup_true_lang-CNz9Vrns.js",
+      "_createLucideIcon-CB_jhUGb.js",
+      "_RovingFocusGroup-C84-rdft.js",
+      "_useForwardExpose-CgmL2VFH.js"
     ]
   }
 }
